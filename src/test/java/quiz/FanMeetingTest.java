@@ -1,16 +1,38 @@
 package quiz;
 
+import algorithm.sort.*;
+import com.google.common.collect.Lists;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-public class FanMeetingTest {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-    FanMeeting fanMeeting;
+@RunWith(value = Parameterized.class)
+public class FanMeetingTest<T extends FanMeeting> {
+
+    private T fanMeeting;
+    private Class<T> fanMeetingClass;
+
+    public FanMeetingTest(Class<T> fanMeetingClass) {
+        this.fanMeetingClass = fanMeetingClass;
+    }
+
+    @Parameterized.Parameters
+    public static List<Class> fanMeetingClasses() {
+        List<Class> classes = new ArrayList<>();
+        classes.add(FoolFanMeeting.class);
+//        classes.add(BitFanMeeting.class);
+        return classes;
+    }
 
     @Before
-    public void setUp() throws Exception {
-        fanMeeting = new FanMeeting();
+    public void setup() throws IllegalAccessException, InstantiationException {
+        this.fanMeeting = fanMeetingClass.newInstance();
     }
 
     @Test
@@ -20,7 +42,7 @@ public class FanMeetingTest {
         String fans = "MMM";
 
         // When
-        int count = fanMeeting.countFullMembersConcurrentHugCount(members, fans);
+        int count = fanMeeting.count(members, fans);
 
         // Then
         Assert.assertEquals(0, count);
@@ -33,7 +55,7 @@ public class FanMeetingTest {
         String fans = "FFF";
 
         // When
-        int count = fanMeeting.countFullMembersConcurrentHugCount(members, fans);
+        int count = fanMeeting.count(members, fans);
 
         // Then
         Assert.assertEquals(1, count);
@@ -46,7 +68,7 @@ public class FanMeetingTest {
         String fans = "MFF";
 
         // When
-        int count = fanMeeting.countFullMembersConcurrentHugCount(members, fans);
+        int count = fanMeeting.count(members, fans);
 
         // Then
         Assert.assertEquals(1, count);
@@ -59,7 +81,7 @@ public class FanMeetingTest {
         String fans = "MMMFFF";
 
         // When
-        int count = fanMeeting.countFullMembersConcurrentHugCount(members, fans);
+        int count = fanMeeting.count(members, fans);
 
         // Then
         Assert.assertEquals(1, count);
@@ -72,7 +94,7 @@ public class FanMeetingTest {
         String fans = "FFFFFFFFFF";
 
         // When
-        int count = fanMeeting.countFullMembersConcurrentHugCount(members, fans);
+        int count = fanMeeting.count(members, fans);
 
         // Then
         Assert.assertEquals(6, count);
@@ -85,7 +107,7 @@ public class FanMeetingTest {
         String fans = "FFFFFMMMMF";
 
         // When
-        int count = fanMeeting.countFullMembersConcurrentHugCount(members, fans);
+        int count = fanMeeting.count(members, fans);
 
         // Then
         Assert.assertEquals(2, count);
@@ -98,7 +120,7 @@ public class FanMeetingTest {
         String fans = "MMFFFFFMFFFMFFFFFFMFFFMFFFFMFMMFFFFFFF";
 
         // When
-        int count = fanMeeting.countFullMembersConcurrentHugCount(members, fans);
+        int count = fanMeeting.count(members, fans);
 
         // Then
         Assert.assertEquals(2, count);

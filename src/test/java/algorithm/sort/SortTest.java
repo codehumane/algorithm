@@ -1,6 +1,8 @@
 package algorithm.sort;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +26,14 @@ public class SortTest<T extends Sort> {
     }
 
     @Parameterized.Parameters
-    public static Collection sortClasses() {
-        return Lists.newArrayList(BubbleSort.class, SelectionSort.class, InsertionSort.class, MergeSort.class, QuickSort.class);
+    public static List<Class> sortClasses() {
+        List<Class> classes = new ArrayList<>();
+        classes.add(BubbleSort.class);
+        classes.add(SelectionSort.class);
+        classes.add(InsertionSort.class);
+        classes.add(MergeSort.class);
+        classes.add(QuickSort.class);
+        return classes;
     }
 
     @Before
