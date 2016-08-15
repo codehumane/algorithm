@@ -31,6 +31,7 @@ public class SortTest<T extends Sort> {
         classes.add(BubbleSort.class);
         classes.add(SelectionSort.class);
         classes.add(InsertionSort.class);
+        classes.add(ParallelMergeSort.class);
         classes.add(MergeSort.class);
         classes.add(QuickSort.class);
         return classes;
