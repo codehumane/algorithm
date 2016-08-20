@@ -11,13 +11,6 @@ public class MergeSort implements Sort {
         divideSort(input, 0, input.length - 1, result);
     }
 
-    /**
-     * e.g <br/>
-     * 4, 1, 3, 2 <br/>
-     * 1, 4, 2, 3 <br/>
-     * 4, 3, 2, 1 <br/>
-     * 3, 1, 4, 2 <br/>
-     */
     private void divideSort(int[] input, int idxFrom, int idxTo, int[] result) {
         if (idxTo - idxFrom < 1) {
             return;
