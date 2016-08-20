@@ -17,8 +17,17 @@ public class MergeSortTest<T extends Sort> {
 
     private T sort;
     private Class<T> sortClass;
+    private static final int[] list;
+    private static final int LIST_SIZE = 1000000;
 
-    public MergeSortTest(Class sortClass) {
+    static {
+        list = new int[LIST_SIZE];
+        for (int i = 0; i < list.length; i++) {
+            list[i] = new Random().nextInt(10000);
+        }
+    }
+
+    public MergeSortTest(Class<T> sortClass) {
         this.sortClass = sortClass;
     }
 
@@ -37,13 +46,6 @@ public class MergeSortTest<T extends Sort> {
 
     @Test
     public void sort() throws Exception {
-        // Given
-        int[] list = new int[5000];
-        for (int i = 0; i < list.length; i++) {
-            list[i] = new Random().nextInt(10000);
-        }
-
-        // When
-        sort.sort(list);
+        new ParallelMergeSort().sort(list);
     }
 }

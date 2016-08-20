@@ -21,7 +21,7 @@ public class SortTest<T extends Sort> {
     private T sort;
     private Class<T> sortClass;
 
-    public SortTest(Class sortClass) {
+    public SortTest(Class<T> sortClass) {
         this.sortClass = sortClass;
     }
 
