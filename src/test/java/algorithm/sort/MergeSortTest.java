@@ -18,7 +18,12 @@ public class MergeSortTest<T extends Sort> {
     private T sort;
     private Class<T> sortClass;
     private static final int[] list;
-    private static final int LIST_SIZE = 1000000;
+
+    /**
+     * List size is a factor affecting on sort performance. The bigger size makes parallel merge sort performance
+     * better.
+     */
+    private static final int LIST_SIZE = 10000;
 
     static {
         list = new int[LIST_SIZE];
