@@ -21,6 +21,16 @@ public class SortTest<T extends Sort> {
     private T sort;
     private Class<T> sortClass;
 
+    private static final int[] bigList;
+    private static final int BIG_LIST_SIZE = 1000000;
+
+    static {
+        bigList = new int[BIG_LIST_SIZE];
+        for (int i = 0; i < bigList.length; i++) {
+            bigList[i] = new Random().nextInt(10000);
+        }
+    }
+
     public SortTest(Class<T> sortClass) {
         this.sortClass = sortClass;
     }
@@ -96,13 +106,6 @@ public class SortTest<T extends Sort> {
 
     @Test
     public void sort_큰_배열() throws Exception {
-        // Given
-        int[] list = new int[5000];
-        for (int i = 0; i < list.length; i++) {
-            list[i] = new Random().nextInt(10000);
-        }
-
-        // When
-        sort.sort(list);
+        sort.sort(bigList);
     }
 }
