@@ -51,6 +51,6 @@ public class MergeSortTest<T extends Sort> {
 
     @Test
     public void sort() throws Exception {
-        new ParallelMergeSort().sort(list);
+        this.sort.sort(list);
     }
 }
