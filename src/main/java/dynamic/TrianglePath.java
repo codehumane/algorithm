@@ -1,7 +1,5 @@
 package dynamic;
 
-import java.util.Arrays;
-
 /**
  * 삼각형으로 배치된 자연수들이 있다.
  * 맨 위의 숫자부터 시작해서, 한번에 한칸씩 아애로 내려가 맨 아래줄 숫자로 내려간다.
@@ -11,50 +9,28 @@ import java.util.Arrays;
  */
 class TrianglePath {
 
-    static int[] path(int[][] input) {
-        int[] path = new int[input.length];
-
-        // 최초 경로 입력 (고정위치 0,0)
-        path[0] = input[0][0];
-
-        // 2행 있는 경우에 한하여, 하위 경로 결정
-        if (input.length > 1) {
-            path = fillMaxPath(input, path, 1, 0);
+    static int sum(int[][] input) {
+        final int start = input[0][0];
+        if (input.length == 1) {
+            return start;
         }
 
-        return path;
+        return start + sum(1, 0, input);
     }
 
-    private static int[] fillMaxPath(int[][] triangle, int[] path, int row, int column) {
-        if (row + 1 == path.length) {
-            int same = triangle[row][column];
-            int right = triangle[row][column + 1];
-            path[row] = (same > right) ? same : right;
-            return path;
+    private static int sum(int row, int col, int[][] input) {
+        final int below = input[row][col];
+        final int next = input[row][col + 1];
+
+        if (row == input.length - 1) {
+            return max(below, next);
         }
 
-        int[] same = Arrays.copyOf(path, path.length);
-        same[row] = triangle[row][column];
-        same = fillMaxPath(triangle, same, row + 1, column);
-
-        int[] right = Arrays.copyOf(path, path.length);
-        right[row] = triangle[row][column + 1];
-        right = fillMaxPath(triangle, right, row + 1, column + 1);
-
-        return sum(same) > sum(right) ? same : right;
+        return max(below + sum(row + 1, col, input),
+                next + sum(row + 1, col + 1, input));
     }
 
-
-    static int sum(int[][] triangle) {
-        return sum(path(triangle));
-    }
-
-    private static int sum(int[] path) {
-        int sum = 0;
-        for (int num : path) {
-            sum += num;
-        }
-
-        return sum;
+    private static int max(int left, int right) {
+        return left > right ? left : right;
     }
 }
