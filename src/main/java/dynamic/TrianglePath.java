@@ -6,6 +6,8 @@ package dynamic;
  * 내려갈때는 바로 아래 혹은 오른쪽 아래 숫자로만 이동이 가능하다.
  * 모든 경로 중 숫자의 합이 가장큰 경로는 무엇인가?
  * 또한 그 합은 얼마인가?
+ *
+ * 동적계획 적용을 위해, 삼각형을 이루는 숫자의 라인은 최대 100까지로 한정함.
  */
 class TrianglePath {
 
@@ -15,10 +17,15 @@ class TrianglePath {
             return start;
         }
 
-        return start + sum(1, 0, input);
+        int[][] cached = new int[100][100];
+        return start + sum(1, 0, input, cached);
     }
 
-    private static int sum(int row, int col, int[][] input) {
+    private static int sum(int row, int col, int[][] input, int[][] cached) {
+        if (cached[row][col] > 0) {
+            return cached[row][col];
+        }
+
         final int below = input[row][col];
         final int next = input[row][col + 1];
 
@@ -26,8 +33,11 @@ class TrianglePath {
             return max(below, next);
         }
 
-        return max(below + sum(row + 1, col, input),
-                next + sum(row + 1, col + 1, input));
+        final int max = max(below + sum(row + 1, col, input, cached),
+                next + sum(row + 1, col + 1, input, cached));
+
+        cached[row][col] = max;
+        return max;
     }
 
     private static int max(int left, int right) {
