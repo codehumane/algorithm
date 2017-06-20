@@ -1,7 +1,5 @@
 package quiz;
 
-import algorithm.sort.*;
-import com.google.common.collect.Lists;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RunWith(value = Parameterized.class)

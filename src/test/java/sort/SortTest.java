@@ -1,9 +1,4 @@
-package algorithm.sort;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+package sort;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -12,7 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @RunWith(value = Parameterized.class)
@@ -106,6 +103,6 @@ public class SortTest<T extends Sort> {
 
     @Test
     public void sort_큰_배열() throws Exception {
-        sort.sort(bigList);
+//        sort.sort(bigList);
     }
 }

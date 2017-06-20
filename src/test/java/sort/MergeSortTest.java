@@ -1,11 +1,13 @@
-package algorithm.sort;
+package sort;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import sort.MergeSort;
+import sort.ParallelMergeSort;
+import sort.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
