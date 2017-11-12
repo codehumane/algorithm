@@ -25,7 +25,7 @@ public class MergeSort implements Sort {
 
     private void merge(int[] input, int idxFrom, int idxMid, int idxTo, int[] result) {
         int i = idxFrom, j = idxMid + 1;
-            for (int k = idxFrom; k <= idxTo; k++) {
+        for (int k = idxFrom; k <= idxTo; k++) {
             if (i <= idxMid && (j > idxTo || input[i] < input[j])) {
                 result[k] = input[i++];
             } else {
@@ -35,8 +35,6 @@ public class MergeSort implements Sort {
     }
 
     private void set(int[] source, int[] target, int idxFrom, int idxTo) {
-        for (int i = idxFrom; i <= idxTo; i++) {
-            target[i] = source[i];
-        }
+        System.arraycopy(source, idxFrom, target, idxFrom, idxTo + 1 - idxFrom);
     }
 }
