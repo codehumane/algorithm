@@ -1,5 +1,6 @@
 package data;
 
+import data.DepthFirstSearch.DirectGraphBuilder;
 import data.DepthFirstSearch.IndirectGraphBuilder;
 import data.DepthFirstSearch.Vertex;
 import lombok.val;
@@ -7,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +22,7 @@ public class DepthFirstSearchTest {
     }
 
     @Test
-    public void explore_단순한_경우() throws Exception {
+    public void explore_무방향그래프_단순한_경우() throws Exception {
 
         // given
         val a = Vertex.of("A");
@@ -40,7 +42,7 @@ public class DepthFirstSearchTest {
     }
 
     @Test
-    public void explore_복잡한_경우_첫번째() throws Exception {
+    public void explore_무방향그래프_복잡한_경우_첫번째() throws Exception {
 
         // given
         val a = Vertex.of("A");
@@ -70,7 +72,7 @@ public class DepthFirstSearchTest {
     }
 
     @Test
-    public void explore_복잡한_경우_두번째() throws Exception {
+    public void explore_무방향그래프_복잡한_경우_두번째() throws Exception {
 
         // given
         val c = Vertex.of("C");
@@ -103,5 +105,49 @@ public class DepthFirstSearchTest {
         assertEquals(g, vertices.get(3));
         assertEquals(k, vertices.get(4));
         assertEquals(l, vertices.get(5));
+    }
+
+    @Test
+    public void explore_유향그래프() throws Exception {
+
+        // given
+        val a = Vertex.of("A");
+        val b = Vertex.of("B");
+        val c = Vertex.of("C");
+        val d = Vertex.of("D");
+        val e = Vertex.of("E");
+        val f = Vertex.of("F");
+        val g = Vertex.of("G");
+        val h = Vertex.of("H");
+
+        val graph = new DirectGraphBuilder()
+                .addEdge(a, b)
+                .addEdge(a, c)
+                .addEdge(a, f)
+                .addEdge(b, e)
+                .addEdge(c, d)
+                .addEdge(d, h)
+                .addEdge(e, f)
+                .addEdge(e, g)
+                .addEdge(e, h)
+                .addEdge(f, g)
+                .addEdge(f, b)
+                .addEdge(h, g)
+                .build();
+
+        // when
+        val explored = dfs.explore(graph);
+
+        // then
+        val vertices = new ArrayList<>(explored);
+        assertEquals(8, vertices.size());
+        assertEquals(a, vertices.get(0));
+        assertEquals(b, vertices.get(1));
+        assertEquals(e, vertices.get(2));
+        assertEquals(f, vertices.get(3));
+        assertEquals(g, vertices.get(4));
+        assertEquals(h, vertices.get(5));
+        assertEquals(c, vertices.get(6));
+        assertEquals(d, vertices.get(7));
     }
 }

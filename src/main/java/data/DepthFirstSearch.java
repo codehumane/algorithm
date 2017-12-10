@@ -3,11 +3,12 @@ package data;
 import lombok.Value;
 import lombok.val;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 class DepthFirstSearch {
 
-    LinkedHashSet<Vertex> explore(IndirectGraph graph) {
+    LinkedHashSet<Vertex> explore(Graph graph) {
         val visited = new LinkedHashSet<Vertex>();
         val edges = graph.getEdges();
 
@@ -27,7 +28,8 @@ class DepthFirstSearch {
         preVisit(vertex);
         visited.add(vertex);
 
-        edges.get(vertex)
+        Optional.ofNullable(edges.get(vertex))
+                .orElse(new HashSet<>())
                 .forEach(adjacent -> explore(edges, visited, adjacent));
 
         postVisit(vertex);
@@ -42,7 +44,7 @@ class DepthFirstSearch {
     }
 
     @Value
-    static class IndirectGraph {
+    static class Graph {
         final LinkedHashMap<Vertex, Set<Vertex>> edges;
     }
 
@@ -56,8 +58,22 @@ class DepthFirstSearch {
             return this;
         }
 
-        IndirectGraph build() {
-            return new IndirectGraph(edges);
+        Graph build() {
+            return new Graph(edges);
+        }
+    }
+
+    static class DirectGraphBuilder {
+
+        final LinkedHashMap<Vertex, Set<Vertex>> edges = new LinkedHashMap<>();
+
+        DirectGraphBuilder addEdge(Vertex from, Vertex to) {
+            edges.computeIfAbsent(from, k -> new LinkedHashSet<>()).add(to);
+            return this;
+        }
+
+        Graph build() {
+            return new Graph(edges);
         }
     }
 
