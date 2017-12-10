@@ -8,28 +8,37 @@ import java.util.*;
 class DepthFirstSearch {
 
     LinkedHashSet<Vertex> explore(IndirectGraph graph) {
-        val explored = new LinkedHashSet<Vertex>();
+        val visited = new LinkedHashSet<Vertex>();
         val edges = graph.getEdges();
 
         edges.keySet()
-                .forEach(vertex -> explore(edges, explored, vertex));
+                .forEach(vertex -> explore(edges, visited, vertex));
 
-        return explored;
+        return visited;
     }
 
     private void explore(Map<Vertex, Set<Vertex>> edges,
-                         LinkedHashSet<Vertex> explored,
+                         LinkedHashSet<Vertex> visited,
                          Vertex vertex) {
 
-        if (explored.contains(vertex))
+        if (visited.contains(vertex))
             return;
 
-        explored.add(vertex);
-        if (edges.get(vertex).isEmpty())
-            return;
+        preVisit(vertex);
+        visited.add(vertex);
 
         edges.get(vertex)
-                .forEach(adjacent -> explore(edges, explored, adjacent));
+                .forEach(adjacent -> explore(edges, visited, adjacent));
+
+        postVisit(vertex);
+    }
+
+    private void preVisit(Vertex vertex) {
+        // do any hook on demand
+    }
+
+    private void postVisit(Vertex vertex) {
+        // do any hook on demand
     }
 
     @Value
