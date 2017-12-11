@@ -1,46 +1,88 @@
 package data;
 
-import lombok.Value;
-import lombok.val;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
+@Slf4j
 class DepthFirstSearch {
 
-    LinkedHashSet<Vertex> explore(Graph graph) {
+    ExploreResult explore(Graph graph) {
+
+        val counter = new Counter();
         val visited = new LinkedHashSet<Vertex>();
-        val edges = graph.getEdges();
+        val visitCounts = new HashMap<Vertex, VisitCount>();
 
-        edges.keySet()
-                .forEach(vertex -> explore(edges, visited, vertex));
+        graph.getEdges().keySet()
+                .forEach(vertex -> explore(
+                        graph.getEdges(),
+                        visitCounts,
+                        visited,
+                        counter,
+                        vertex
+                ));
 
-        return visited;
+        val cyclic = detectCyclic(graph.getEdges(), visitCounts);
+
+        return new ExploreResult(
+                visited,
+                cyclic
+        );
+    }
+
+    private Map<Vertex, Vertex> detectCyclic(LinkedHashMap<Vertex, Set<Vertex>> edges,
+                                              HashMap<Vertex, VisitCount> counts) {
+
+        val cyclic = new HashMap<Vertex, Vertex>();
+        edges.forEach((v, adjacents) -> adjacents
+                .stream()
+                .filter(a -> determineBackEdge(counts, v, a))
+                .forEach(a -> cyclic.put(v, a)));
+
+        return cyclic;
+    }
+
+    private boolean determineBackEdge(HashMap<Vertex, VisitCount> visitCounts,
+                                      Vertex from,
+                                      Vertex to) {
+
+        return visitCounts.get(from).getPre() > visitCounts.get(to).getPre() &&
+                visitCounts.get(from).getPost() < visitCounts.get(to).getPost();
     }
 
     private void explore(Map<Vertex, Set<Vertex>> edges,
+                         HashMap<Vertex, VisitCount> visitCounts,
                          LinkedHashSet<Vertex> visited,
+                         Counter counter,
                          Vertex vertex) {
 
         if (visited.contains(vertex))
             return;
 
-        preVisit(vertex);
+        preVisit(vertex, visitCounts, counter);
         visited.add(vertex);
 
         Optional.ofNullable(edges.get(vertex))
                 .orElse(new HashSet<>())
-                .forEach(adjacent -> explore(edges, visited, adjacent));
+                .forEach(adjacent -> explore(
+                        edges,
+                        visitCounts,
+                        visited,
+                        counter,
+                        adjacent
+                ));
 
-        postVisit(vertex);
+        postVisit(vertex, visitCounts, counter);
     }
 
-    private void preVisit(Vertex vertex) {
-        // do any hook on demand
+    private void preVisit(Vertex vertex, HashMap<Vertex, VisitCount> visitCounts, Counter counter) {
+        visitCounts.computeIfAbsent(vertex, k -> new VisitCount())
+                .setPre(counter.increase());
     }
 
-    private void postVisit(Vertex vertex) {
-        // do any hook on demand
+    private void postVisit(Vertex vertex, HashMap<Vertex, VisitCount> visitCounts, Counter counter) {
+        visitCounts.get(vertex).setPost(counter.increase());
     }
 
     @Value
@@ -78,6 +120,7 @@ class DepthFirstSearch {
     }
 
     @Value
+    @ToString
     static class Vertex {
 
         private final String value;
@@ -85,5 +128,29 @@ class DepthFirstSearch {
         static Vertex of(String value) {
             return new Vertex(value);
         }
+    }
+
+    @Getter
+    private static class Counter {
+
+        private int value = 1;
+
+        int increase() {
+            return value++;
+        }
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    private static class VisitCount {
+        private int pre;
+        private int post;
+    }
+
+    @Value
+    static class ExploreResult {
+        private final LinkedHashSet<Vertex> visited;
+        private final Map<Vertex, Vertex> backEdges;
     }
 }
