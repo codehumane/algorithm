@@ -24,6 +24,7 @@ class DepthFirstSearch {
                 ));
 
         val cyclic = detectCyclic(graph.getEdges(), visitCounts);
+        visited.forEach(v -> log.info("vertex: {}, count: {}", v, visitCounts.get(v)));
 
         return new ExploreResult(
                 visited,
@@ -32,7 +33,7 @@ class DepthFirstSearch {
     }
 
     private Map<Vertex, Vertex> detectCyclic(LinkedHashMap<Vertex, Set<Vertex>> edges,
-                                              HashMap<Vertex, VisitCount> counts) {
+                                             HashMap<Vertex, VisitCount> counts) {
 
         val cyclic = new HashMap<Vertex, Vertex>();
         edges.forEach((v, adjacents) -> adjacents
@@ -83,51 +84,6 @@ class DepthFirstSearch {
 
     private void postVisit(Vertex vertex, HashMap<Vertex, VisitCount> visitCounts, Counter counter) {
         visitCounts.get(vertex).setPost(counter.increase());
-    }
-
-    @Value
-    static class Graph {
-        final LinkedHashMap<Vertex, Set<Vertex>> edges;
-    }
-
-    static class IndirectGraphBuilder {
-
-        final LinkedHashMap<Vertex, Set<Vertex>> edges = new LinkedHashMap<>();
-
-        IndirectGraphBuilder addEdge(Vertex from, Vertex to) {
-            edges.computeIfAbsent(from, k -> new LinkedHashSet<>()).add(to);
-            edges.computeIfAbsent(to, k -> new LinkedHashSet<>()).add(from);
-            return this;
-        }
-
-        Graph build() {
-            return new Graph(edges);
-        }
-    }
-
-    static class DirectGraphBuilder {
-
-        final LinkedHashMap<Vertex, Set<Vertex>> edges = new LinkedHashMap<>();
-
-        DirectGraphBuilder addEdge(Vertex from, Vertex to) {
-            edges.computeIfAbsent(from, k -> new LinkedHashSet<>()).add(to);
-            return this;
-        }
-
-        Graph build() {
-            return new Graph(edges);
-        }
-    }
-
-    @Value
-    @ToString
-    static class Vertex {
-
-        private final String value;
-
-        static Vertex of(String value) {
-            return new Vertex(value);
-        }
     }
 
     @Getter

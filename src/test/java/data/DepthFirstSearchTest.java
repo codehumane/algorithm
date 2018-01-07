@@ -1,8 +1,5 @@
 package data;
 
-import data.DepthFirstSearch.DirectGraphBuilder;
-import data.DepthFirstSearch.IndirectGraphBuilder;
-import data.DepthFirstSearch.Vertex;
 import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,9 +23,7 @@ public class DepthFirstSearchTest {
         // given
         val a = Vertex.of("A");
         val b = Vertex.of("B");
-        val graph = new IndirectGraphBuilder()
-                .addEdge(a, b)
-                .build();
+        val graph = new IndirectGraphBuilder().addEdge(a, b).build();
 
         // when
         val explored = dfs.explore(graph);
@@ -107,7 +102,43 @@ public class DepthFirstSearchTest {
     }
 
     @Test
-    public void explore_유향그래프() throws Exception {
+    public void explore_유향그래프_첫번째() throws Exception {
+
+        // given
+        val a = Vertex.of("A");
+        val b = Vertex.of("B");
+        val c = Vertex.of("C");
+        val d = Vertex.of("D");
+        val e = Vertex.of("E");
+        val f = Vertex.of("F");
+        val g = Vertex.of("G");
+        val h = Vertex.of("H");
+
+        val graph = new DirectGraphBuilder()
+                .addEdge(b, a)
+                .addEdge(b, d)
+                .addEdge(a, c)
+                .addEdge(d, c)
+                .addEdge(c, e)
+                .addEdge(c, f)
+                .build();
+
+        // when
+        val explored = dfs.explore(graph);
+
+        // then
+        val vertices = new ArrayList<>(explored.getVisited());
+        assertEquals(6, vertices.size());
+        assertEquals(b, vertices.get(0));
+        assertEquals(a, vertices.get(1));
+        assertEquals(c, vertices.get(2));
+        assertEquals(e, vertices.get(3));
+        assertEquals(f, vertices.get(4));
+        assertEquals(d, vertices.get(5));
+    }
+
+    @Test
+    public void explore_유향그래프_두번째() throws Exception {
 
         // given
         val a = Vertex.of("A");
