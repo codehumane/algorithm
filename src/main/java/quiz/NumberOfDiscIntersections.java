@@ -1,39 +1,38 @@
 package quiz;
 
-/**
- * Given array A shown above, the function should return 11, as explained above.
- * <p>
- * Assume that:
- * <p>
- * N is an integer within the range [0..100,000];
- * each element of array A is an integer within the range [0..2,147,483,647]. 2,147,483,647 => 9,999,900,000
- */
-public class NumberOfDiscIntersections {
+class NumberOfDiscIntersections {
+
+    private static final int EXCEED_PAIRS_COUNT = 10000000;
 
     int solution(int[] A) {
 
         int count = 0;
-
         for (int J = 0; J < A.length - 1; J++) {
             for (int K = J + 1; K < A.length; K++) {
-                if (hasIntersect(A, J, K)) {
+                if (hasIntersect(A, J, K))
                     count++;
-                }
-                if (count == 10000000) {
+
+                if (count == EXCEED_PAIRS_COUNT)
                     return -1;
-                }
             }
         }
 
         return count;
     }
 
+    //     |----|       (비교 대상)
+    //  |---|           (O)
+    //         |----|   (O)
+    // |-------------|  (O)
+    //      |-|         (O)
+    // |-|              (X)
+    //            |-|   (X)
     private boolean hasIntersect(int[] A, int J, int K) {
 
-        int minJ = J - A[J];
-        int maxJ = J + A[J];
-        int minK = K - A[K];
-        int maxK = K + A[K];
+        long minJ = (long) J - A[J];
+        long maxJ = (long) J + A[J];
+        long minK = (long) K - A[K];
+        long maxK = (long) K + A[K];
 
         return minJ <= maxK && maxJ >= minK;
     }
