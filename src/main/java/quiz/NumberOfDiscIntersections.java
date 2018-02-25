@@ -1,39 +1,66 @@
 package quiz;
 
+import java.util.Arrays;
+
 class NumberOfDiscIntersections {
 
-    private static final int EXCEED_PAIRS_COUNT = 10000000;
-
+    /**
+     * O(N*log(N))은 아래 링크 참고.
+     * https://stackoverflow.com/a/4801275
+     */
     int solution(int[] A) {
+        Disc[] discs = toDiscs(A);
+        Arrays.sort(discs);
+        return intersect(discs);
+    }
+
+    private Disc[] toDiscs(int[] A) {
+        Disc[] discs = new Disc[A.length];
+        for (int i = 0; i < A.length; i++) {
+            discs[i] = new Disc((long) i - A[i], (long) i + A[i]);
+        }
+
+        return discs;
+    }
+
+    private int intersect(Disc[] discs) {
 
         int count = 0;
-        for (int J = 0; J < A.length - 1; J++) {
-            for (int K = J + 1; K < A.length; K++) {
-                if (hasIntersect(A, J, K))
-                    count++;
-
-                if (count == EXCEED_PAIRS_COUNT)
-                    return -1;
-            }
+        for (int i = 0; i < discs.length - 1; i++) {
+            count += intersect(discs, i, i + 1, discs.length - 1);
+            if (count > 10000000)
+                return -1;
         }
 
         return count;
     }
 
-    //     |----|       (비교 대상)
-    //  |---|           (O)
-    //         |----|   (O)
-    // |-------------|  (O)
-    //      |-|         (O)
-    // |-|              (X)
-    //            |-|   (X)
-    private boolean hasIntersect(int[] A, int J, int K) {
+    private int intersect(Disc[] discs, int compare, int from, int to) {
 
-        long minJ = (long) J - A[J];
-        long maxJ = (long) J + A[J];
-        long minK = (long) K - A[K];
-        long maxK = (long) K + A[K];
+        if (to - from == 0)
+            return discs[from].left <= discs[compare].right ? 1 : 0;
 
-        return minJ <= maxK && maxJ >= minK;
+        int mid = (from + to) / 2;
+        if (discs[mid].left <= discs[compare].right) {
+            return intersect(discs, compare, mid + 1, to) + (mid - from + 1);
+        } else {
+            return intersect(discs, compare, from, mid);
+        }
+    }
+
+    private class Disc implements Comparable<Disc> {
+
+        private final long left;
+        private final long right;
+
+        Disc(long left, long right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public int compareTo(Disc o) {
+            return Long.compare(this.left, o.left);
+        }
     }
 }
