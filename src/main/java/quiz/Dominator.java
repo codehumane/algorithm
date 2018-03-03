@@ -1,26 +1,39 @@
 package quiz;
 
-import java.util.Arrays;
-
 class Dominator {
 
     int solution(int[] A) {
+        final int candidateIndex = findCandidateIndex(A);
+        return isDominant(A, candidateIndex) ? candidateIndex : -1;
+    }
 
-        if (A.length == 0) return -1;
+    private int findCandidateIndex(int[] A) {
 
-        int count = 0;
-        int index = -1;
-        final int mid = A.length / 2;
-        final int[] sorted = Arrays.copyOf(A, A.length);
-        Arrays.sort(sorted);
+        int candidateIndex = 0;
+        int counter = 0;
 
         for (int i = 0; i < A.length; i++) {
-            if (sorted[mid] == A[i]) {
-                count++;
-                index = i;
+            if (counter == 0) {
+                counter++;
+                candidateIndex = i;
+                continue;
             }
+
+            if (A[i] == A[candidateIndex]) counter++;
+            else counter--;
         }
 
-        return count > mid ? index : -1;
+        return candidateIndex;
+    }
+
+    private boolean isDominant(int[] A, int index) {
+        int occurrence = 0;
+        for (int a : A) {
+            if (a == A[index])
+                occurrence++;
+        }
+
+        return occurrence > A.length / 2;
     }
 }
+
