@@ -8,13 +8,10 @@ class MaxSliceSum {
         int maxSum = A[0];
 
         for (int P = 0; P < N; P++) {
-
             int sum = 0;
             for (int Q = P; Q < N; Q++) {
-
                 sum += A[Q];
-                if (sum > maxSum)
-                    maxSum = sum;
+                maxSum = Math.max(sum, maxSum);
             }
         }
 
