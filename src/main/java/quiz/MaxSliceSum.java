@@ -1,20 +1,25 @@
 package quiz;
 
+import static java.lang.Math.max;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * refer. https://en.wikipedia.org/wiki/Maximum_subarray_problem
+ */
+@Slf4j
 class MaxSliceSum {
 
     int solution(int[] A) {
 
-        final int N = A.length;
-        int maxSum = A[0];
+        int subSumHere = 0;
+        int maxSubSum = 0;
 
-        for (int P = 0; P < N; P++) {
-            int sum = 0;
-            for (int Q = P; Q < N; Q++) {
-                sum += A[Q];
-                maxSum = Math.max(sum, maxSum);
-            }
+        for (int a : A) {
+            subSumHere = max(subSumHere + a, a);
+            maxSubSum = max(maxSubSum, subSumHere);
         }
 
-        return maxSum;
+        return maxSubSum;
     }
 }
