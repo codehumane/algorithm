@@ -5,17 +5,22 @@ import static java.lang.Math.max;
 class MaxProfit {
 
     int solution(int[] A) {
+        if (A.length < 1) return 0;
 
-        final int N = A.length;
         int maxProfit = 0;
+        int bought = A[0];
+        int sold = A[0];
 
-        for (int P = 0; P < N; P++) {
-            int maxOfBoughtOnP = 0;
-            for (int Q = P; Q < N; Q++) {
-                maxOfBoughtOnP = max(maxOfBoughtOnP, A[Q] - A[P]);
+        for (int a : A) {
+            if (a > sold) {
+                sold = a;
+                maxProfit = max(maxProfit, sold - bought);
             }
 
-            maxProfit = max(maxProfit, maxOfBoughtOnP);
+            if (a < bought) {
+                bought = a;
+                sold = a;
+            }
         }
 
         return maxProfit;
