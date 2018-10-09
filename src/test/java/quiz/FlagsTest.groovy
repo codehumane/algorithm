@@ -80,4 +80,25 @@ class FlagsTest extends Specification {
         then:
         3 == result
     }
+
+    def "코드 최적화를 위한 일반해 찾기"(int[] A, int result) {
+
+        given:
+        def flags = new Flags()
+
+        expect:
+        flags.solution(A) == result
+
+        where:
+        A                                                                     | result
+        [0, 1, 0]                                                             | 1 // 예외
+        [0, 1, 0, 1, 0]                                                       | 2 // 2 * 1 + 3 = 5
+        [0, 1, 0, 0, 1, 0, 0, 1, 0]                                           | 3 // 3 * 2 + 3 = 9
+        [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0]                         | 4 // 4 * 3 + 3 = 15
+        [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0] | 5 // 5 * 4 + 3 = 23
+
+        // 따라서, distance를 d라고 할 때(2부터 시작함),
+        // d * (d - 1) + 3이 N(A의 길이)보다 작거나 같은 경우만 조사하면 된다.
+        // 시간 복잡도는 대략 O(N * log N)이 되는 것.
+    }
 }
