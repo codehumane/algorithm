@@ -2,3 +2,7 @@ target
 */.gitignore*
 .idea/
 *.iml
+.gradle/
+build/
+out/
+
