@@ -1,16 +1,17 @@
 package hackerrank
 
 fun minimumSwaps(arr: Array<Int>): Int {
-    return (1..arr.size)
-        .map { placeValueAt(arr, it, it - 1) }
-        .count { it }
-}
+    var count = 0
 
-fun placeValueAt(arr: Array<Int>, value: Int, at: Int): Boolean {
-    val valueIndex = arr.indexOf(value)
-    if (valueIndex == at) return false
-    swap(arr, valueIndex, at)
-    return true
+    (0 until arr.size - 1)
+        .forEach {
+            while (arr[it] != it + 1) {
+                swap(arr, it, arr[it] - 1)
+                count++
+            }
+        }
+
+    return count
 }
 
 fun swap(arr: Array<Int>, idx1: Int, idx2: Int) {
