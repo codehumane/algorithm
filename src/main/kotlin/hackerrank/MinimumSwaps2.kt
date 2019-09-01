@@ -14,7 +14,7 @@ fun minimumSwaps(arr: Array<Int>): Int {
     return count
 }
 
-fun swap(arr: Array<Int>, idx1: Int, idx2: Int) {
+private fun swap(arr: Array<Int>, idx1: Int, idx2: Int) {
     val temp = arr[idx1]
     arr[idx1] = arr[idx2]
     arr[idx2] = temp
