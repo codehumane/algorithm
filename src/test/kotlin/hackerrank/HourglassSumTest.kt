@@ -5,12 +5,11 @@ import org.junit.Test
 
 class HourglassSumTest {
 
-    @Test
-    fun hourglassSum() {
-        val sum = HourglassSum()
+    private val solution = HourglassSum()
 
-        // given
-        val input1 = arrayOf(
+    @Test
+    fun `hourglassSum case1`() {
+        val input = arrayOf(
             arrayOf(1, 1, 1, 0, 0, 0),
             arrayOf(0, 1, 0, 0, 0, 0),
             arrayOf(1, 1, 1, 0, 0, 0),
@@ -19,7 +18,13 @@ class HourglassSumTest {
             arrayOf(0, 0, 1, 2, 4, 0)
         )
 
-        val input2 = arrayOf(
+        val result = solution.hourglassSum(input)
+        assertEquals(19, result)
+    }
+
+    @Test
+    fun `hourglassSum case2`() {
+        val input = arrayOf(
             arrayOf(1, 1, 1, 0, 0, 0),
             arrayOf(0, 1, 0, 0, 0, 0),
             arrayOf(1, 1, 1, 0, 0, 0),
@@ -28,7 +33,13 @@ class HourglassSumTest {
             arrayOf(0, 0, -1, -2, -4, 0)
         )
 
-        val input3 = arrayOf(
+        val result = solution.hourglassSum(input)
+        assertEquals(13, result)
+    }
+
+    @Test
+    fun `hourglassSum case3`() {
+        val input = arrayOf(
             arrayOf(-9, -9, -9, 1, 1, 1),
             arrayOf(0, -9, 0, 4, 3, 2),
             arrayOf(-9, -9, -9, 1, 2, 3),
@@ -37,8 +48,7 @@ class HourglassSumTest {
             arrayOf(0, 0, 1, 2, 4, 0)
         )
 
-        assertEquals(19, sum.hourglassSum(input1))
-        assertEquals(13, sum.hourglassSum(input2))
-        assertEquals(28, sum.hourglassSum(input3))
+        val result = solution.hourglassSum(input)
+        assertEquals(28, result)
     }
 }
