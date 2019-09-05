@@ -30,7 +30,7 @@ class ArrayManipulationKtTest {
             arrayOf(2, 5, 100),
             arrayOf(3, 4, 100)
         )
-        
+
         val result = arrayManipulation(n, queries)
         assertEquals(expected, result)
     }
