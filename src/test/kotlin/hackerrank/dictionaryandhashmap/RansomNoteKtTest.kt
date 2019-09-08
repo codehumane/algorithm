@@ -70,13 +70,13 @@ class RansomNoteKtTest {
             "some",
             "coconuts"
         )
-        
+
         val result = checkMagazine(magazine, note)
         assertFalse(result)
     }
 
     @Test
-    fun `checkMagazine case4 ulocked`() {
+    fun `checkMagazine case4 unlocked`() {
         val magazine = arrayOf(
             "apgo",
             "clm",

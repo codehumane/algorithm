@@ -3,15 +3,14 @@ package hackerrank.dictionayandhashmap
 fun checkMagazine(magazine: Array<String>, note: Array<String>): Boolean {
 
     val magazineWordCounts = magazine
-        .groupBy { it }
-        .mapValues { it.value.size }
+        .groupingBy { it }
+        .eachCount()
 
     val noteWordCounts = note
-        .groupBy { it }
-        .mapValues { it.value.size }
+        .groupingBy { it }
+        .eachCount()
 
-    return noteWordCounts.all {
-        it.value <= magazineWordCounts[it.key] ?: 0
-    }
+    return noteWordCounts
+        .all { it.value <= magazineWordCounts[it.key] ?: 0 }
 
 }
