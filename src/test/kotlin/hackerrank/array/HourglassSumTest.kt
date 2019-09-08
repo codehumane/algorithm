@@ -1,5 +1,6 @@
-package hackerrank
+package hackerrank.array
 
+import hackerrank.array.HourglassSum
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

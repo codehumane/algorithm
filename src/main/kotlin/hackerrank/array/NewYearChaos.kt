@@ -1,4 +1,4 @@
-package hackerrank
+package hackerrank.array
 
 /**
  * 발견한 규칙은 2개.

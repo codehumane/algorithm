@@ -1,4 +1,4 @@
-package hackerrank
+package hackerrank.array
 
 fun minimumSwaps(arr: Array<Int>): Int {
     var count = 0

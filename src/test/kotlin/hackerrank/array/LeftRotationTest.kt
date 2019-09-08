@@ -1,5 +1,6 @@
-package hackerrank
+package hackerrank.array
 
+import hackerrank.array.LeftRotation
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 

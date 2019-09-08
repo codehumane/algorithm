@@ -1,5 +1,6 @@
-package hackerrank
+package hackerrank.array
 
+import hackerrank.array.countMinimumBribes
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
