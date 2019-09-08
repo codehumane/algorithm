@@ -1,17 +1,17 @@
 package hackerrank.dictionayandhashmap
 
 fun checkMagazine(magazine: Array<String>, note: Array<String>): Boolean {
-    return note.all { word ->
 
-        var matching = false
-        (0 until magazine.size).forEach { candidateIndex ->
-            if (magazine[candidateIndex] == word) {
-                magazine[candidateIndex] = ""
-                matching = true
-            }
-        }
+    val magazineWordCounts = magazine
+        .groupBy { it }
+        .mapValues { it.value.size }
 
-        matching
+    val noteWordCounts = note
+        .groupBy { it }
+        .mapValues { it.value.size }
 
+    return noteWordCounts.all {
+        it.value <= magazineWordCounts[it.key] ?: 0
     }
+
 }

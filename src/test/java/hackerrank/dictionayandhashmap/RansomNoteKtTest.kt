@@ -29,4 +29,37 @@ class RansomNoteKtTest {
         val result = checkMagazine(magazine, note)
         assertFalse(result)
     }
+
+    @Test
+    fun `checkMagazine case4 ulocked`() {
+        val magazine = arrayOf(
+            "apgo",
+            "clm",
+            "w",
+            "lxkvg",
+            "mwz",
+            "elo",
+            "bg",
+            "elo",
+            "lxkvg",
+            "elo",
+            "apgo",
+            "apgo",
+            "w",
+            "elo",
+            "bg"
+        )
+
+        val note = arrayOf(
+            "elo",
+            "lxkvg",
+            "bg",
+            "mwz",
+            "clm",
+            "w"
+        )
+
+        val result = checkMagazine(magazine, note)
+        assertTrue(result)
+    }
 }
