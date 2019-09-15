@@ -1,6 +1,6 @@
 package hackerrank.dictionaryandhashmap
 
-import hackerrank.dictionayandhashmap.twoStrings
+import hackerrank.dictionaryandhashmap.twoStrings
 import org.junit.Assert.*
 import org.junit.Test
 

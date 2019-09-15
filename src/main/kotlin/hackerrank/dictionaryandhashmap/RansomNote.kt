@@ -1,4 +1,4 @@
-package hackerrank.dictionayandhashmap
+package hackerrank.dictionaryandhashmap
 
 fun checkMagazine(magazine: Array<String>, note: Array<String>): Boolean {
 

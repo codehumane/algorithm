@@ -1,6 +1,6 @@
 package hackerrank.dictionaryandhashmap
 
-import hackerrank.dictionayandhashmap.checkMagazine
+import hackerrank.dictionaryandhashmap.checkMagazine
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test

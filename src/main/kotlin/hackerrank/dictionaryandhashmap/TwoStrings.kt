@@ -1,4 +1,4 @@
-package hackerrank.dictionayandhashmap
+package hackerrank.dictionaryandhashmap
 
 fun twoStrings(s1: String, s2: String): String {
     val counts = s1.groupingBy { it }.eachCount()
