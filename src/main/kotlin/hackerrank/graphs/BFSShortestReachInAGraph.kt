@@ -41,15 +41,15 @@ internal class Graph(private val start: Node, private val nodes: Array<Node>) {
     fun shortestReach(): IntArray {
 
         start.distance = 0
-        val queue = ArrayDeque<Node>()
-        queue.add(start)
+        val queue: Queue<Node> = ArrayDeque<Node>()
+        queue.offer(start)
 
         while (queue.isNotEmpty()) {
-            val from = queue.remove()
+            val from = queue.poll()
             from.neighbors.forEach { to ->
                 if (to.isNotVisited()) {
                     to.distance = from.distance + 1
-                    queue.add(to)
+                    queue.offer(to)
                 }
             }
         }
