@@ -2,6 +2,7 @@ package hackerrank.graphs
 
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test
+import java.util.*
 
 class BFSShortestReachInAGraphKtTest {
 
@@ -172,4 +173,14 @@ class BFSShortestReachInAGraphKtTest {
         assertArrayEquals(intArrayOf(6, 6, -1), distance)
     }
 
+    @Test
+    fun `arrayDeque double size`() {
+        val deque = ArrayDeque<Int>(4)
+
+        deque.addLast(1)
+        deque.addLast(2)
+        deque.addFirst(3)
+
+        println(deque.element())
+    }
 }
