@@ -1,6 +1,9 @@
 package hackerrank.graphs;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 
 public class FindTheNearestClone {
 
@@ -22,7 +25,7 @@ public class FindTheNearestClone {
 
         final CNode[] nodes = new CNode[ids.length];
         for (int i = 0; i < ids.length; i++) {
-            nodes[i] = new CNode(i + 1, ids[i]);
+            nodes[i] = new CNode(ids[i]);
         }
 
         for (int i = 0; i < graphFrom.length; i++) {
@@ -37,15 +40,15 @@ public class FindTheNearestClone {
     private static int findShortestColorMatchingDistance(CNode start) {
         final Queue<CNode> queue = new ArrayDeque<>();
         queue.offer(start);
-        start.setDistance(0);
+        start.distance = 0;
 
         while (!queue.isEmpty()) {
             final CNode polled = queue.poll();
 
-            for (CNode n : polled.getNeighbors()) {
+            for (CNode n : polled.neighbors) {
                 if (n.isNotVisited()) {
-                    n.setDistance(polled.getDistance() + 1);
-                    if (start.matchColor(n)) return n.getDistance();
+                    n.distance = polled.distance + 1;
+                    if (start.color.equals(n.color)) return n.distance;
                     queue.offer(n);
                 }
             }
@@ -56,54 +59,24 @@ public class FindTheNearestClone {
 
     static class CNode {
 
-        private static final Integer INITIAL_DISTANCE = -1;
-        private final Integer value;
         private final Long color;
-        private Integer distance = INITIAL_DISTANCE;
-        private final Set<CNode> neighbors = new HashSet<>();
+        Integer distance = -1;
+        private final List<CNode> neighbors = new ArrayList<>();
 
-        CNode(Integer value, Long color) {
-            this.value = value;
+        CNode(Long color) {
             this.color = color;
         }
 
         void addNeighbors(CNode neighbor) {
+            if (neighbors.contains(neighbor)) return;
             neighbors.add(neighbor);
             neighbor.neighbors.add(this);
         }
 
-        Set<CNode> getNeighbors() {
-            return neighbors;
-        }
-
-        void setDistance(Integer distance) {
-            this.distance = distance;
-        }
-
-        Integer getDistance() {
-            return distance;
-        }
-
         boolean isNotVisited() {
-            return distance.equals(INITIAL_DISTANCE);
+            return distance.equals(-1);
         }
 
-        boolean matchColor(CNode node) {
-            return color.equals(node.color);
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            CNode cNode = (CNode) o;
-            return Objects.equals(value, cNode.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return value != null ? value.hashCode() : 0;
-        }
     }
 
 }
