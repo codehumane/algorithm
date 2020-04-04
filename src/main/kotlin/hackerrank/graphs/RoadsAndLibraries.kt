@@ -20,11 +20,11 @@ fun roadsAndLibraries(
 ): Long {
 
     val nodes = buildCityNodes(n, cities)
-    val visited = Array(n) { false }
+    val visited = mutableSetOf<CityNode>()
     var totalCost = 0L
 
     nodes.forEach { node ->
-        if (!visited[node.value - 1]) {
+        if (!visited.contains(node)) {
             val distance = bfs(node, visited)
 
             totalCost += calculateMinCost(
@@ -53,7 +53,7 @@ private fun buildCityNodes(count: Int, cities: Array<Array<Int>>): List<CityNode
     return nodes
 }
 
-private fun bfs(root: CityNode, visited: Array<Boolean>): Int {
+private fun bfs(root: CityNode, visited: MutableSet<CityNode>): Int {
 
     var distance = 0
     val queue = ArrayDeque<CityNode>()
@@ -61,13 +61,13 @@ private fun bfs(root: CityNode, visited: Array<Boolean>): Int {
 
     while (queue.isNotEmpty()) {
         val node = queue.removeFirst()
-        visited[node.value - 1] = true
+        visited.add(node)
 
         node.neighbors.forEach { neighbor ->
-            if (!visited[neighbor.value - 1]) {
+            if (!visited.contains(neighbor)) {
 
                 distance++
-                visited[neighbor.value - 1] = true
+                visited.add(neighbor)
                 queue.addLast(neighbor)
 
             }
@@ -82,22 +82,28 @@ private fun calculateMinCost(
     c_lib: Int,
     distance: Int,
     c_road: Int
-): Int {
+): Long {
 
     val librariesCost = cityCount * c_lib
     val roadsCost = distance * c_road + c_lib
 
     return min(
-        librariesCost,
-        roadsCost
+        librariesCost.toLong(),
+        roadsCost.toLong()
     )
-
 }
 
 data class CityNode(val value: Int) {
 
     val neighbors: MutableSet<CityNode> = mutableSetOf()
 
-    fun addNeighbor(neighbor: CityNode) = neighbors.add(neighbor)
+    fun addNeighbor(neighbor: CityNode): Boolean {
+        return neighbors.add(neighbor)
+    }
+
+    override fun toString() = "CityNode(" +
+            "value=$value, " +
+            "neighbors=${neighbors.map { it.value }}" +
+            ")"
 
 }
