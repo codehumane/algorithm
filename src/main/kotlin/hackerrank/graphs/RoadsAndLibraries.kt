@@ -1,7 +1,6 @@
 package hackerrank.graphs
 
 import java.util.*
-import kotlin.math.min
 
 /**
  * isolated subgraphs가 아니라고 가정하고 간단하게 구현
@@ -20,27 +19,22 @@ fun roadsAndLibraries(
 ): Long {
 
     val nodes = buildCityNodes(n, cities)
-    val visited = mutableSetOf<CityNode>()
     var totalCost = 0L
 
-    nodes.forEach { node ->
-        if (!visited.contains(node)) {
-            val distance = bfs(node, visited)
+    0.until(n).forEach { i ->
+        if (!nodes[i].visited) {
+            val distance = bfs(nodes[i])
 
-            totalCost += calculateMinCost(
-                distance + 1,
-                c_lib,
-                distance,
-                c_road
-            )
+            totalCost += if (c_road < c_lib) distance * c_road + c_lib
+            else (distance + 1) * c_lib
         }
     }
 
     return totalCost
 }
 
-private fun buildCityNodes(count: Int, cities: Array<Array<Int>>): List<CityNode> {
-    val nodes = (1..count).map { CityNode(it) }
+private fun buildCityNodes(count: Int, cities: Array<Array<Int>>): Array<CityNode> {
+    val nodes = Array(count) { CityNode() }
 
     cities.forEach { link ->
         val from = nodes[link[0] - 1]
@@ -53,23 +47,22 @@ private fun buildCityNodes(count: Int, cities: Array<Array<Int>>): List<CityNode
     return nodes
 }
 
-private fun bfs(root: CityNode, visited: MutableSet<CityNode>): Int {
+private fun bfs(root: CityNode): Int {
 
     var distance = 0
     val queue = ArrayDeque<CityNode>()
     queue.addLast(root)
 
     while (queue.isNotEmpty()) {
+
         val node = queue.removeFirst()
-        visited.add(node)
+        node.visited = true
+        node.neighbors.forEach {
 
-        node.neighbors.forEach { neighbor ->
-            if (!visited.contains(neighbor)) {
-
+            if (!it.visited) {
                 distance++
-                visited.add(neighbor)
-                queue.addLast(neighbor)
-
+                it.visited = true
+                queue.addLast(it)
             }
         }
     }
@@ -77,33 +70,10 @@ private fun bfs(root: CityNode, visited: MutableSet<CityNode>): Int {
     return distance
 }
 
-private fun calculateMinCost(
-    cityCount: Int,
-    c_lib: Int,
-    distance: Int,
-    c_road: Int
-): Long {
+class CityNode {
 
-    val librariesCost = cityCount * c_lib
-    val roadsCost = distance * c_road + c_lib
-
-    return min(
-        librariesCost.toLong(),
-        roadsCost.toLong()
-    )
-}
-
-data class CityNode(val value: Int) {
-
+    var visited = false
     val neighbors: MutableSet<CityNode> = mutableSetOf()
-
-    fun addNeighbor(neighbor: CityNode): Boolean {
-        return neighbors.add(neighbor)
-    }
-
-    override fun toString() = "CityNode(" +
-            "value=$value, " +
-            "neighbors=${neighbors.map { it.value }}" +
-            ")"
+    fun addNeighbor(neighbor: CityNode) = neighbors.add(neighbor)
 
 }
