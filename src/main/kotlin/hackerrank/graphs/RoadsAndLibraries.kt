@@ -20,11 +20,11 @@ fun roadsAndLibraries(
 ): Long {
 
     val nodes = buildCityNodes(n, cities)
-    val visited = mutableSetOf<CityNode>()
+    val visited = Array(n) { false }
     var totalCost = 0L
 
     nodes.forEach { node ->
-        if (!visited.contains(node)) {
+        if (!visited[node.value - 1]) {
             val distance = bfs(node, visited)
 
             totalCost += calculateMinCost(
@@ -53,7 +53,7 @@ private fun buildCityNodes(count: Int, cities: Array<Array<Int>>): List<CityNode
     return nodes
 }
 
-private fun bfs(root: CityNode, visited: MutableSet<CityNode>): Int {
+private fun bfs(root: CityNode, visited: Array<Boolean>): Int {
 
     var distance = 0
     val queue = ArrayDeque<CityNode>()
@@ -61,13 +61,13 @@ private fun bfs(root: CityNode, visited: MutableSet<CityNode>): Int {
 
     while (queue.isNotEmpty()) {
         val node = queue.removeFirst()
-        visited.add(node)
+        visited[node.value - 1] = true
 
         node.neighbors.forEach { neighbor ->
-            if (!visited.contains(neighbor)) {
+            if (!visited[neighbor.value - 1]) {
 
                 distance++
-                visited.add(neighbor)
+                visited[neighbor.value - 1] = true
                 queue.addLast(neighbor)
 
             }
@@ -82,28 +82,22 @@ private fun calculateMinCost(
     c_lib: Int,
     distance: Int,
     c_road: Int
-): Long {
+): Int {
 
     val librariesCost = cityCount * c_lib
     val roadsCost = distance * c_road + c_lib
 
     return min(
-        librariesCost.toLong(),
-        roadsCost.toLong()
+        librariesCost,
+        roadsCost
     )
+
 }
 
 data class CityNode(val value: Int) {
 
     val neighbors: MutableSet<CityNode> = mutableSetOf()
 
-    fun addNeighbor(neighbor: CityNode): Boolean {
-        return neighbors.add(neighbor)
-    }
-
-    override fun toString() = "CityNode(" +
-            "value=$value, " +
-            "neighbors=${neighbors.map { it.value }}" +
-            ")"
+    fun addNeighbor(neighbor: CityNode) = neighbors.add(neighbor)
 
 }
