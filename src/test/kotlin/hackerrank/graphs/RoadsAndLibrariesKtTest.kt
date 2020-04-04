@@ -6,7 +6,7 @@ import org.junit.Test
 class RoadsAndLibrariesKtTest {
 
     @Test
-    fun `roadsAndLibraries hackerrank 첫 번째 문제`() {
+    fun `roadsAndLibraries hackerrank case 1`() {
         val cost = roadsAndLibraries(
             3,
             2,
@@ -21,8 +21,8 @@ class RoadsAndLibrariesKtTest {
         assertEquals(4, cost)
     }
 
-//    @Test
-    fun `roadsAndLibraries hackerrank 두 번째 문제`() {
+    @Test
+    fun `roadsAndLibraries hackerrank case 2`() {
         val cost = roadsAndLibraries(
             6,
             2,
@@ -38,5 +38,21 @@ class RoadsAndLibrariesKtTest {
         )
 
         assertEquals(12, cost)
+    }
+
+    @Test
+    fun `roadsAndLibraries hackerrank case 3`() {
+        val cost = roadsAndLibraries(
+            5,
+            3,
+            6,
+            arrayOf(
+                arrayOf(1, 2),
+                arrayOf(1, 3),
+                arrayOf(1, 4)
+            )
+        )
+
+        assertEquals(15, cost)
     }
 }
