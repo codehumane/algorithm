@@ -7,14 +7,14 @@ class RoadsAndLibrariesKtTest {
 
     @Test
     fun `roadsAndLibraries hackerrank case 1`() {
-        val cost = roadsAndLibraries(
+        val cost = RoadsAndLibraries.roadsAndLibraries(
             3,
             2,
             1,
             arrayOf(
-                arrayOf(1, 2),
-                arrayOf(3, 1),
-                arrayOf(2, 3)
+                arrayOf(1, 2).toIntArray(),
+                arrayOf(3, 1).toIntArray(),
+                arrayOf(2, 3).toIntArray()
             )
         )
 
@@ -23,17 +23,17 @@ class RoadsAndLibrariesKtTest {
 
     @Test
     fun `roadsAndLibraries hackerrank case 2`() {
-        val cost = roadsAndLibraries(
+        val cost = RoadsAndLibraries.roadsAndLibraries(
             6,
             2,
             5,
             arrayOf(
-                arrayOf(1, 3),
-                arrayOf(3, 4),
-                arrayOf(2, 4),
-                arrayOf(1, 2),
-                arrayOf(2, 3),
-                arrayOf(5, 6)
+                arrayOf(1, 3).toIntArray(),
+                arrayOf(3, 4).toIntArray(),
+                arrayOf(2, 4).toIntArray(),
+                arrayOf(1, 2).toIntArray(),
+                arrayOf(2, 3).toIntArray(),
+                arrayOf(5, 6).toIntArray()
             )
         )
 
@@ -42,14 +42,14 @@ class RoadsAndLibrariesKtTest {
 
     @Test
     fun `roadsAndLibraries hackerrank case 3`() {
-        val cost = roadsAndLibraries(
+        val cost = RoadsAndLibraries.roadsAndLibraries(
             5,
             3,
             6,
             arrayOf(
-                arrayOf(1, 2),
-                arrayOf(1, 3),
-                arrayOf(1, 4)
+                arrayOf(1, 2).toIntArray(),
+                arrayOf(1, 3).toIntArray(),
+                arrayOf(1, 4).toIntArray()
             )
         )
 
