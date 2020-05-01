@@ -5,46 +5,40 @@ import java.util.Arrays;
 public class TripleSum {
 
     static long triplets(int[] a, int[] b, int[] c) {
+        final int[] as = toSortedDistinctArray(a);
+        final int[] bs = toSortedDistinctArray(b);
+        final int[] cs = toSortedDistinctArray(c);
 
-        Arrays.sort(a);
-        Arrays.sort(b);
-        Arrays.sort(c);
+        long aCnt = 0;
+        long cCnt = 0;
+        int aIdx = 0;
+        int cIdx = 0;
 
-        long aCount = 0;
-        long cCount = 0;
-        int aIndex = 0;
-        int cIndex = 0;
-        long count = 0L;
-        int bCurrent = 0;
+        long triplets = 0L;
 
-        for (int n : b) {
-
-            // 같은 값이 존재할 수 있음.
-            if (n <= bCurrent) continue;
-            bCurrent = n;
-
-            while (aIndex < a.length && a[aIndex] <= n) {
-                // 같은 값이 존재할 수 있음.
-                if (aIndex == 0 || a[aIndex - 1] != a[aIndex]) {
-                    aCount++;
-                }
-
-                aIndex++;
+        for (int n : bs) {
+            while (aIdx < as.length && as[aIdx] <= n) {
+                aCnt++;
+                aIdx++;
             }
 
-            while (cIndex < c.length && c[cIndex] <= n) {
-                // 같은 값이 존재할 수 있음.
-                if (cIndex == 0 || c[cIndex - 1] != c[cIndex]) {
-                    cCount++;
-                }
-
-                cIndex++;
+            while (cIdx < cs.length && cs[cIdx] <= n) {
+                cCnt++;
+                cIdx++;
             }
 
-            count += aCount * cCount;
+            triplets += aCnt * cCnt;
         }
 
-        return count;
+        return triplets;
+    }
+
+    private static int[] toSortedDistinctArray(int[] a) {
+        return Arrays
+                .stream(a)
+                .distinct()
+                .sorted()
+                .toArray();
     }
 
 }
