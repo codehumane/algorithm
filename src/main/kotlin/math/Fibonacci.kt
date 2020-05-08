@@ -1,7 +1,22 @@
 package math
 
 fun fibonacci(n: Int): Int {
-    return fibonacciTopDown(n)
+    return fibonacciTopDownWithoutArray(n)
+}
+
+fun fibonacciTopDownWithoutArray(n: Int): Int {
+    if (n < 2) return n - 1
+
+    var cache1 = 0
+    var cache2 = 1
+
+    repeat(n - 2) {
+        val current = cache1 + cache2
+        cache1 = cache2
+        cache2 = current
+    }
+
+    return cache2
 }
 
 fun fibonacciTopDown(n: Int): Int {
@@ -19,7 +34,10 @@ fun fibonacciTopDown(n: Int): Int {
     return cache[n]
 }
 
-private fun fibonacciBottomUp(n: Int) = fibonacciBottomUp(n, IntArray(n + 1) { -1 })
+private fun fibonacciBottomUp(n: Int): Int {
+    val cache = IntArray(n + 1) { -1 }
+    return fibonacciBottomUp(n, cache)
+}
 
 fun fibonacciBottomUp(n: Int, cache: IntArray): Int {
     if (n == 1) return 0
