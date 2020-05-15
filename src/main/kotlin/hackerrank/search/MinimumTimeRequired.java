@@ -1,22 +1,41 @@
 package hackerrank.search;
 
+import java.util.Arrays;
+
 public class MinimumTimeRequired {
 
     static long minTime(long[] machines, long goal) {
-        long count = 0;
-        int days = 0;
+        Arrays.sort(machines);
 
-        while (count < goal) {
+        return findMinTime(
+                machines,
+                goal,
+                1,
+                machines[machines.length - 1] * goal
+        );
+    }
 
-            days++;
+    private static long findMinTime(long[] machines, long goal, long minDays, long maxDays) {
+        if (minDays == maxDays) return minDays;
 
-            for (long machine : machines)
-                if (days % machine == 0)
-                    count++;
+        final long halfDays = (minDays + maxDays) / 2;
+        final long count = Arrays
+                .stream(machines)
+                .map(m -> halfDays / m)
+                .sum();
 
-        }
-
-        return days;
+        if (count < goal) return findMinTime(
+                machines,
+                goal,
+                halfDays + 1,
+                maxDays
+        );
+        else return findMinTime(
+                machines,
+                goal,
+                minDays,
+                halfDays
+        );
     }
 
 }
