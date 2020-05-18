@@ -10,27 +10,31 @@ public class SwapNodesTest {
     public void swapNodesCase1() {
 
         // given
-        final int[] expected = {2, 1, 3};
-        final int[] queries = {1, 1};
+        final int[][] expected = {
+                new int[]{3, 1, 2},
+                new int[]{2, 1, 3}
+        };
         final int[][] indexes = {
                 new int[]{2, 3},
                 new int[]{-1, -1},
                 new int[]{-1, -1}
         };
+        final int[] queries = {1, 1};
 
         // when
         final int[][] actual = SwapNodes.swapNodes(indexes, queries);
 
         // then
-        assertArrayEquals(expected, actual[0]); // 임시 인덱스
+        assertArrayEquals(expected, actual);
     }
 
     @Test
     public void swapNodesCase2() {
 
         // given
-        final int[] expected = {2, 4, 1, 3, 5};
-        final int[] queries = {2};
+        final int[][] expected = {
+                new int[]{4, 2, 1, 5, 3}
+        };
         final int[][] indexes = {
                 new int[]{2, 3},
                 new int[]{-1, 4},
@@ -38,19 +42,23 @@ public class SwapNodesTest {
                 new int[]{-1, -1},
                 new int[]{-1, -1}
         };
+        final int[] queries = {2};
 
         // when
         final int[][] actual = SwapNodes.swapNodes(indexes, queries);
 
         // then
-        assertArrayEquals(expected, actual[0]); // 임시 인덱스
+        assertArrayEquals(expected, actual);
     }
 
     @Test
     public void swapNodesCase3() {
 
         // given
-        final int[] expected = {6, 9, 4, 2, 1, 7, 5, 10, 8, 11, 3};
+        final int[][] expected = {
+                new int[]{2, 9, 6, 4, 1, 3, 7, 5, 11, 8, 10},
+                new int[]{2, 6, 9, 4, 1, 3, 7, 5, 10, 8, 11}
+        };
         final int[] queries = {2, 4};
         final int[][] indexes = {
                 new int[]{2, 3},
@@ -70,7 +78,7 @@ public class SwapNodesTest {
         final int[][] actual = SwapNodes.swapNodes(indexes, queries);
 
         // then
-        assertArrayEquals(expected, actual[0]); // 임시 인덱스
+        assertArrayEquals(expected, actual);
     }
 
 }

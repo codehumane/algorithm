@@ -1,7 +1,5 @@
 package hackerrank.search;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,25 +13,28 @@ public class SwapNodes {
      * in-order traversal.
      */
     static int[][] swapNodes(int[][] indexes, int[] queries) {
+        final int[][] result = new int[queries.length][indexes.length];
         final Node root = buildTree(indexes);
 
-        // TODO swap
+        for (int i = 0; i < queries.length; i++) {
+            swapTree(root, queries[i]);
+            result[i] = traverseTree(root, indexes.length);
+        }
 
-        final int[][] result = new int[queries.length][indexes.length];
-        result[0] = traverseTree(root, indexes.length);
         return result;
     }
 
-    @NotNull
     private static Node buildTree(int[][] indexes) {
 
-        final Node root = new Node(1, null);
+        int depth = 1;
+        final Node root = new Node(1, depth, null);
         final Queue<Node> queue = new ArrayDeque<>();
         queue.offer(root);
         int index = 0;
 
         while (index < indexes.length) {
 
+            depth++;
             final List<Node> temp = new ArrayList<>();
             while (!queue.isEmpty()) {
 
@@ -41,12 +42,12 @@ public class SwapNodes {
                 final int[] pair = indexes[index++];
 
                 if (pair[0] != -1) {
-                    element.left = new Node(pair[0], element);
+                    element.left = new Node(pair[0], depth, element);
                     temp.add(element.left);
                 }
 
                 if (pair[1] != -1) {
-                    element.right = new Node(pair[1], element);
+                    element.right = new Node(pair[1], depth, element);
                     temp.add(element.right);
                 }
             }
@@ -54,26 +55,36 @@ public class SwapNodes {
             for (Node t : temp) {
                 queue.offer(t);
             }
-
         }
 
         return root;
     }
 
-    private static int[] traverseTree(Node root, int size) {
+    private static void swapTree(Node node, int query) {
+        if (node == null) return;
 
+        swapTree(node.left, query);
+        swapTree(node.right, query);
+
+        if (node.depth % query == 0) {
+            final Node temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+        }
+    }
+
+    private static int[] traverseTree(Node root, int size) {
+        final boolean[] visited = new boolean[size + 1];
         final int[] traversed = new int[size];
         int traverseIndex = 0;
         Node current = root;
 
         while (traverseIndex < size) {
-
-            if (current.visited) {
+            if (visited[current.value]) {
                 current = current.parent;
-            } else if (current.left == null || current.left.visited) {
+            } else if (current.left == null || visited[current.left.value]) {
+                visited[current.value] = true;
                 traversed[traverseIndex++] = current.value;
-                current.visited = true;
-
                 if (current.right == null) {
                     current = current.parent;
                 } else {
@@ -82,7 +93,6 @@ public class SwapNodes {
             } else {
                 current = current.left;
             }
-
         }
 
         return traversed;
@@ -91,13 +101,14 @@ public class SwapNodes {
     static class Node {
 
         final int value;
+        final int depth;
         Node parent;
         Node left;
         Node right;
-        boolean visited;
 
-        public Node(int value, Node parent) {
+        public Node(int value, int depth, Node parent) {
             this.parent = parent;
+            this.depth = depth;
             this.value = value;
         }
 
