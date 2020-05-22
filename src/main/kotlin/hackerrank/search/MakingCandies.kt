@@ -28,21 +28,37 @@ fun minimumPasses(m: Long, w: Long, p: Long, n: Long): Long {
 
     while (accumulation < n) {
 
+        val beforeProduction = try {
+            Math.multiplyExact(machines, workers)
+        } catch (e: ArithmeticException) {
+            pass++
+            break
+        }
+
+        if (accumulation < p) {
+            val count = ceilDiv(p - accumulation, beforeProduction)
+            accumulation += beforeProduction * count
+            pass += count
+        }
+
+        optimizedPass = min(
+            optimizedPass,
+            pass + ceilDiv(n - accumulation, beforeProduction)
+        )
+
         pass++
 
-        if (accumulation >= p) {
-            val purchase = accumulation.div(p)
-            accumulation = accumulation.rem(p)
+        val purchase = accumulation.div(p)
+        accumulation = accumulation.rem(p)
 
-            val total = purchase + machines + workers
-            val half = total.div(2)
-            if (machines > workers) {
-                machines = max(machines, half)
-                workers = total - machines
-            } else {
-                workers = max(workers, half)
-                machines = total - workers
-            }
+        val total = purchase + machines + workers
+        val half = total.div(2)
+        if (machines > workers) {
+            machines = max(machines, half)
+            workers = total - machines
+        } else {
+            workers = max(workers, half)
+            machines = total - workers
         }
 
         val production = try {
@@ -57,11 +73,10 @@ fun minimumPasses(m: Long, w: Long, p: Long, n: Long): Long {
             break
         }
 
-        optimizedPass = min(
-            optimizedPass,
-            pass + ceil((n - accumulation).div(production.toDouble())).toLong()
-        )
     }
 
     return min(pass, optimizedPass)
 }
+
+private fun ceilDiv(dividend: Long, divisor: Long) =
+    ceil(dividend.div(divisor.toDouble())).toLong()
