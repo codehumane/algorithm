@@ -1,6 +1,7 @@
 package hackerrank.search
 
 import kotlin.math.ceil
+import kotlin.math.max
 import kotlin.math.min
 
 /**
@@ -33,8 +34,14 @@ fun minimumPasses(m: Long, w: Long, p: Long, n: Long): Long {
             val purchase = accumulation.div(p)
             accumulation = accumulation.rem(p)
 
-            repeat(purchase.toInt()) {
-                if (machines > workers) workers++ else machines++
+            val total = purchase + machines + workers
+            val half = total.div(2)
+            if (machines > workers) {
+                machines = max(machines, half)
+                workers = total - machines
+            } else {
+                workers = max(workers, half)
+                machines = total - workers
             }
         }
 
