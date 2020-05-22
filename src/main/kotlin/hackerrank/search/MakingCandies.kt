@@ -1,5 +1,8 @@
 package hackerrank.search
 
+import kotlin.math.ceil
+import kotlin.math.min
+
 /**
  * 5,1 10 15
  *
@@ -15,19 +18,18 @@ package hackerrank.search
  * 4> 10 + 5x2 = 20
  */
 fun minimumPasses(m: Long, w: Long, p: Long, n: Long): Long {
+
     var accumulation = 0L
     var machines = m
     var workers = w
     var pass = 0L
+    var optimizedPass = Long.MAX_VALUE
 
-    while (accumulation in 0 until n) {
+    while (accumulation < n) {
 
         pass++
 
-        val production = machines * workers
-        accumulation += production
-
-        if (accumulation + production in 0 until n) {
+        if (accumulation >= p) {
             val purchase = accumulation.div(p)
             accumulation = accumulation.rem(p)
 
@@ -35,7 +37,18 @@ fun minimumPasses(m: Long, w: Long, p: Long, n: Long): Long {
                 if (machines > workers) workers++ else machines++
             }
         }
+
+        val production = machines * workers
+        if (production <= 0) break
+
+        accumulation += production
+        if (accumulation <= 0) break
+
+        optimizedPass = min(
+            optimizedPass,
+            pass + ceil((n - accumulation).div(production.toDouble())).toLong()
+        )
     }
 
-    return pass
+    return min(pass, optimizedPass)
 }
