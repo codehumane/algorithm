@@ -13,6 +13,7 @@ class MakingCandiesKtTest {
         assertEquals(3, minimumPasses(5, 1, 10, 15))
         assertEquals(1, minimumPasses(5184889632, 5184889632, 20, 10000))
         assertEquals(3577, minimumPasses(5361, 3918, 8447708, 989936375520))
+        assertEquals(1, minimumPasses(4294967297, 4294967297, 1000000000000, 1000000000000))
     }
 
 }

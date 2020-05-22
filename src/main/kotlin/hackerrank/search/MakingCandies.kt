@@ -38,11 +38,17 @@ fun minimumPasses(m: Long, w: Long, p: Long, n: Long): Long {
             }
         }
 
-        val production = machines * workers
-        if (production <= 0) break
+        val production = try {
+            Math.multiplyExact(machines, workers)
+        } catch (e: ArithmeticException) {
+            break
+        }
 
-        accumulation += production
-        if (accumulation <= 0) break
+        accumulation = try {
+            Math.addExact(accumulation, production)
+        } catch (e: ArithmeticException) {
+            break
+        }
 
         optimizedPass = min(
             optimizedPass,
