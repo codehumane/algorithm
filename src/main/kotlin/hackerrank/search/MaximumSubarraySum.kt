@@ -1,41 +1,34 @@
 package hackerrank.search
 
+import java.util.*
 import kotlin.math.max
 
 /**
  * 부분집합이 아닌, subarray 임에 유의.
- * 중복은 고려하나 안 하나 의미 없음. (나중에 성능 개선 포인트가 될 수도)
+ * 중복은 고려하나 안 하나 의미 없음.
  *
- * 만약, 결과를 캐싱한다면?
- *  - key에 필요한 공간: N + (N-1) + (N-2) + ... + 1 = (1 + N) * N / 2
- *  - 근데 이전 size에 대한 값만 유지하고 있으면 될 것으로 보임
- *  - 그리고 캐시할 때는 modulus만 기억하면 될 것
- *  - 하지만, 그럼에도 불구하고 가장 큰 소수를 생각하면, 10^18에 대한 처리는 필요 (일단 이거 고려 없이 구현 시작)
+ * 해법은 prefix array sum을 활용해야 한다는 것.
+ * 더불어 아래의 공식 활용. (어렵다)
+ *  - 매번 루프를 돌며 `max(i) = (prefix(i) - prefix(x) + m) % m`를 찾는다.
+ *  - 여기서 x는 최대값을 만들게 도와줄 i보다 작은 수이며,
+ *  - balanced binary search tree를 통해
+ *  - prefix(i)에 가장 가까우면서도 prefix(i)보다는 큰 수를 찾으면 됨.
  */
 fun maximumSum(a: Array<Long>, m: Long): Long {
-    var result = 0L
 
-    (1..a.size).forEach {
-        result = max(result, getMaxModulus(a, it, m))
+    val set = TreeSet<Long>()
+    var pre = a[0] % m
+    var res = pre
+    set.add(pre)
+
+    (1 until a.size).forEach {
+        pre = (pre + a[it]) % m
+
+        set.add(pre)
+        res = max(res, pre)
+        val high = set.higher(pre)
+        if (high != null) res = max(res, (pre - high + m) % m)
     }
 
-    return result
-}
-
-private fun getMaxModulus(a: Array<Long>, size: Int, m: Long): Long {
-    var maxModulus = 0L
-
-    (0..a.size - size).forEach {
-        var sum = 0L
-        var index = it
-
-        repeat(size) {
-            sum += a[index++]
-        }
-
-        maxModulus = max(maxModulus, sum.rem(m))
-    }
-
-    return maxModulus
-
+    return res
 }
