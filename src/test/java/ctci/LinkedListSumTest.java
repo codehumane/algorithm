@@ -49,4 +49,47 @@ public class LinkedListSumTest {
         assertEquals(3, result.next.next.value);
     }
 
+    @Test
+    public void sumReversely() {
+
+        // 문제 (617: 6->1->7)
+        final LinkedListNode l1 = new LinkedListNode(6);
+        l1.next = new LinkedListNode(1);
+        l1.next.next = new LinkedListNode(7);
+
+        // 문제 (295: 2->9->5)
+        final LinkedListNode l2 = new LinkedListNode(2);
+        l2.next = new LinkedListNode(9);
+        l2.next.next = new LinkedListNode(5);
+
+        // 풀이
+        final LinkedListNode result = LinkedListSum.sumReversely(l1, l2);
+
+        // 확인
+        assertEquals(9, result.value);
+        assertEquals(1, result.next.value);
+        assertEquals(2, result.next.next.value);
+    }
+
+    @Test
+    public void sumReversely_자릿수_다를_경우() {
+
+        // 문제 (17: 1->7)
+        final LinkedListNode l1 = new LinkedListNode(1);
+        l1.next = new LinkedListNode(7);
+
+        // 문제 (295: 2->9->5)
+        final LinkedListNode l2 = new LinkedListNode(2);
+        l2.next = new LinkedListNode(9);
+        l2.next.next = new LinkedListNode(5);
+
+        // 풀이
+        final LinkedListNode result = LinkedListSum.sumReversely(l1, l2);
+
+        // 확인
+        assertEquals(3, result.value);
+        assertEquals(1, result.next.value);
+        assertEquals(2, result.next.next.value);
+    }
+
 }
