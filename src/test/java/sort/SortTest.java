@@ -41,12 +41,14 @@ public class SortTest<T extends Sort> {
         classes.add(ParallelMergeSort.class);
         classes.add(MergeSort.class);
         classes.add(QuickSort.class);
+        classes.add(CountingSort.class);
         return classes;
     }
 
     @Before
     public void setup() throws IllegalAccessException, InstantiationException {
         this.sort = sortClass.newInstance();
+        log.info("sort test for " + sortClass.getSimpleName());
     }
 
     @Test

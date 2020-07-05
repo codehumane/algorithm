@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 public class MergeSort implements Sort {
 
     public void sort(int[] input) {
-        log.info("merge-sort");
         int[] result = new int[input.length];
         divideSort(input, 0, input.length - 1, result);
     }

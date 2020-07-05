@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 public class BubbleSort implements Sort {
 
     public void sort(int[] list) {
-        log.info("bubble-sort");
 //        byWhileStatement(list);
         effectively(list);
     }

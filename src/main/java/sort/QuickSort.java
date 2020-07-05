@@ -7,7 +7,6 @@ public class QuickSort implements Sort {
 
     @Override
     public void sort(int[] list) {
-        log.info("quick-sort");
         sort(list, 0, list.length - 1);
     }
 

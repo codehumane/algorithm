@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 public class InsertionSort implements Sort {
 
     public void sort(int[] list) {
-        log.info("insertion-sort");
 //        sortNormally(list);
         sortEffectively(list);
     }
