@@ -2,38 +2,38 @@ package sort;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
+
 @Slf4j
 public class MergeSort implements Sort {
 
     public void sort(int[] input) {
-        int[] result = new int[input.length];
-        divideSort(input, 0, input.length - 1, result);
+        divideSort(input, 0, input.length - 1);
     }
 
-    private void divideSort(int[] input, int idxFrom, int idxTo, int[] result) {
-        if (idxTo - idxFrom < 1) {
-            return;
-        }
+    private void divideSort(int[] input, int from, int to) {
+        if (to <= from) return;
 
-        int idxMid = (idxTo + idxFrom) / 2;
-        divideSort(input, idxFrom, idxMid, result);
-        divideSort(input, idxMid + 1, idxTo, result);
-        merge(input, idxFrom, idxMid, idxTo, result);
-        set(result, input, idxFrom, idxTo);
+        int mid = (to + from) / 2;
+        divideSort(input, from, mid);
+        divideSort(input, mid + 1, to);
+        merge(input, from, mid, to);
     }
 
-    private void merge(int[] input, int idxFrom, int idxMid, int idxTo, int[] result) {
-        int i = idxFrom, j = idxMid + 1;
-        for (int k = idxFrom; k <= idxTo; k++) {
-            if (i <= idxMid && (j > idxTo || input[i] < input[j])) {
-                result[k] = input[i++];
+    private void merge(int[] input, int from, int mid, int to) {
+        final int[] l = Arrays.copyOfRange(input, from, mid + 1);
+        final int[] r = Arrays.copyOfRange(input, mid + 1, to + 1);
+
+        int li = 0;
+        int ri = 0;
+
+        for (int i = from; i <= to; i++) {
+            if (li == l.length || (ri < r.length && r[ri] < l[li])) {
+                input[i] = r[ri++];
             } else {
-                result[k] = input[j++];
+                input[i] = l[li++];
             }
         }
     }
 
-    private void set(int[] source, int[] target, int idxFrom, int idxTo) {
-        System.arraycopy(source, idxFrom, target, idxFrom, idxTo + 1 - idxFrom);
-    }
 }

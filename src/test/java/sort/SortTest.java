@@ -1,7 +1,6 @@
 package sort;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +9,8 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static org.junit.Assert.assertArrayEquals;
 
 @Slf4j
 @RunWith(value = Parameterized.class)
@@ -61,7 +62,7 @@ public class SortTest<T extends Sort> {
 
         // Then
         int[] expected = {3};
-        Assert.assertArrayEquals(expected, list);
+        assertArrayEquals(expected, list);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class SortTest<T extends Sort> {
 
         // Then
         int[] expected = {1, 2, 3};
-        Assert.assertArrayEquals(expected, list);
+        assertArrayEquals(expected, list);
     }
 
     @Test
@@ -87,7 +88,7 @@ public class SortTest<T extends Sort> {
 
         // Then
         int[] expected = {1, 2, 3};
-        Assert.assertArrayEquals(expected, list);
+        assertArrayEquals(expected, list);
     }
 
     @Test
@@ -100,11 +101,24 @@ public class SortTest<T extends Sort> {
 
         // Then
         int[] expected = {1, 2, 3, 4, 5, 6, 7, 8};
-        Assert.assertArrayEquals(expected, list);
+        assertArrayEquals(expected, list);
     }
 
     @Test
     public void sort_큰_배열() throws Exception {
 //        sort.sort(bigList);
+    }
+
+    @Test
+    public void caseOfGeeksForGeeks() {
+        // Given
+        int[] list = {12, 11, 13, 5, 6, 7};
+
+        // When
+        sort.sort(list);
+
+        // Then
+        int[] expected = {5, 6, 7, 11, 12, 13};
+        assertArrayEquals(expected, list);
     }
 }
