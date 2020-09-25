@@ -109,6 +109,31 @@ public class LinkedListCycle {
         return head;
     }
 
+    public ListNode removeNthFromEndMoreEasily(ListNode head, int n) {
+
+        // dummy:
+        //  - head 포인터(캐시)임과 동시에,
+        //  - 노드가 한 개 뿐이 없는 경우에도 코드를 간결하게 유지해 준다.
+        final ListNode dummy = new ListNode(Integer.MIN_VALUE);
+        ListNode ahead = dummy;
+        ListNode behind = dummy;
+        dummy.next = head;
+
+        for (int i = 0; i < n; i++) {
+            // n이 valid(이는 거꾸로인 경우에도 마찬가지)하다고 전제하고 있으므로 null check 불필요
+            ahead = ahead.next;
+        }
+
+        while (ahead.next != null) {
+            ahead = ahead.next;
+            behind = behind.next;
+        }
+
+        behind.next = behind.next.next;
+        return dummy.next;
+    }
+
+
     public static class ListNode {
 
         public int val;
