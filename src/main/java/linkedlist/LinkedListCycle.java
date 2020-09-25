@@ -47,6 +47,47 @@ public class LinkedListCycle {
         return null;
     }
 
+    /**
+     * find the node
+     * at which the intersection of two singly linked lists begins.
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        final int sizeA = getSize(headA);
+        final int sizeB = getSize(headB);
+        final int diff = sizeA - sizeB;
+
+        ListNode cursorA = headA;
+        ListNode cursorB = headB;
+
+        if (diff > 0) cursorA = forward(cursorA, diff);
+        else cursorB = forward(cursorB, -diff);
+
+        while (true) {
+            if (cursorA == null) return null;
+            if (cursorB == null) return null;
+            if (cursorA == cursorB) return cursorA;
+            cursorA = cursorA.next;
+            cursorB = cursorB.next;
+        }
+    }
+
+    private int getSize(ListNode head) {
+        int size = 0;
+        while (true) {
+            if (head == null) return size;
+            head = head.next;
+            size++;
+        }
+    }
+
+    private ListNode forward(ListNode cursor, int diff) {
+        for (int i = 0; i < diff; i++) {
+            cursor = cursor.next;
+        }
+
+        return cursor;
+    }
+
     public static class ListNode {
 
         public int val;
