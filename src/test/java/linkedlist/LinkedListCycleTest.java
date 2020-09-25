@@ -362,4 +362,75 @@ public class LinkedListCycleTest {
         assertNull(intersection);
     }
 
+    @Test
+    public void removeNthFromEndExample1() {
+
+        // given 1 -> 2 -> 3 -> 4 -> 5
+        val node1 = new ListNode(1);
+        val node2 = new ListNode(2);
+        val node3 = new ListNode(3);
+        val node4 = new ListNode(4);
+        val node5 = new ListNode(5);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+
+        // when
+        val removed = new LinkedListCycle().removeNthFromEnd(node1, 2);
+
+        // then 1 -> 2 -> 3 -> 5
+        assertEquals(removed, node1);
+        assertEquals(node2, node1.next);
+        assertEquals(node3, node2.next);
+        assertEquals(node5, node3.next);
+        assertNull(node5.next);
+    }
+
+    @Test
+    public void removeNthFromEndWhenFirstToBeRemoved() {
+
+        // given
+        val node1 = new ListNode(1);
+        val node2 = new ListNode(2);
+        node1.next = node2;
+
+        // when
+        val removed = new LinkedListCycle().removeNthFromEnd(node1, 2);
+
+        assertEquals(node2, removed);
+        assertNull(removed.next);
+    }
+
+    @Test
+    public void removeNthFromEndWhenLastToBeRemoved() {
+
+        // given
+        val node1 = new ListNode(1);
+        val node2 = new ListNode(2);
+        node1.next = node2;
+
+        // when
+        val removed = new LinkedListCycle().removeNthFromEnd(node1, 1);
+
+        assertEquals(node1, removed);
+        assertNull(removed.next);
+    }
+
+    @Test
+    public void removeNthFromEndWhenLastZeroToBeRemoved() {
+
+        // given
+        val node1 = new ListNode(1);
+        val node2 = new ListNode(2);
+        node1.next = node2;
+
+        // when
+        val removed = new LinkedListCycle().removeNthFromEnd(node1, 0);
+
+        assertEquals(node1, removed);
+        assertEquals(node2, removed.next);
+    }
+
+
 }

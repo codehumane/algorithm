@@ -88,6 +88,27 @@ public class LinkedListCycle {
         return cursor;
     }
 
+    /**
+     * Given a linked list,
+     * remove the n-th node from the end of list
+     * and return its head.
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        final int size = getSize(head);
+
+        if (n == 0) return head;
+
+        if (n == size) {
+            final ListNode newHead = head.next;
+            head.next = null;
+            return newHead;
+        }
+
+        final ListNode remover = forward(head, size - n - 1);
+        remover.next = remover.next.next;
+        return head;
+    }
+
     public static class ListNode {
 
         public int val;
