@@ -1,12 +1,12 @@
 package linkedlist;
 
-import linkedlist.LinkedListCycle.ListNode;
+import linkedlist.LinkedListTwoPointer.ListNode;
 import lombok.val;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class LinkedListCycleTest {
+public class LinkedListTwoPointerTest {
 
     @Test
     public void hasCycleExample1() {
@@ -22,7 +22,7 @@ public class LinkedListCycleTest {
         node4.next = node2;
 
         // when
-        val hasCycle = new LinkedListCycle().hasCycle(node1);
+        val hasCycle = new LinkedListTwoPointer().hasCycle(node1);
 
         // then
         assertTrue(hasCycle);
@@ -38,7 +38,7 @@ public class LinkedListCycleTest {
         node2.next = node1;
 
         // when
-        val hasCycle = new LinkedListCycle().hasCycle(node1);
+        val hasCycle = new LinkedListTwoPointer().hasCycle(node1);
 
         // then
         assertTrue(hasCycle);
@@ -51,7 +51,7 @@ public class LinkedListCycleTest {
         val node1 = new ListNode(1);
 
         // when
-        val hasCycle = new LinkedListCycle().hasCycle(node1);
+        val hasCycle = new LinkedListTwoPointer().hasCycle(node1);
 
         // then
         assertFalse(hasCycle);
@@ -61,7 +61,7 @@ public class LinkedListCycleTest {
     public void hasCycleWhenHeadIsNull() {
 
         // when
-        val hasCycle = new LinkedListCycle().hasCycle(null);
+        val hasCycle = new LinkedListTwoPointer().hasCycle(null);
 
         // then
         assertFalse(hasCycle);
@@ -81,7 +81,7 @@ public class LinkedListCycleTest {
         node4.next = node2;
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNotNull(cycle);
@@ -98,7 +98,7 @@ public class LinkedListCycleTest {
         node2.next = node1;
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNotNull(cycle);
@@ -112,7 +112,7 @@ public class LinkedListCycleTest {
         val node1 = new ListNode(1);
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNull(cycle);
@@ -134,7 +134,7 @@ public class LinkedListCycleTest {
         node5.next = node3;
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNotNull(cycle);
@@ -159,7 +159,7 @@ public class LinkedListCycleTest {
         node6.next = node3;
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNotNull(cycle);
@@ -184,7 +184,7 @@ public class LinkedListCycleTest {
         node6.next = node4;
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNotNull(cycle);
@@ -211,7 +211,7 @@ public class LinkedListCycleTest {
         node7.next = node4;
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNotNull(cycle);
@@ -240,7 +240,7 @@ public class LinkedListCycleTest {
         node8.next = node4;
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNotNull(cycle);
@@ -273,7 +273,7 @@ public class LinkedListCycleTest {
         node10.next = node10;
 
         // when
-        val cycle = new LinkedListCycle().detectCycle(node1);
+        val cycle = new LinkedListTwoPointer().detectCycle(node1);
 
         // then
         assertNotNull(cycle);
@@ -306,7 +306,7 @@ public class LinkedListCycleTest {
         nodeI2.next = nodeI3;
 
         // when
-        val intersection = new LinkedListCycle().getIntersectionNode(nodeA1, nodeB1);
+        val intersection = new LinkedListTwoPointer().getIntersectionNode(nodeA1, nodeB1);
 
         // then
         assertEquals(nodeI1, intersection);
@@ -334,7 +334,7 @@ public class LinkedListCycleTest {
         nodeI1.next = nodeI2;
 
         // when
-        val intersection = new LinkedListCycle().getIntersectionNode(nodeA1, nodeB1);
+        val intersection = new LinkedListTwoPointer().getIntersectionNode(nodeA1, nodeB1);
 
         // then
         assertEquals(nodeI1, intersection);
@@ -356,7 +356,7 @@ public class LinkedListCycleTest {
         nodeB1.next = nodeB2;
 
         // when
-        val intersection = new LinkedListCycle().getIntersectionNode(nodeA1, nodeB1);
+        val intersection = new LinkedListTwoPointer().getIntersectionNode(nodeA1, nodeB1);
 
         // then
         assertNull(intersection);
@@ -377,7 +377,7 @@ public class LinkedListCycleTest {
         node4.next = node5;
 
         // when
-        val removed = new LinkedListCycle().removeNthFromEndMoreEasily(node1, 2);
+        val removed = new LinkedListTwoPointer().removeNthFromEndMoreEasily(node1, 2);
 
         // then 1 -> 2 -> 3 -> 5
         assertEquals(removed, node1);
@@ -396,7 +396,7 @@ public class LinkedListCycleTest {
         node1.next = node2;
 
         // when
-        val removed = new LinkedListCycle().removeNthFromEndMoreEasily(node1, 2);
+        val removed = new LinkedListTwoPointer().removeNthFromEndMoreEasily(node1, 2);
 
         assertEquals(node2, removed);
         assertNull(removed.next);
@@ -411,12 +411,12 @@ public class LinkedListCycleTest {
         node1.next = node2;
 
         // when
-        val removed = new LinkedListCycle().removeNthFromEndMoreEasily(node1, 1);
+        val removed = new LinkedListTwoPointer().removeNthFromEndMoreEasily(node1, 1);
 
         assertEquals(node1, removed);
         assertNull(removed.next);
     }
-    
+
     @Test
     public void removeNthFromEndWhenOfOnlyOne() {
 
@@ -424,7 +424,7 @@ public class LinkedListCycleTest {
         val node1 = new ListNode(1);
 
         // when
-        val removed = new LinkedListCycle().removeNthFromEndMoreEasily(node1, 1);
+        val removed = new LinkedListTwoPointer().removeNthFromEndMoreEasily(node1, 1);
 
         // then
         assertNull(removed);

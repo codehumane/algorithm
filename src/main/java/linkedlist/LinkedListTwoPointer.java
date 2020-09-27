@@ -1,6 +1,6 @@
 package linkedlist;
 
-public class LinkedListCycle {
+public class LinkedListTwoPointer {
 
     /**
      * Given head, the head of a linked list,
