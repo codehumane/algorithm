@@ -1,6 +1,5 @@
 package linkedlist;
 
-import linkedlist.LinkedListTwoPointer.ListNode;
 import lombok.val;
 import org.junit.Test;
 
