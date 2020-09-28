@@ -2,6 +2,8 @@ package linkedlist;
 
 public class LinkedListPalindrome {
 
+    private static final LinkedListReverse reverser = new LinkedListReverse();
+
     /**
      * Given a singly linked list, determine if it is a palindrome.
      * <p>
@@ -60,20 +62,7 @@ public class LinkedListPalindrome {
     }
 
     private ListNode reverse(ListNode head) {
-        ListNode reversed = null;
-        ListNode before = null;
-        ListNode cursor = head;
-        ListNode next;
-
-        while (cursor != null) {
-            next = cursor.next;
-            cursor.next = before;
-            reversed = cursor;
-            before = cursor;
-            cursor = next;
-        }
-
-        return reversed;
+        return reverser.reverseList(head);
     }
 
     private boolean equalsValues(ListNode left, ListNode right) {
