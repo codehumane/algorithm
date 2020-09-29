@@ -23,8 +23,8 @@ public class LinkedListPalindrome {
         if (head.next == null) return true;
 
         final int size = getSize(head);
-        ListNode half = forward(head, size / 2 - 1);
-        ListNode right = reverse(splitHalf(size, half));
+        final ListNode half = forward(head, size / 2 - 1);
+        final ListNode right = reverse(splitHalf(size, half));
         return equalsValues(head, right);
     }
 
