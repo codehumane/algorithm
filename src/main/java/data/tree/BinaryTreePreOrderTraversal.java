@@ -19,15 +19,16 @@ public class BinaryTreePreOrderTraversal {
     // 1 2 4 5 3
     public List<Integer> preOrderTraversal(TreeNode root) {
         final List<Integer> result = new ArrayList<>();
-        if (root == null) return result;
         traversal(root, result);
         return result;
     }
 
     private void traversal(TreeNode node, List<Integer> result) {
+        if (node == null) return;
+
         result.add(node.val);
-        if (node.left != null) traversal(node.left, result);
-        if (node.right != null) traversal(node.right, result);
+        traversal(node.left, result);
+        traversal(node.right, result);
     }
 
 }
