@@ -1,4 +1,4 @@
-package linkedlist;
+package data.linkedlist;
 
 public class LinkedListTwoPointer {
 

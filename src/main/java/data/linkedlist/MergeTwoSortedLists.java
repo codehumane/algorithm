@@ -1,4 +1,4 @@
-package linkedlist;
+package data.linkedlist;
 
 /**
  * Merge two sorted linked lists and return it as a new sorted list.

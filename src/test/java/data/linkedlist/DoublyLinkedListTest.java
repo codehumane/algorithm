@@ -1,4 +1,4 @@
-package linkedlist;
+package data.linkedlist;
 
 import lombok.val;
 import org.junit.Test;

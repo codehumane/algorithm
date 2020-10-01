@@ -1,4 +1,4 @@
-package linkedlist;
+package data.linkedlist;
 
 /**
  * Given a singly linked list,
