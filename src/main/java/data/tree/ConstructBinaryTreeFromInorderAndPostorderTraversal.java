@@ -1,5 +1,6 @@
 package data.tree;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
@@ -30,7 +31,7 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
                 postorder,
                 0,
                 inorder.length - 1,
-                new PostIndex(postorder.length - 1)
+                new AtomicInteger(postorder.length - 1)
         );
     }
 
@@ -38,12 +39,11 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
                            int[] postorder,
                            int inorderFrom,
                            int inorderTo,
-                           PostIndex postIndex) {
+                           AtomicInteger postIndex) {
 
         if (inorderFrom > inorderTo) return null;
-        final TreeNode parent = new TreeNode(postorder[postIndex.val]);
-        final int parentIndex = findIndex(parent.val, inorder);
-        postIndex.decrease();
+        final TreeNode parent = new TreeNode(postorder[postIndex.getAndDecrement()]);
+        final int parentIndex = findIndex(parent.val, inorder, inorderFrom, inorderTo);
 
         parent.right = build(
                 inorder,
@@ -64,24 +64,12 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
         return parent;
     }
 
-    private int findIndex(int value, int[] source) {
+    private int findIndex(int value, int[] source, int from, int to) {
         return IntStream
-                .range(0, source.length)
+                .range(from, to + 1)
                 .filter(i -> source[i] == value)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
-    }
-
-    static class PostIndex {
-        int val;
-
-        PostIndex(int val) {
-            this.val = val;
-        }
-
-        void decrease() {
-            val--;
-        }
     }
 
 }
