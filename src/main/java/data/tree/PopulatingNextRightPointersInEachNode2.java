@@ -3,13 +3,10 @@ package data.tree;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class PopulatingNextRightPointersInEachNode {
+public class PopulatingNextRightPointersInEachNode2 {
 
     /**
-     * You are given a perfect binary tree
-     * where all leaves are on the same level,
-     * and every parent has two children.
-     * The binary tree has the following definition:
+     * Given a binary tree (완전 이진 트리가 아님)
      * <p>
      * struct Node {
      * int val;
@@ -43,14 +40,12 @@ public class PopulatingNextRightPointersInEachNode {
             }
 
             while (first != null) {
-                if (first.left == null) break;
-                queue.add(first.left);
-                queue.add(first.right);
+                if (first.left != null) queue.add(first.left);
+                if (first.right != null) queue.add(first.right);
                 first = first.next;
             }
         }
 
         return root;
     }
-
 }
