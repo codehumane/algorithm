@@ -26,6 +26,7 @@ public class LowestCommonAncestorOfABinaryTreeTest<T extends LowestCommonAncesto
         List<Class> classes = new ArrayList<>();
         classes.add(SlowLowestCommonAncestorOfABinaryTree.class);
         classes.add(RecursiveLowestCommonAncestorOfABinaryTree.class);
+        classes.add(ParentPointersLowestCommonAncestorOfABinaryTree.class);
         return classes;
     }
 
