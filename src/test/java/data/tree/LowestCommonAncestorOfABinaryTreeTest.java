@@ -1,18 +1,43 @@
 package data.tree;
 
 import lombok.val;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class LowestCommonAncestorOfABinaryTreeTest {
+@RunWith(value = Parameterized.class)
+public class LowestCommonAncestorOfABinaryTreeTest<T extends LowestCommonAncestorOfABinaryTree> {
 
-    private final LowestCommonAncestorOfABinaryTree lca = new LowestCommonAncestorOfABinaryTree();
+    private T lca;
+    private Class<T> lcaClass;
+
+    public LowestCommonAncestorOfABinaryTreeTest(Class<T> lcaClass) {
+        this.lcaClass = lcaClass;
+    }
+
+    @Parameterized.Parameters
+    public static List<Class> fanMeetingClasses() {
+        List<Class> classes = new ArrayList<>();
+        classes.add(SlowLowestCommonAncestorOfABinaryTree.class);
+        classes.add(RecursiveLowestCommonAncestorOfABinaryTree.class);
+        return classes;
+    }
+
+    @Before
+    public void setup() throws IllegalAccessException, InstantiationException {
+        this.lca = lcaClass.newInstance();
+    }
 
     @Test
     public void lowestCommonAncestorExample1() {
 
-        // given:
+        // given: 5, 1
         //        3
         //      /    \
         //     5      1
@@ -80,6 +105,5 @@ public class LowestCommonAncestorOfABinaryTreeTest {
         // then
         assertEquals(node5, ancestor);
     }
-
 
 }
