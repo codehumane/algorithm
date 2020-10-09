@@ -1,10 +1,12 @@
 package data.tree;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+@Slf4j
 public class SerializeAndDeserializeBinaryTreeTest {
 
     private final SerializeAndDeserializeBinaryTree seder = new SerializeAndDeserializeBinaryTree();
@@ -168,5 +170,27 @@ public class SerializeAndDeserializeBinaryTreeTest {
         assertEquals(node5.val, deserialized.right.left.val);
         assertEquals(node6.val, deserialized.right.right.val);
         assertEquals(node7.val, deserialized.right.left.left.val);
+    }
+
+    @Test
+    public void findLeftChildIndex() {
+
+        // tree:
+        //      1
+        //    /   \
+        //   2     3
+        //    \   /  \
+        //     4 5    6
+        //      /
+        //     7
+        //
+        // values: [1,2,3,null,4,5,6,null,null,null,null,7,null,null,null]
+        assertEquals(1, seder.findLeftChildIndex(0));
+        assertEquals(3, seder.findLeftChildIndex(1));
+        assertEquals(5, seder.findLeftChildIndex(2));
+        assertEquals(7, seder.findLeftChildIndex(3));
+        assertEquals(9, seder.findLeftChildIndex(4));
+        assertEquals(11, seder.findLeftChildIndex(5));
+        assertEquals(13, seder.findLeftChildIndex(6));
     }
 }

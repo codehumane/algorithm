@@ -57,36 +57,32 @@ public class SerializeAndDeserializeBinaryTree {
     public TreeNode deserialize(String data) {
         if (data.length() < 3) return null;
 
-        final List<TreeNode> parents = new ArrayList<>();
         final String[] values = data.substring(1, data.length() - 1).split(",");
         final TreeNode root = new TreeNode(Integer.valueOf(values[0]));
-        parents.add(root);
-        int index = 1;
-
-        while (!parents.isEmpty() && index < values.length) {
-            final List<TreeNode> children = new ArrayList<>();
-
-            for (TreeNode parent : parents) {
-                final String lv = values[index++];
-                final String rv = values[index++];
-
-                final TreeNode left = lv.equals("null") ? null : new TreeNode(Integer.valueOf(lv));
-                final TreeNode right = rv.equals("null") ? null : new TreeNode(Integer.valueOf(rv));
-
-                if (parent != null) {
-                    parent.left = left;
-                    parent.right = right;
-                }
-
-                children.add(left);
-                children.add(right);
-            }
-
-            parents.clear();
-            parents.addAll(children);
-        }
+        appendChildren(root, values, 0);
 
         return root;
+    }
+
+    private void appendChildren(TreeNode node, String[] values, int valueIndex) {
+        final int leftIndex = findLeftChildIndex(valueIndex);
+        if (leftIndex < values.length && !"null".equals(values[leftIndex])) {
+            node.left = new TreeNode(Integer.valueOf(values[leftIndex]));
+            appendChildren(node.left, values, leftIndex);
+        }
+
+        final int rightIndex = leftIndex + 1;
+        if (rightIndex < values.length && !"null".equals(values[rightIndex])) {
+            node.right = new TreeNode(Integer.valueOf(values[rightIndex]));
+            appendChildren(node.right, values, rightIndex);
+        }
+    }
+
+    int findLeftChildIndex(int valueIndex) {
+        final double exponent = Math.floor(Math.log(valueIndex + 1) / Math.log(2));
+        final int leftMost = (int) Math.pow(2, exponent) * 2 - 1;
+        final int farFrom = 2 * (valueIndex + 1 - (int) Math.pow(2, exponent));
+        return leftMost + farFrom;
     }
 
 }
