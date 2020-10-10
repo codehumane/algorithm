@@ -3,7 +3,6 @@ package data.tree;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Serialization is the process of converting a data structure or object into a sequence of bits
@@ -27,30 +26,30 @@ public class SerializeAndDeserializeBinaryTree {
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        final List<TreeNode> visited = new ArrayList<>();
+        if (root == null) return "[]";
+
+        final StringBuilder sb = new StringBuilder();
         final Deque<List<TreeNode>> queue = new ArrayDeque<>();
-        queue.offer(Collections.singletonList(root));
+        queue.add(Collections.singletonList(root));
 
         while (!queue.isEmpty()) {
-            final List<TreeNode> parents = queue.poll();
-            if (parents.stream().allMatch(Objects::isNull)) break;
             final List<TreeNode> children = new ArrayList<>();
+            for (TreeNode node : queue.remove()) {
 
-            for (TreeNode node : parents) {
-                visited.add(node);
-                children.add(node == null ? null : node.left);
-                children.add(node == null ? null : node.right);
+                if (node == null) {
+                    sb.append("null,");
+                    continue;
+                }
+
+                sb.append(node.val).append(",");
+                children.add(node.left);
+                children.add(node.right);
             }
 
-            queue.offer(children);
+            if (!children.isEmpty()) queue.add(children);
         }
 
-        final String serialized = visited
-                .stream()
-                .map(n -> n == null ? "null" : String.valueOf(n.val))
-                .collect(Collectors.joining(","));
-
-        return "[" + serialized + "]";
+        return "[" + sb.substring(0, sb.length() - 1) + "]";
     }
 
     // Decodes your encoded data to tree.
@@ -59,24 +58,59 @@ public class SerializeAndDeserializeBinaryTree {
 
         final String[] values = data.substring(1, data.length() - 1).split(",");
         final TreeNode root = new TreeNode(Integer.valueOf(values[0]));
-        appendChildren(root, values, 0);
+        final List<TreeNode> parents = new ArrayList<>();
+        parents.add(root);
+        int index = 1;
+
+        while (!parents.isEmpty()) {
+            final List<TreeNode> children = new ArrayList<>();
+            for (TreeNode parent : parents) {
+
+                final String lv = values[index++];
+                final String rv = values[index++];
+
+                if (!lv.equals("null")) {
+                    parent.left = new TreeNode(Integer.valueOf(lv));
+                    children.add(parent.left);
+                }
+
+                if (!rv.equals("null")) {
+                    parent.right = new TreeNode(Integer.valueOf(rv));
+                    children.add(parent.right);
+                }
+            }
+
+            parents.clear();
+            if (!children.isEmpty()) parents.addAll(children);
+        }
 
         return root;
     }
 
-    private void appendChildren(TreeNode node, String[] values, int valueIndex) {
-        final int leftIndex = findLeftChildIndex(valueIndex);
-        if (leftIndex < values.length && !"null".equals(values[leftIndex])) {
-            node.left = new TreeNode(Integer.valueOf(values[leftIndex]));
-            appendChildren(node.left, values, leftIndex);
-        }
-
-        final int rightIndex = leftIndex + 1;
-        if (rightIndex < values.length && !"null".equals(values[rightIndex])) {
-            node.right = new TreeNode(Integer.valueOf(values[rightIndex]));
-            appendChildren(node.right, values, rightIndex);
-        }
-    }
+//    // Decodes your encoded data to tree.
+//    public TreeNode deserialize(String data) {
+//        if (data.length() < 3) return null;
+//
+//        final String[] values = data.substring(1, data.length() - 1).split(",");
+//        final TreeNode root = new TreeNode(Integer.valueOf(values[0]));
+//        appendChildren(root, values, 0);
+//
+//        return root;
+//    }
+//
+//    private void appendChildren(TreeNode node, String[] values, int valueIndex) {
+//        final int leftIndex = findLeftChildIndex(valueIndex);
+//        if (leftIndex < values.length && !"null".equals(values[leftIndex])) {
+//            node.left = new TreeNode(Integer.valueOf(values[leftIndex]));
+//            appendChildren(node.left, values, leftIndex);
+//        }
+//
+//        final int rightIndex = leftIndex + 1;
+//        if (rightIndex < values.length && !"null".equals(values[rightIndex])) {
+//            node.right = new TreeNode(Integer.valueOf(values[rightIndex]));
+//            appendChildren(node.right, values, rightIndex);
+//        }
+//    }
 
     int findLeftChildIndex(int valueIndex) {
         final double exponent = Math.floor(Math.log(valueIndex + 1) / Math.log(2));
