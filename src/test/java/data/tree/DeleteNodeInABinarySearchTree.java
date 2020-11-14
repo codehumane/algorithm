@@ -18,9 +18,7 @@ public class DeleteNodeInABinarySearchTree {
         final WithParent target = find(root, key);
         if (target == null) return root;
 
-        final WithParent left = new WithParent(target.node, target.node.left);
-        final TreeNode removed = removeBiggest(left);
-        return replace(target, removed, root);
+        return delete(root, target.parent, target.node);
     }
 
     private WithParent find(TreeNode root, int key) {
@@ -35,53 +33,40 @@ public class DeleteNodeInABinarySearchTree {
         return null;
     }
 
-    private TreeNode removeBiggest(WithParent from) {
-        if (from.node == null) return null;
+    private TreeNode delete(TreeNode root, TreeNode parent, TreeNode node) {
+        if (node.left == null && node.right == null) {
+            root = replace(root, parent, node, null);
 
-        TreeNode parent = from.parent;
-        TreeNode node = from.node;
+        } else if (node.left != null && node.right != null) {
+            final TreeNode predecessor = findInorderPredecessor(node);
+            deleteNode(root, predecessor.val);
+            root = replace(root, parent, node, predecessor);
+            predecessor.left = node.left;
+            predecessor.right = node.right;
 
-        while (node.right != null) {
-            parent = node;
-            node = node.right;
-        }
-
-        if (parent.left == node) parent.left = node.left;
-        else parent.right = null;
-
-        return node;
-    }
-
-    private TreeNode replace(WithParent from, TreeNode to, TreeNode root) {
-        if (to == null) {
-            //   3
-            //    \
-            //     4
-            //      \
-            //       6
-            //      / \
-            //     5   7
-            replaceChild(from, from.node.right);
-            return from.node == root ? from.node.right : root;
         } else {
-            //    2
-            //  /   \
-            // 1     5
-            //      / \
-            //     3   7
-            //        /
-            //       6
-            replaceChild(from, to);
-            to.right = from.node.right;
-            to.left = from.node.left;
-            return from.node == root ? to : root;
+            final TreeNode child = node.left != null ? node.left : node.right;
+            root = replace(root, parent, node, child);
         }
+
+        return root;
     }
 
-    private void replaceChild(WithParent from, TreeNode newChild) {
-        if (from.parent == null) return;
-        if (from.parent.right == from.node) from.parent.right = newChild;
-        else from.parent.left = newChild;
+    private TreeNode replace(TreeNode root, TreeNode parent, TreeNode from, TreeNode to) {
+        if (from == root) root = to;
+        else if (parent.left == from) parent.left = to;
+        else parent.right = to;
+
+        return root;
+    }
+
+    private TreeNode findInorderPredecessor(TreeNode node) {
+        TreeNode predecessor = node.left;
+        while (predecessor.right != null) {
+            predecessor = predecessor.right;
+        }
+
+        return predecessor;
     }
 
     static class WithParent {

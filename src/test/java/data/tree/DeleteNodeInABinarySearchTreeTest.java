@@ -172,14 +172,12 @@ public class DeleteNodeInABinarySearchTreeTest {
         val deleted = tree.deleteNode(n5, 5);
 
         // then
-        //     4
-        //    /
         //   3
-        //  /
-        // 2
-        assertEquals(n4, deleted);
-        assertEquals(n3, deleted.left);
-        assertEquals(n2, deleted.left.left);
+        //  / \
+        // 2   4
+        assertEquals(n3, deleted);
+        assertEquals(n2, deleted.left);
+        assertEquals(n4, deleted.right);
         assertTrue(validator.isValidBST(deleted));
     }
 
