@@ -24,9 +24,9 @@ public class BinaryTreeInOrderTraversalTest {
 
         // then
         assertEquals(3, traversed.size());
-        assertEquals(node1.val, traversed.get(0));
-        assertEquals(node3.val, traversed.get(1));
-        assertEquals(node2.val, traversed.get(2));
+        assertEquals(node1.val, traversed.get(0).intValue());
+        assertEquals(node3.val, traversed.get(1).intValue());
+        assertEquals(node2.val, traversed.get(2).intValue());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class BinaryTreeInOrderTraversalTest {
 
         // then
         assertEquals(1, traversed.size());
-        assertEquals(node1.val, traversed.get(0));
+        assertEquals(node1.val, traversed.get(0).intValue());
     }
 
     @Test
@@ -66,8 +66,8 @@ public class BinaryTreeInOrderTraversalTest {
 
         // then
         assertEquals(2, traversed.size());
-        assertEquals(node2.val, traversed.get(0));
-        assertEquals(node1.val, traversed.get(1));
+        assertEquals(node2.val, traversed.get(0).intValue());
+        assertEquals(node1.val, traversed.get(1).intValue());
     }
 
     @Test
@@ -83,8 +83,8 @@ public class BinaryTreeInOrderTraversalTest {
 
         // then
         assertEquals(2, traversed.size());
-        assertEquals(node1.val, traversed.get(0));
-        assertEquals(node2.val, traversed.get(1));
+        assertEquals(node1.val, traversed.get(0).intValue());
+        assertEquals(node2.val, traversed.get(1).intValue());
     }
 
 }

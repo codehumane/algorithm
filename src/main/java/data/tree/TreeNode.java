@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString(of = "val")
 class TreeNode {
 
-    final Integer val;
+    final int val;
     TreeNode left;
     TreeNode right;
 

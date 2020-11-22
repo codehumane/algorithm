@@ -72,7 +72,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, node7.right);
         assertEquals(node1, node7.left.left);
         assertEquals(node5, node7.left.right);
-        assertEquals(6, node7.left.right.right.val.intValue());
+        assertEquals(6, node7.left.right.right.val);
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -111,7 +111,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 2, inserted.left.left.right.val.intValue());
+        assertEquals("새로 추가된 노드", 2, inserted.left.left.right.val);
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -148,7 +148,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 8, inserted.right.left.val.intValue());
+        assertEquals("새로 추가된 노드", 8, inserted.right.left.val);
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -187,7 +187,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 0, inserted.left.left.left.val.intValue());
+        assertEquals("새로 추가된 노드", 0, inserted.left.left.left.val);
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -224,7 +224,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 10, inserted.right.right.val.intValue());
+        assertEquals("새로 추가된 노드", 10, inserted.right.right.val);
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -263,7 +263,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 4, inserted.left.right.left.val.intValue());
+        assertEquals("새로 추가된 노드", 4, inserted.left.right.left.val);
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -274,7 +274,7 @@ public class InsertIntoABinarySearchTreeTest {
         val inserted = tree.insertIntoBST(null, 4);
 
         // then
-        assertEquals(4, inserted.val.intValue());
+        assertEquals(4, inserted.val);
         assertNull(inserted.left);
         assertNull(inserted.right);
     }

@@ -26,11 +26,11 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //  9  20
         //    /  \
         //   15   7
-        assertEquals(3, tree.val.intValue());
-        assertEquals(9, tree.left.val.intValue());
-        assertEquals(20, tree.right.val.intValue());
-        assertEquals(15, tree.right.left.val.intValue());
-        assertEquals(7, tree.right.right.val.intValue());
+        assertEquals(3, tree.val);
+        assertEquals(9, tree.left.val);
+        assertEquals(20, tree.right.val);
+        assertEquals(15, tree.right.left.val);
+        assertEquals(7, tree.right.right.val);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
 
         // then:
         //   1
-        assertEquals(1, tree.val.intValue());
+        assertEquals(1, tree.val);
     }
 
     @Test
@@ -62,8 +62,8 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1
         //  /
         // 2
-        assertEquals(1, tree.val.intValue());
-        assertEquals(2, tree.left.val.intValue());
+        assertEquals(1, tree.val);
+        assertEquals(2, tree.left.val);
     }
 
     @Test
@@ -80,9 +80,9 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1
         //  / \
         // 2   4
-        assertEquals(1, tree.val.intValue());
-        assertEquals(2, tree.left.val.intValue());
-        assertEquals(4, tree.right.val.intValue());
+        assertEquals(1, tree.val);
+        assertEquals(2, tree.left.val);
+        assertEquals(4, tree.right.val);
     }
 
     @Test
@@ -99,8 +99,8 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1
         //    \
         //     4
-        assertEquals(1, tree.val.intValue());
-        assertEquals(4, tree.right.val.intValue());
+        assertEquals(1, tree.val);
+        assertEquals(4, tree.right.val);
     }
 
     @Test
@@ -119,9 +119,9 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1
         //  /
         // 2
-        assertEquals(4, tree.val.intValue());
-        assertEquals(1, tree.left.val.intValue());
-        assertEquals(2, tree.left.left.val.intValue());
+        assertEquals(4, tree.val);
+        assertEquals(1, tree.left.val);
+        assertEquals(2, tree.left.left.val);
     }
 
     @Test
@@ -140,10 +140,10 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1   3
         //  /
         // 2
-        assertEquals(4, tree.val.intValue());
-        assertEquals(1, tree.left.val.intValue());
-        assertEquals(2, tree.left.left.val.intValue());
-        assertEquals(3, tree.right.val.intValue());
+        assertEquals(4, tree.val);
+        assertEquals(1, tree.left.val);
+        assertEquals(2, tree.left.left.val);
+        assertEquals(3, tree.right.val);
     }
 
     @Test
@@ -162,10 +162,10 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1
         //  / \
         // 2   3
-        assertEquals(4, tree.val.intValue());
-        assertEquals(1, tree.left.val.intValue());
-        assertEquals(2, tree.left.left.val.intValue());
-        assertEquals(3, tree.left.right.val.intValue());
+        assertEquals(4, tree.val);
+        assertEquals(1, tree.left.val);
+        assertEquals(2, tree.left.left.val);
+        assertEquals(3, tree.left.right.val);
     }
 
     @Test
@@ -184,11 +184,11 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1   3
         //  / \
         // 2   5
-        assertEquals(4, tree.val.intValue());
-        assertEquals(1, tree.left.val.intValue());
-        assertEquals(2, tree.left.left.val.intValue());
-        assertEquals(5, tree.left.right.val.intValue());
-        assertEquals(3, tree.right.val.intValue());
+        assertEquals(4, tree.val);
+        assertEquals(1, tree.left.val);
+        assertEquals(2, tree.left.left.val);
+        assertEquals(5, tree.left.right.val);
+        assertEquals(3, tree.right.val);
     }
 
     @Test
@@ -209,12 +209,12 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1
         //  / \
         // 2   5
-        assertEquals(6, tree.val.intValue());
-        assertEquals(4, tree.left.val.intValue());
-        assertEquals(1, tree.left.left.val.intValue());
-        assertEquals(2, tree.left.left.left.val.intValue());
-        assertEquals(5, tree.left.left.right.val.intValue());
-        assertEquals(3, tree.right.val.intValue());
+        assertEquals(6, tree.val);
+        assertEquals(4, tree.left.val);
+        assertEquals(1, tree.left.left.val);
+        assertEquals(2, tree.left.left.left.val);
+        assertEquals(5, tree.left.left.right.val);
+        assertEquals(3, tree.right.val);
     }
 
     @Test
@@ -235,11 +235,11 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //   1
         //    \
         //     5
-        assertEquals(6, tree.val.intValue());
-        assertEquals(4, tree.left.val.intValue());
-        assertEquals(1, tree.left.left.val.intValue());
-        assertEquals(5, tree.left.left.right.val.intValue());
-        assertEquals(3, tree.right.val.intValue());
+        assertEquals(6, tree.val);
+        assertEquals(4, tree.left.val);
+        assertEquals(1, tree.left.left.val);
+        assertEquals(5, tree.left.left.right.val);
+        assertEquals(3, tree.right.val);
     }
 
     @Test
@@ -260,12 +260,12 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversalTest {
         //        1
         //       / \
         //      7    5
-        assertEquals(6, tree.val.intValue());
-        assertEquals(4, tree.left.val.intValue());
-        assertEquals(3, tree.right.val.intValue());
-        assertEquals(1, tree.right.right.val.intValue());
-        assertEquals(7, tree.right.right.left.val.intValue());
-        assertEquals(5, tree.right.right.right.val.intValue());
+        assertEquals(6, tree.val);
+        assertEquals(4, tree.left.val);
+        assertEquals(3, tree.right.val);
+        assertEquals(1, tree.right.right.val);
+        assertEquals(7, tree.right.right.left.val);
+        assertEquals(5, tree.right.right.right.val);
     }
 
 }
