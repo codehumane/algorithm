@@ -1,13 +1,38 @@
 package data.tree;
 
 import lombok.val;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class LCAofBSTTest {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-    private final LCAofBST lcaOfBST = new LCAofBST();
+@RunWith(value = Parameterized.class)
+public class LCAofBSTTest<T extends LCAofBST> {
+
+    private T lcaOfBST;
+    private Class<T> lcaOfBSTClass;
+
+    public LCAofBSTTest(Class<T> lcaOfBSTClass) {
+        this.lcaOfBSTClass = lcaOfBSTClass;
+    }
+
+    @Parameterized.Parameters
+    public static List<Class> classes() {
+        final List<Class> classes = new ArrayList<>();
+        classes.add(InefficientRecursiveLCAofBST.class);
+        return classes;
+    }
+
+    @Before
+    public void setup() throws IllegalAccessException, InstantiationException {
+        this.lcaOfBST = lcaOfBSTClass.newInstance();
+    }
 
     @Test
     public void example1() {
