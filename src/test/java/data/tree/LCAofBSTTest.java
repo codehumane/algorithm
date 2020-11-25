@@ -27,6 +27,7 @@ public class LCAofBSTTest<T extends LCAofBST> {
         final List<Class> classes = new ArrayList<>();
         classes.add(InefficientRecursiveLCAofBST.class);
         classes.add(EfficientRecursiveLCAofBST.class);
+        classes.add(IterativeLCAofBST.class);
         return classes;
     }
 
