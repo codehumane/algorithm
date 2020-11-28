@@ -46,7 +46,7 @@ public class ContainsDuplicate3Test {
     }
 
     @Test
-    public void failed1_몫을_활용한_구현이라면_t가_0인_경우도_고려해야_한다() {
+    public void failed2_몫을_활용한_구현이라면_t가_0인_경우도_고려해야_한다() {
         final int[] nums = {1, 2, 3, 1};
         final int k = 3;
         final int t = 0;
@@ -54,4 +54,12 @@ public class ContainsDuplicate3Test {
         assertTrue(duplicate.containsNearbyAlmostDuplicate(nums, k, t));
     }
 
+    @Test
+    public void failed3() {
+        final int[] nums = {2147483646, 2147483647};
+        final int k = 3;
+        final int t = 3;
+
+        assertTrue(duplicate.containsNearbyAlmostDuplicate(nums, k, t));
+    }
 }
