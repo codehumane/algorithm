@@ -7,15 +7,31 @@ package data.tree;
  */
 public class BinarySearch {
     public int search(int[] nums, int target) {
-        return search(nums, target, 0, nums.length - 1);
+        return searchIteratively(nums, target);
+//        return searchRecursive(nums, target, 0, nums.length - 1);
     }
 
-    private int search(int[] nums, int target, int left, int right) {
+    private int searchIteratively(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int index = -1;
+
+        while (left <= right) {
+            final int half = (left + right) / 2;
+            if (target < nums[half]) right = half - 1;
+            else if (nums[half] < target) left = half + 1;
+            else return half;
+        }
+
+        return index;
+    }
+
+    private int searchRecursively(int[] nums, int target, int left, int right) {
         if (right < left) return -1;
 
         final int half = (right + left) / 2;
-        if (nums[half] > target) return search(nums, target, left, half - 1);
-        if (nums[half] < target) return search(nums, target, half + 1, right);
+        if (nums[half] > target) return searchRecursively(nums, target, left, half - 1);
+        if (nums[half] < target) return searchRecursively(nums, target, half + 1, right);
         return half;
     }
 }
