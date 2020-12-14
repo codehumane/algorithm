@@ -12,7 +12,9 @@ public class SearchForARange {
 
     public int[] searchRange(int[] nums, int target) {
         final int start = searchEdge(nums, 0, nums.length - 1, target, true);
-        final int end = searchEdge(nums, 0, nums.length - 1, target, false);
+        if (start == -1) return new int[]{-1, -1};
+
+        final int end = searchEdge(nums, start, nums.length - 1, target, false);
         return new int[]{start, end};
     }
 
