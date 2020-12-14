@@ -72,21 +72,21 @@ public class SearchForARangeTest {
     @Test
     public void findStart() {
         final int[] nums = {5, 7, 7, 8, 8, 10};
-        assertEquals(0, range.findStart(nums, 0, nums.length - 1, 5));
-        assertEquals(1, range.findStart(nums, 0, nums.length - 1, 7));
-        assertEquals(3, range.findStart(nums, 0, nums.length - 1, 8));
-        assertEquals(5, range.findStart(nums, 0, nums.length - 1, 10));
-        assertEquals(-1, range.findStart(nums, 0, nums.length - 1, 9));
+        assertEquals(0, range.searchEdge(nums, 0, nums.length - 1, 5, true));
+        assertEquals(1, range.searchEdge(nums, 0, nums.length - 1, 7, true));
+        assertEquals(3, range.searchEdge(nums, 0, nums.length - 1, 8, true));
+        assertEquals(5, range.searchEdge(nums, 0, nums.length - 1, 10, true));
+        assertEquals(-1, range.searchEdge(nums, 0, nums.length - 1, 9, true));
     }
 
     @Test
     public void findEnd() {
         final int[] nums = {5, 7, 7, 8, 8, 10};
-        assertEquals(0, range.findEnd(nums, 0, nums.length - 1, 5));
-        assertEquals(2, range.findEnd(nums, 0, nums.length - 1, 7));
-        assertEquals(4, range.findEnd(nums, 0, nums.length - 1, 8));
-        assertEquals(5, range.findEnd(nums, 0, nums.length - 1, 10));
-        assertEquals(-1, range.findEnd(nums, 0, nums.length - 1, 9));
+        assertEquals(0, range.searchEdge(nums, 0, nums.length - 1, 5, false));
+        assertEquals(2, range.searchEdge(nums, 0, nums.length - 1, 7, false));
+        assertEquals(4, range.searchEdge(nums, 0, nums.length - 1, 8, false));
+        assertEquals(5, range.searchEdge(nums, 0, nums.length - 1, 10, false));
+        assertEquals(-1, range.searchEdge(nums, 0, nums.length - 1, 9, false));
     }
 
 }
