@@ -7,10 +7,10 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @ToString(of = "val")
-class TreeNode {
+public class TreeNode {
 
-    final int val;
-    TreeNode left;
-    TreeNode right;
+    public final int val;
+    public TreeNode left;
+    public TreeNode right;
 
 }
