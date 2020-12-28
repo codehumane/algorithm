@@ -1,8 +1,6 @@
 package quiz.tree;
 
 import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Given two arrays,
@@ -11,26 +9,30 @@ import java.util.stream.Collectors;
 public class IntersectionOfTwoArrays {
 
     public int[] intersection(int[] nums1, int[] nums2) {
+        final int[] intersection = new int[nums1.length];
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
 
-        final int[] result = new int[nums1.length];
-        int[] shorter = nums1.length > nums2.length ? nums2 : nums1;
-        int[] longer = nums1.length > nums2.length ? nums1 : nums2;
+        int idx = 0;
+        int idx1 = 0;
+        int idx2 = 0;
 
-        Arrays.sort(longer);
+        while (idx1 < nums1.length && idx2 < nums2.length) {
+            if (nums1[idx1] == nums2[idx2]) {
+                if (idx == 0 || intersection[idx - 1] != nums1[idx1]) {
+                    intersection[idx++] = nums1[idx1];
+                }
 
-        final Set<Integer> shorterNums = Arrays
-                .stream(shorter)
-                .boxed()
-                .collect(Collectors.toSet());
-
-        int index = 0;
-        for (Integer num : shorterNums) {
-            if (Arrays.binarySearch(longer, num) >= 0) {
-                result[index++] = num;
+                idx1++;
+                idx2++;
+            } else if (nums1[idx1] > nums2[idx2]) {
+                idx2++;
+            } else {
+                idx1++;
             }
         }
 
-        return Arrays.copyOf(result, index);
+        return Arrays.copyOf(intersection, idx);
     }
 
 }
