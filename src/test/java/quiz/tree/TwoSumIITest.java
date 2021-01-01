@@ -53,4 +53,34 @@ public class TwoSumIITest {
         assertArrayEquals(expected, result);
     }
 
+    @Test
+    public void custom1() {
+
+        // given
+        final int target = 9;
+        final int[] numbers = {2, 7, 8, 11, 15};
+        final int[] expected = {1, 2};
+
+        // when
+        final int[] result = sum.twoSum(numbers, target);
+
+        // then
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    public void custom2() {
+
+        // given
+        final int target = 9;
+        final int[] numbers = {2, 3, 6, 8, 11, 15};
+        final int[] expected = {2, 3};
+
+        // when
+        final int[] result = sum.twoSum(numbers, target);
+
+        // then
+        assertArrayEquals(expected, result);
+    }
+
 }

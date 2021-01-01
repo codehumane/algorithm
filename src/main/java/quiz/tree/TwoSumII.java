@@ -1,8 +1,5 @@
 package quiz.tree;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * https://leetcode.com/explore/learn/card/binary-search/144/more-practices/1035/
  * <p><br/>
@@ -20,19 +17,16 @@ import java.util.Map;
 public class TwoSumII {
 
     public int[] twoSum(int[] numbers, int target) {
-        final Map<Integer, Integer> indices = new HashMap<>();
+        int left = 0;
+        int right = numbers.length - 1;
 
-        for (int i = 0; i < numbers.length; i++) {
-            final int num = numbers[i];
+        while (true) {
+            final int sum = numbers[left] + numbers[right];
 
-            if (indices.containsKey(target - num)) {
-                return new int[]{indices.get(target - num), i + 1};
-            }
-
-            indices.put(num, i + 1);
+            if (sum > target) right--;
+            else if (sum < target) left++;
+            else return new int[]{left + 1, right + 1};
         }
-
-        throw new IllegalStateException();
     }
 
 }
