@@ -3,20 +3,18 @@ package data.tree;
 import lombok.val;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class NAryTreePreorderTraversalTest {
+public class NAryTreeTraversalTest {
 
-    private final NAryTreePreorderTraversal traversal = new NAryTreePreorderTraversal();
+    private static final NAryTreeTraversal traversal = new NAryTreeTraversal();
+    private static final NAryNode example1Root;
+    private static final NAryNode example2Root;
 
-    @Test
-    public void example1() {
-
-        // given
+    static {
         val n1 = new NAryNode(1);
         val n3 = new NAryNode(3);
         val n2 = new NAryNode(2);
@@ -25,19 +23,10 @@ public class NAryTreePreorderTraversalTest {
         val n6 = new NAryNode(6);
         n1.addChildren(n3, n2, n4);
         n3.addChildren(n5, n6);
-
-        // when
-        val traversed = traversal.preorder(n1);
-
-        // then
-        val expected = Arrays.asList(1, 3, 5, 6, 2, 4);
-        assertEquals(expected, traversed);
+        example1Root = n1;
     }
 
-    @Test
-    public void example2() {
-
-        // given
+    static {
         val n1 = new NAryNode(1);
         val n2 = new NAryNode(2);
         val n3 = new NAryNode(3);
@@ -60,17 +49,26 @@ public class NAryTreePreorderTraversalTest {
         n8.addChildren(n12);
         n5.addChildren(n9, n10);
         n9.addChildren(n13);
+        example2Root = n1;
+    }
 
-        // when
-        val traversed = traversal.preorder(n1);
-
-        // then
-        val expected = Arrays.asList(1, 2, 3, 6, 7, 11, 14, 4, 8, 12, 5, 9, 13, 10);
+    @Test
+    public void preorderExample1() {
+        val expected = Arrays.asList(1, 3, 5, 6, 2, 4);
+        val traversed = traversal.preorder(example1Root);
         assertEquals(expected, traversed);
     }
 
     @Test
-    public void failed1() {
+    public void preorderExample2() {
+        val expected = Arrays.asList(1, 2, 3, 6, 7, 11, 14, 4, 8, 12, 5, 9, 13, 10);
+        val traversed = traversal.preorder(example2Root);
+        assertEquals(expected, traversed);
+    }
+
+    @Test
+    public void preorderFailed1() {
         assertTrue(traversal.preorder(null).isEmpty());
     }
+
 }

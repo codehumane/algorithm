@@ -2,20 +2,17 @@ package data.tree;
 
 import java.util.*;
 
-/**
- * Given an n-ary tree, return the preorder traversal of its nodes' values.
- * <br/><br/>
- * Nary-Tree input serialization is represented in their level order traversal,
- * each group of children is separated by the null value (See examples).
- * <br/><br/>
- * Follow up:
- * <br/><br/>
- * Recursive solution is trivial, could you do it iteratively?
- */
-public class NAryTreePreorderTraversal {
+public class NAryTreeTraversal {
 
     /**
-     * recursive 대신 iterative 방식 사용
+     * Given an n-ary tree, return the preorder traversal of its nodes' values.
+     * <br/><br/>
+     * Nary-Tree input serialization is represented in their level order traversal,
+     * each group of children is separated by the null value (See examples).
+     * <br/><br/>
+     * Follow up:
+     * <br/><br/>
+     * Recursive solution is trivial, could you do it iteratively?
      */
     public List<Integer> preorder(NAryNode root) {
         if (root == null) return Collections.emptyList();
