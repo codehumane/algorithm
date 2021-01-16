@@ -55,20 +55,34 @@ public class NAryTreeTraversalTest {
     @Test
     public void preorderExample1() {
         val expected = Arrays.asList(1, 3, 5, 6, 2, 4);
-        val traversed = traversal.preorder(example1Root);
-        assertEquals(expected, traversed);
+        val result = traversal.preorder(example1Root);
+        assertEquals(expected, result);
     }
 
     @Test
     public void preorderExample2() {
         val expected = Arrays.asList(1, 2, 3, 6, 7, 11, 14, 4, 8, 12, 5, 9, 13, 10);
-        val traversed = traversal.preorder(example2Root);
-        assertEquals(expected, traversed);
+        val result = traversal.preorder(example2Root);
+        assertEquals(expected, result);
     }
 
     @Test
     public void preorderFailed1() {
         assertTrue(traversal.preorder(null).isEmpty());
+    }
+
+    @Test
+    public void postorderExample1() {
+        val expected = Arrays.asList(5, 6, 3, 2, 4, 1);
+        val result = traversal.postorder(example1Root);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void postorderExample2() {
+        val expected = Arrays.asList(2, 6, 14, 11, 7, 3, 12, 8, 4, 13, 9, 10, 5, 1);
+        val result = traversal.postorder(example2Root);
+        assertEquals(expected, result);
     }
 
 }

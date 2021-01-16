@@ -33,4 +33,33 @@ public class NAryTreeTraversal {
         return result;
     }
 
+    /**
+     * Given an n-ary tree, return the postorder traversal of its nodes' values.
+     * <br/><br/>
+     * Nary-Tree input serialization is represented in their level order traversal,
+     * each group of children is separated by the null value.
+     * <br/><br/>
+     * Follow up:
+     * <br/><br/>
+     * Recursive solution is trivial, could you do it iteratively?
+     */
+    public List<Integer> postorder(NAryNode root) {
+        if (root == null) return Collections.emptyList();
+
+        final List<Integer> result = new ArrayList<>();
+        final Deque<NAryNode> deque = new ArrayDeque<>();
+        deque.push(root);
+
+        while (!deque.isEmpty()) {
+            final NAryNode node = deque.pop();
+            result.add(0, node.val);
+
+            for (NAryNode child : node.children) {
+                deque.push(child);
+            }
+        }
+
+        return result;
+    }
+
 }
