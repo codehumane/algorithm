@@ -11,36 +11,36 @@ import static org.junit.Assert.assertTrue;
 public class NAryTreeTraversalTest {
 
     private static final NAryTreeTraversal traversal = new NAryTreeTraversal();
-    private static final NAryNode example1Root;
-    private static final NAryNode example2Root;
+    private static final NTNode example1Root;
+    private static final NTNode example2Root;
 
     static {
-        val n1 = new NAryNode(1);
-        val n3 = new NAryNode(3);
-        val n2 = new NAryNode(2);
-        val n4 = new NAryNode(4);
-        val n5 = new NAryNode(5);
-        val n6 = new NAryNode(6);
+        val n1 = new NTNode(1);
+        val n3 = new NTNode(3);
+        val n2 = new NTNode(2);
+        val n4 = new NTNode(4);
+        val n5 = new NTNode(5);
+        val n6 = new NTNode(6);
         n1.addChildren(n3, n2, n4);
         n3.addChildren(n5, n6);
         example1Root = n1;
     }
 
     static {
-        val n1 = new NAryNode(1);
-        val n2 = new NAryNode(2);
-        val n3 = new NAryNode(3);
-        val n4 = new NAryNode(4);
-        val n5 = new NAryNode(5);
-        val n6 = new NAryNode(6);
-        val n7 = new NAryNode(7);
-        val n8 = new NAryNode(8);
-        val n9 = new NAryNode(9);
-        val n10 = new NAryNode(10);
-        val n11 = new NAryNode(11);
-        val n12 = new NAryNode(12);
-        val n13 = new NAryNode(13);
-        val n14 = new NAryNode(14);
+        val n1 = new NTNode(1);
+        val n2 = new NTNode(2);
+        val n3 = new NTNode(3);
+        val n4 = new NTNode(4);
+        val n5 = new NTNode(5);
+        val n6 = new NTNode(6);
+        val n7 = new NTNode(7);
+        val n8 = new NTNode(8);
+        val n9 = new NTNode(9);
+        val n10 = new NTNode(10);
+        val n11 = new NTNode(11);
+        val n12 = new NTNode(12);
+        val n13 = new NTNode(13);
+        val n14 = new NTNode(14);
         n1.addChildren(n2, n3, n4, n5);
         n3.addChildren(n6, n7);
         n7.addChildren(n11);

@@ -14,15 +14,15 @@ public class NAryTreeTraversal {
      * <br/><br/>
      * Recursive solution is trivial, could you do it iteratively?
      */
-    public List<Integer> preorder(NAryNode root) {
+    public List<Integer> preorder(NTNode root) {
         if (root == null) return Collections.emptyList();
 
         final List<Integer> result = new ArrayList<>();
-        final Deque<NAryNode> deque = new ArrayDeque<>();
+        final Deque<NTNode> deque = new ArrayDeque<>();
         deque.push(root);
 
         while (!deque.isEmpty()) {
-            final NAryNode node = deque.pop();
+            final NTNode node = deque.pop();
             result.add(node.val);
 
             for (int i = node.children.size() - 1; i >= 0; i--) {
@@ -43,18 +43,18 @@ public class NAryTreeTraversal {
      * <br/><br/>
      * Recursive solution is trivial, could you do it iteratively?
      */
-    public List<Integer> postorder(NAryNode root) {
+    public List<Integer> postorder(NTNode root) {
         if (root == null) return Collections.emptyList();
 
         final List<Integer> result = new ArrayList<>();
-        final Deque<NAryNode> deque = new ArrayDeque<>();
+        final Deque<NTNode> deque = new ArrayDeque<>();
         deque.push(root);
 
         while (!deque.isEmpty()) {
-            final NAryNode node = deque.pop();
+            final NTNode node = deque.pop();
             result.add(0, node.val);
 
-            for (NAryNode child : node.children) {
+            for (NTNode child : node.children) {
                 deque.push(child);
             }
         }
