@@ -3,8 +3,8 @@ package data.tree;
 import lombok.val;
 import org.junit.Test;
 
-import java.util.Arrays;
-
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -54,14 +54,14 @@ public class NAryTreeTraversalTest {
 
     @Test
     public void preorderExample1() {
-        val expected = Arrays.asList(1, 3, 5, 6, 2, 4);
+        val expected = asList(1, 3, 5, 6, 2, 4);
         val result = traversal.preorder(example1Root);
         assertEquals(expected, result);
     }
 
     @Test
     public void preorderExample2() {
-        val expected = Arrays.asList(1, 2, 3, 6, 7, 11, 14, 4, 8, 12, 5, 9, 13, 10);
+        val expected = asList(1, 2, 3, 6, 7, 11, 14, 4, 8, 12, 5, 9, 13, 10);
         val result = traversal.preorder(example2Root);
         assertEquals(expected, result);
     }
@@ -73,15 +73,41 @@ public class NAryTreeTraversalTest {
 
     @Test
     public void postorderExample1() {
-        val expected = Arrays.asList(5, 6, 3, 2, 4, 1);
+        val expected = asList(5, 6, 3, 2, 4, 1);
         val result = traversal.postorder(example1Root);
         assertEquals(expected, result);
     }
 
     @Test
     public void postorderExample2() {
-        val expected = Arrays.asList(2, 6, 14, 11, 7, 3, 12, 8, 4, 13, 9, 10, 5, 1);
+        val expected = asList(2, 6, 14, 11, 7, 3, 12, 8, 4, 13, 9, 10, 5, 1);
         val result = traversal.postorder(example2Root);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void levelOrderExample1() {
+        val expected = asList(
+                singletonList(1),
+                asList(3, 2, 4),
+                asList(5, 6)
+        );
+
+        val result = traversal.levelOrder(example1Root);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void levelOrderExample2() {
+        val expected = asList(
+                singletonList(1),
+                asList(2, 3, 4, 5),
+                asList(6, 7, 8, 9, 10),
+                asList(11, 12, 13),
+                singletonList(14)
+        );
+
+        val result = traversal.levelOrder(example2Root);
         assertEquals(expected, result);
     }
 

@@ -62,4 +62,26 @@ public class NAryTreeTraversal {
         return result;
     }
 
+    public List<List<Integer>> levelOrder(NTNode root) {
+        if (root == null) return Collections.emptyList();
+
+        final List<List<Integer>> result = new ArrayList<>();
+        List<NTNode> level = new ArrayList<>();
+        level.add(root);
+
+        while (!level.isEmpty()) {
+            final List<Integer> values = new ArrayList<>();
+            List<NTNode> nextLevel = new ArrayList<>();
+
+            for (NTNode node : level) {
+                values.add(node.val);
+                nextLevel.addAll(node.children);
+            }
+
+            result.add(values);
+            level = nextLevel;
+        }
+
+        return result;
+    }
 }
