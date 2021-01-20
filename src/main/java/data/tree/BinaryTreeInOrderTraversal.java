@@ -22,12 +22,33 @@ public class BinaryTreeInOrderTraversal {
     public List<Integer> inOrderTraversal(TreeNode root) {
         final List<Integer> recursive = recursiveApproach(root);
         final List<Integer> iterative = iterativeApproach(root);
+        final List<Integer> iterative2 = iterative2Approach(root);
 
-        if (!recursive.equals(iterative)) {
+        if (!recursive.equals(iterative) || !recursive.equals(iterative2)) {
             throw new IllegalStateException();
         }
 
         return iterative;
+    }
+
+    private List<Integer> iterative2Approach(TreeNode root) {
+        final List<Integer> result = new ArrayList<>();
+        final Deque<TreeNode> deque = new ArrayDeque<>();
+
+        TreeNode cur = root;
+        while (cur != null || !deque.isEmpty()) {
+
+            while (cur != null) {
+                deque.push(cur);
+                cur = cur.left;
+            }
+
+            cur = deque.pop();
+            result.add(cur.val);
+            cur = cur.right;
+        }
+
+        return result;
     }
 
     private List<Integer> iterativeApproach(TreeNode root) {
