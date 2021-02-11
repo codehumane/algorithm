@@ -7,29 +7,42 @@ package quiz.array;
 public class DiagonalTraverse {
 
     public int[] findDiagonalOrder(int[][] matrix) {
-        if (matrix.length == 0) return new int[]{};
+        if (matrix.length == 0 || matrix[0].length == 0) return new int[]{};
 
-        final int xMax = matrix.length - 1;
-        final int yMax = matrix[0].length - 1;
+        int x = 0;
+        int y = 0;
+        boolean upRight = true;
+        final int xMax = matrix[0].length - 1;
+        final int yMax = matrix.length - 1;
         final int[] traverse = new int[(xMax + 1) * (yMax + 1)];
         int index = 0;
 
-        for (int i = 0; i <= xMax + yMax; i++) {
+        while (x + y <= xMax + yMax) {
+            traverse[index++] = matrix[y][x];
 
-            final boolean even = i % 2 == 0;
-            int x = even ? Math.max(0, i - yMax) : Math.min(i, xMax);
-            int y = even ? Math.min(i, yMax) : Math.max(0, i - xMax);
-
-            if (even) {
-                for (int j = y; j >= x; j--) {
-                    traverse[index++] = matrix[j][x + y - j];
+            if (upRight) {
+                if (x == xMax) {
+                    upRight = false;
+                    y++;
+                } else if (y == 0) {
+                    upRight = false;
+                    x++;
+                } else {
+                    x++;
+                    y--;
                 }
             } else {
-                for (int j = x; j >= y; j--) {
-                    traverse[index++] = matrix[x + y - j][j];
+                if (y == yMax) {
+                    upRight = true;
+                    x++;
+                } else if (x == 0) {
+                    upRight = true;
+                    y++;
+                } else {
+                    y++;
+                    x--;
                 }
             }
-
         }
 
         return traverse;

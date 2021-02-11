@@ -20,7 +20,7 @@ public class DiagonalTraverseTest {
     }
 
     @Test
-    public void custom1() {
+    public void bigger() {
         final int[][] input = {
                 new int[]{1, 2, 3, 4, 5},
                 new int[]{6, 7, 8, 9, 10},
@@ -29,6 +29,17 @@ public class DiagonalTraverseTest {
                 new int[]{21, 22, 23, 24, 25}
         };
         final int[] output = new int[]{1, 2, 6, 11, 7, 3, 4, 8, 12, 16, 21, 17, 13, 9, 5, 10, 14, 18, 22, 23, 19, 15, 20, 24, 25};
+        final int[] result = traverse.findDiagonalOrder(input);
+        Assert.assertArrayEquals(output, result);
+    }
+
+    @Test
+    public void notSquare() {
+        final int[][] input = {
+                new int[]{1, 2, 3, 4, 5},
+                new int[]{6, 7, 8, 9, 10}
+        };
+        final int[] output = new int[]{1, 2, 6, 7, 3, 4, 8, 9, 5, 10};
         final int[] result = traverse.findDiagonalOrder(input);
         Assert.assertArrayEquals(output, result);
     }
