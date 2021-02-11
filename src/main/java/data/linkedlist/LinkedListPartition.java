@@ -1,4 +1,4 @@
-package ctci;
+package data.linkedlist;
 
 /**
  * Write code to partition a linked list around a value x,

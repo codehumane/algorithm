@@ -1,4 +1,4 @@
-package ctci;
+package data.linkedlist;
 
 public class LinkedListSum {
 

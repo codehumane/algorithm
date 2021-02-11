@@ -1,4 +1,4 @@
-package ctci;
+package data.linkedlist;
 
 import lombok.ToString;
 

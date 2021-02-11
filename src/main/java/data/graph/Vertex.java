@@ -1,4 +1,4 @@
-package data;
+package data.graph;
 
 import lombok.ToString;
 import lombok.Value;

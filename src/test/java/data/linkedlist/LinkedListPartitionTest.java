@@ -1,5 +1,7 @@
-package ctci;
+package data.linkedlist;
 
+import data.linkedlist.LinkedListNode;
+import data.linkedlist.LinkedListPartition;
 import org.junit.Test;
 
 import java.util.Arrays;

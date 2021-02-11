@@ -1,5 +1,9 @@
-package data;
+package data.graph;
 
+import data.graph.DepthFirstSearch;
+import data.graph.DirectGraphBuilder;
+import data.graph.IndirectGraphBuilder;
+import data.graph.Vertex;
 import lombok.val;
 import org.junit.Before;
 import org.junit.Test;

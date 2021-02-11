@@ -1,5 +1,7 @@
-package ctci;
+package data.linkedlist;
 
+import data.linkedlist.LinkedListNode;
+import data.linkedlist.LinkedListSum;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
