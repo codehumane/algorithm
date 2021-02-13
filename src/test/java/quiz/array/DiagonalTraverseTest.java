@@ -1,8 +1,10 @@
 package quiz.array;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Slf4j
 public class DiagonalTraverseTest {
 
     private final DiagonalTraverse traverse = new DiagonalTraverse();
@@ -34,14 +36,29 @@ public class DiagonalTraverseTest {
     }
 
     @Test
-    public void notSquare() {
+    public void horizontal() {
         final int[][] input = {
                 new int[]{1, 2, 3, 4, 5},
                 new int[]{6, 7, 8, 9, 10}
         };
+
         final int[] output = new int[]{1, 2, 6, 7, 3, 4, 8, 9, 5, 10};
         final int[] result = traverse.findDiagonalOrder(input);
         Assert.assertArrayEquals(output, result);
     }
 
+    @Test
+    public void vertical() {
+        final int[][] input = {
+                new int[]{1, 2},
+                new int[]{3, 4},
+                new int[]{5, 6},
+                new int[]{7, 8},
+                new int[]{9, 10}
+        };
+
+        final int[] output = new int[]{1, 2, 3, 5, 4, 6, 7, 9, 8, 10};
+        final int[] result = traverse.findDiagonalOrder(input);
+        Assert.assertArrayEquals(output, result);
+    }
 }
