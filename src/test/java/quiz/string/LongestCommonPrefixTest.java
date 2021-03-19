@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class LongestCommonPrefixTest {
 
-    private final LongestCommonPrefix prefix = new LongestCommonPrefix();
+    private final LongestCommonPrefix prefix = new LongestCommonPrefix.CompositeLongestCommonPrefix();
 
     @Test
     public void example1() {
