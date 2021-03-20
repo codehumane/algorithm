@@ -12,13 +12,26 @@ public class ReverseString {
 
     public void reverseString(char[] s) {
         final char[] copy1 = Arrays.copyOf(s, s.length);
+        final char[] copy2 = Arrays.copyOf(s, s.length);
 
         byIterationWithTwoPointers(s);
         byIterationWithoutTwoPointers(copy1);
+        byRecursive(copy2);
 
-        if (!Arrays.equals(s, copy1)) {
+        if (!Arrays.equals(s, copy1) || !Arrays.equals(s, copy2)) {
             throw new IllegalStateException();
         }
+    }
+
+    private void byRecursive(char[] s) {
+        byRecursive(s, 0, s.length - 1);
+    }
+
+    private void byRecursive(char[] s, int left, int right) {
+        if (left >= right) return;
+
+        swap(s, left, right);
+        byRecursive(s, ++left, --right);
     }
 
     private void byIterationWithoutTwoPointers(char[] s) {
