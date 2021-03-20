@@ -1,5 +1,7 @@
 package quiz.string;
 
+import java.util.Arrays;
+
 /**
  * Write a function that reverses a string.
  * The input string is given as an array of characters s.<br/>
@@ -9,9 +11,28 @@ package quiz.string;
 public class ReverseString {
 
     public void reverseString(char[] s) {
-        final int mid = s.length / 2;
-        for (int i = 0; i < mid; i++) {
+        final char[] copy1 = Arrays.copyOf(s, s.length);
+
+        byIterationWithTwoPointers(s);
+        byIterationWithoutTwoPointers(copy1);
+
+        if (!Arrays.equals(s, copy1)) {
+            throw new IllegalStateException();
+        }
+    }
+
+    private void byIterationWithoutTwoPointers(char[] s) {
+        for (int i = 0; i < s.length / 2; i++) {
             swap(s, i, s.length - 1 - i);
+        }
+    }
+
+    private void byIterationWithTwoPointers(char[] s) {
+        int left = 0;
+        int right = s.length - 1;
+
+        while (left < right) {
+            swap(s, left++, right--);
         }
     }
 
