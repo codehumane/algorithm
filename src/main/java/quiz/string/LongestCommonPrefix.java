@@ -19,7 +19,8 @@ public interface LongestCommonPrefix {
     class CompositeLongestCommonPrefix implements LongestCommonPrefix {
 
         private final List<LongestCommonPrefix> solutions = Arrays.asList(
-                new VerticalScanningLongestCommonPrefix()
+                new VerticalScanningLongestCommonPrefix(),
+                new HorizontalScanningLongestCommonPrefix()
         );
 
         @Override
@@ -38,6 +39,35 @@ public interface LongestCommonPrefix {
                     .iterator()
                     .next();
         }
+    }
+
+    class HorizontalScanningLongestCommonPrefix implements LongestCommonPrefix {
+
+        @Override
+        public String longestCommonPrefix(String[] strs) {
+            if (strs.length == 0) return "";
+
+            String common = strs[0];
+            for (int i = 1; i < strs.length; i++) {
+                common = commonPrefix(strs[i], common);
+                if (common.equals("")) break;
+            }
+
+            return common;
+        }
+
+        private String commonPrefix(String str1, String str2) {
+            final StringBuilder builder = new StringBuilder();
+            final int minLength = Math.min(str1.length(), str2.length());
+
+            for (int i = 0; i < minLength; i++) {
+                if (str1.charAt(i) != str2.charAt(i)) break;
+                builder.append(str1.charAt(i));
+            }
+
+            return builder.toString();
+        }
+
     }
 
     class VerticalScanningLongestCommonPrefix implements LongestCommonPrefix {
