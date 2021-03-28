@@ -57,4 +57,11 @@ public class RotateArrayTest {
         assertArrayEquals(expected, nums);
     }
 
+    @Test
+    public void failed2() {
+        val nums = new int[]{1, 2, 3, 4, 5, 6};
+        val expected = new int[]{3, 4, 5, 6, 1, 2};
+        solution.rotate(nums, 4);
+        assertArrayEquals(expected, nums);
+    }
 }

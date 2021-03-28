@@ -1,5 +1,7 @@
 package quiz.array;
 
+import java.util.Arrays;
+
 /**
  * Given an array, rotate the array to the right by k steps, where k is non-negative.<br/>
  * <br/>
@@ -12,26 +14,76 @@ package quiz.array;
  */
 public class RotateArray {
 
+    private final ReverseRotateArray reverse = new ReverseRotateArray();
+    private final CyclicReplaceRotateArray cyclic = new CyclicReplaceRotateArray();
+
     public void rotate(int[] nums, int k) {
-        final int move = k % nums.length;
+        final int[] copy = Arrays.copyOf(nums, nums.length);
 
-        if (move == 0) return;
+        reverse.rotate(nums, k);
+        cyclic.rotate(copy, k);
 
-        reverse(nums, nums.length - move, nums.length - 1);
-        reverse(nums, 0, nums.length - move - 1);
-        reverse(nums, 0, nums.length - 1);
-    }
-
-    private void reverse(int[] nums, int from, int to) {
-        for (int i = 0; i <= (to - from) / 2; i++) {
-            swap(nums, from + i, to - i);
+        if (!Arrays.equals(nums, copy)) {
+            throw new IllegalStateException();
         }
     }
 
-    private void swap(int[] nums, int i1, int i2) {
-        final int temp = nums[i1];
-        nums[i1] = nums[i2];
-        nums[i2] = temp;
+    static class CyclicReplaceRotateArray {
+
+        void rotate(int[] nums, int k) {
+            final int N = nums.length;
+            k = k % N;
+
+            if (k == 0) return;
+
+            int count = 0;
+            int start = 0;
+
+            while (count < N) {
+
+                int current = start;
+                int temp = nums[start];
+
+                do {
+                    final int to = (current + k) % N;
+                    final int toValue = nums[to];
+                    nums[to] = temp;
+                    temp = toValue;
+
+                    current = (current + k) % N;
+                    count++;
+                } while (start != current);
+
+                start++;
+            }
+        }
+
+    }
+
+    static class ReverseRotateArray {
+
+        void rotate(int[] nums, int k) {
+            final int move = k % nums.length;
+
+            if (move == 0) return;
+
+            reverse(nums, nums.length - move, nums.length - 1);
+            reverse(nums, 0, nums.length - move - 1);
+            reverse(nums, 0, nums.length - 1);
+        }
+
+        private void reverse(int[] nums, int from, int to) {
+            for (int i = 0; i <= (to - from) / 2; i++) {
+                swap(nums, from + i, to - i);
+            }
+        }
+
+        private void swap(int[] nums, int i1, int i2) {
+            final int temp = nums[i1];
+            nums[i1] = nums[i2];
+            nums[i2] = temp;
+        }
+
     }
 
 }
