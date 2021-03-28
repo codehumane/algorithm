@@ -17,27 +17,16 @@ package quiz.array;
 public class RemoveDuplicatesFromSortedArray {
 
     public int removeDuplicates(int[] nums) {
-        if (nums.length < 2) return nums.length;
+        if (nums.length == 0) return 0;
 
-        int index = 1;
-        int current = nums[0];
-        int length = nums.length;
-
-        while (index < length) {
-            if (current == nums[index]) {
-                shift(nums, index, --length);
-            } else {
-                current = nums[index++];
+        int slow = 0;
+        for (int fast = 1; fast < nums.length; fast++) {
+            if (nums[slow] != nums[fast]) {
+                swap(nums, ++slow, fast);
             }
         }
 
-        return length;
-    }
-
-    private void shift(int[] nums, int from, int to) {
-        for (int i = from; i < to; i++) {
-            swap(nums, i, i + 1);
-        }
+        return slow + 1;
     }
 
     private void swap(int[] nums, int i1, int i2) {
