@@ -1,4 +1,4 @@
-package data;
+package data.list;
 
 import java.util.AbstractList;
 import java.util.List;

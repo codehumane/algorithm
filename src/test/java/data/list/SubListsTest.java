@@ -1,5 +1,6 @@
-package data;
+package data.list;
 
+import data.list.SubLists;
 import lombok.val;
 import org.junit.Test;
 

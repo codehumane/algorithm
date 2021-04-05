@@ -1,6 +1,7 @@
-package data;
+package data.set;
 
 import com.google.common.collect.Sets;
+import data.set.PowerSet;
 import org.junit.Test;
 
 import java.util.List;

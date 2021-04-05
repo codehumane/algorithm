@@ -1,5 +1,6 @@
-package data;
+package data.queue;
 
+import data.queue.ArrayPriorityQueue;
 import lombok.val;
 import org.junit.Test;
 

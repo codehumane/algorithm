@@ -1,4 +1,4 @@
-package data;
+package data.queue;
 
 import lombok.Value;
 
