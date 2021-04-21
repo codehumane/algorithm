@@ -2,6 +2,8 @@ package quiz.stack;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Given a string s containing just the characters '(', ')', '{', '}', '[' and ']',
@@ -19,25 +21,29 @@ import java.util.Deque;
  */
 public class ValidParentheses {
 
+    private static final Map<Character, Character> PAIRS;
+
+    static {
+        PAIRS = new HashMap<>();
+        PAIRS.put(')', '(');
+        PAIRS.put('}', '{');
+        PAIRS.put(']', '[');
+    }
+
     public boolean isValid(String s) {
         final Deque<Character> stack = new ArrayDeque<>();
 
         for (char c : s.toCharArray()) {
-            if (c == '(') {
-                stack.push('(');
-            } else if (c == '[') {
-                stack.push('[');
-            } else if (c == '{') {
-                stack.push('{');
-            } else if (c == ')') {
-                if (stack.isEmpty() || '(' != stack.pop()) return false;
-            } else if (c == ']') {
-                if (stack.isEmpty() || '[' != stack.pop()) return false;
-            } else if (c == '}') {
-                if (stack.isEmpty() || '{' != stack.pop()) return false;
-            } else {
-                throw new IllegalArgumentException();
+
+            // (, {, [
+            if (PAIRS.containsValue(c)) {
+                stack.push(c);
+                continue;
             }
+
+            // ), }, ]
+            if (stack.isEmpty()) return false;
+            if (PAIRS.get(c) != stack.pop()) return false;
         }
 
         return stack.isEmpty();
