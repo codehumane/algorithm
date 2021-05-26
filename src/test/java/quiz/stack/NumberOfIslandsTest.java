@@ -1,4 +1,4 @@
-package quiz.queue;
+package quiz.stack;
 
 import org.junit.Test;
 
