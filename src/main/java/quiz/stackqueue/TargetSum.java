@@ -1,4 +1,4 @@
-package quiz.stack;
+package quiz.stackqueue;
 
 /**
  * You are given an integer array nums and an integer target.<br/>

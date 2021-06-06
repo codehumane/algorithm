@@ -1,4 +1,4 @@
-package quiz.stack;
+package quiz.stackqueue;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
