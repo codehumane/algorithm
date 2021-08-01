@@ -1,5 +1,12 @@
 package dynamic;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Supplier;
+
+import java.util.function.BooleanSupplier;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+
 /**
  * You are given an array prices
  * where prices[i] is the price of a given stock on the ith day.<br/>
@@ -71,6 +78,18 @@ public class BestTimeToBuyAndSellStock2 {
             high = prices[i];
 
             profit += high - low;
+        }
+
+        return profit;
+    }
+
+    public int maxProfitV3(int[] prices) {
+        int profit = 0;
+
+        for (int i = 0; i < prices.length - 1; i++) {
+            if (prices[i] < prices[i + 1]) {
+                profit += prices[i + 1] - prices[i];
+            }
         }
 
         return profit;

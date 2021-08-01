@@ -19,10 +19,12 @@ public class BestTimeToBuyAndSellStock2Test {
         // when
         val result = solution.maxProfit(input);
         val result2 = solution.maxProfitV2(input);
+        val result3 = solution.maxProfitV3(input);
 
         // then
         assertEquals(expected, result);
         assertEquals(expected, result2);
+        assertEquals(expected, result3);
     }
 
     @Test
@@ -35,10 +37,12 @@ public class BestTimeToBuyAndSellStock2Test {
         // when
         val result = solution.maxProfit(input);
         val result2 = solution.maxProfitV2(input);
+        val result3 = solution.maxProfitV3(input);
 
         // then
         assertEquals(expected, result);
         assertEquals(expected, result2);
+        assertEquals(expected, result3);
     }
 
     @Test
@@ -51,10 +55,12 @@ public class BestTimeToBuyAndSellStock2Test {
         // when
         val result = solution.maxProfit(input);
         val result2 = solution.maxProfitV2(input);
+        val result3 = solution.maxProfitV3(input);
 
         // then
         assertEquals(expected, result);
         assertEquals(expected, result2);
+        assertEquals(expected, result3);
     }
 
 }
