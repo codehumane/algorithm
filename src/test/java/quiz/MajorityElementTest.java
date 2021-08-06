@@ -37,4 +37,18 @@ public class MajorityElementTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void custom1() {
+
+        // given
+        val input = new int[]{3, 7, 2, 2, 7, 7, 7};
+        val expected = 7;
+
+        // when
+        val result = solution.majorityElement(input);
+
+        // then
+        assertEquals(expected, result);
+    }
+
 }

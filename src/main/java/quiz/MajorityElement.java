@@ -25,16 +25,19 @@ public class MajorityElement {
     private final BruteForceMajorityElement bruteForce = new BruteForceMajorityElement();
     private final HashMapMajorityElement hashMap = new HashMapMajorityElement();
     private final SortMajorityElement sort = new SortMajorityElement();
+    private final BoyerMooreVotingMajorityElement voting = new BoyerMooreVotingMajorityElement();
 
     public int majorityElement(int[] nums) {
         final int result1 = hashMap.solve(nums);
         final int result2 = bruteForce.solve(nums);
         final int result3 = sort.solve(nums);
+        final int result4 = voting.solve(nums);
 
         assert result1 == result2;
         assert result1 == result3;
+        assert result1 == result4;
 
-        return result2;
+        return result1;
     }
 
     /**
@@ -100,6 +103,33 @@ public class MajorityElement {
             final int[] sorted = Arrays.copyOf(nums, nums.length);
             Arrays.sort(sorted);
             return sorted[nums.length / 2];
+        }
+
+    }
+
+    /**
+     * Boyer Moore의 투표 알고리즘이라고 함.
+     * <p>
+     * 시간 복잡도: O(n)
+     * 공간 복잡도: n
+     */
+    static class BoyerMooreVotingMajorityElement {
+
+        public int solve(int[] nums) {
+            if (nums.length == 0) {
+                throw new IllegalArgumentException();
+            }
+
+            int candidate = nums[0];
+            int count = 1;
+
+            for (int i = 1; i < nums.length; i++) {
+                if (count == 0) candidate = nums[i];
+                if (nums[i] == candidate) count++;
+                else count--;
+            }
+
+            return candidate;
         }
 
     }
