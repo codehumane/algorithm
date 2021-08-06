@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -196,7 +198,7 @@ public class TwoZeroFourEightTest {
         final int[][] down5 = TwoZeroFourEight.down(down4);
 
         // then
-        log.info("{}", down5);
+        log.info("{}", Arrays.deepToString(down5));
     }
 
 }
