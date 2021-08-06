@@ -46,7 +46,7 @@ public class MajorityElement {
     static class BruteForceMajorityElement {
 
         public int solve(int[] nums) {
-            final int majority = nums.length / 2;
+            final int majority = nums.length / 2 + 1;
 
             for (int candidate : nums) {
                 int appearance = 0;
