@@ -1,5 +1,6 @@
 package quiz;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,12 +24,17 @@ public class MajorityElement {
 
     private final BruteForceMajorityElement bruteForce = new BruteForceMajorityElement();
     private final HashMapMajorityElement hashMap = new HashMapMajorityElement();
+    private final SortMajorityElement sort = new SortMajorityElement();
 
     public int majorityElement(int[] nums) {
-        final int hashMap = this.hashMap.solve(nums);
-        final int bruteForce = this.bruteForce.solve(nums);
-        assert hashMap == bruteForce;
-        return bruteForce;
+        final int result1 = hashMap.solve(nums);
+        final int result2 = bruteForce.solve(nums);
+        final int result3 = sort.solve(nums);
+
+        assert result1 == result2;
+        assert result1 == result3;
+
+        return result2;
     }
 
     /**
@@ -58,7 +64,7 @@ public class MajorityElement {
 
     /**
      * hashmap 풀이
-     *
+     * <p>
      * 시간 복잡도: O(n)
      * 공간 복잡도: O(n)
      */
@@ -78,6 +84,22 @@ public class MajorityElement {
                     .max(Map.Entry.comparingByValue())
                     .map(Map.Entry::getKey)
                     .orElseThrow(IllegalStateException::new);
+        }
+
+    }
+
+    /**
+     * 정렬 활용 (절반이 넘는 수이기 때문에 정렬 후 가운데 값을 고르는 것만으로 충분)
+     * <p>
+     * 시간 복잡도: O(n * log n)
+     * 공간 복잡도: O(n) - 물론 입력값을 훼손해도 된다면 O(1)
+     */
+    static class SortMajorityElement {
+
+        public int solve(int[] nums) {
+            final int[] sorted = Arrays.copyOf(nums, nums.length);
+            Arrays.sort(sorted);
+            return sorted[nums.length / 2];
         }
 
     }
