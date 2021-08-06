@@ -1,5 +1,8 @@
 package quiz;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given an array nums of size n, return the majority element.<br/>
  * <br/>
@@ -19,9 +22,13 @@ package quiz;
 public class MajorityElement {
 
     private final BruteForceMajorityElement bruteForce = new BruteForceMajorityElement();
+    private final HashMapMajorityElement hashMap = new HashMapMajorityElement();
 
     public int majorityElement(int[] nums) {
-        return bruteForce.solve(nums);
+        final int hashMap = this.hashMap.solve(nums);
+        final int bruteForce = this.bruteForce.solve(nums);
+        assert hashMap == bruteForce;
+        return bruteForce;
     }
 
     /**
@@ -45,6 +52,32 @@ public class MajorityElement {
             }
 
             throw new IllegalStateException();
+        }
+
+    }
+
+    /**
+     * hashmap 풀이
+     *
+     * 시간 복잡도: O(n)
+     * 공간 복잡도: O(n)
+     */
+    static class HashMapMajorityElement {
+
+        public int solve(int[] nums) {
+            final Map<Integer, Integer> appearance = new HashMap<>();
+
+            for (int num : nums) {
+                appearance.putIfAbsent(num, 0);
+                appearance.computeIfPresent(num, (k, v) -> v + 1);
+            }
+
+            return appearance
+                    .entrySet()
+                    .stream()
+                    .max(Map.Entry.comparingByValue())
+                    .map(Map.Entry::getKey)
+                    .orElseThrow(IllegalStateException::new);
         }
 
     }
