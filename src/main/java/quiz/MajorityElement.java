@@ -26,17 +26,19 @@ public class MajorityElement {
     private final HashMapMajorityElement hashMap = new HashMapMajorityElement();
     private final SortMajorityElement sort = new SortMajorityElement();
     private final BoyerMooreVotingMajorityElement voting = new BoyerMooreVotingMajorityElement();
+    private final MergeMajorityElement merge = new MergeMajorityElement();
 
     public int majorityElement(int[] nums) {
         final int result1 = hashMap.solve(nums);
         final int result2 = bruteForce.solve(nums);
         final int result3 = sort.solve(nums);
         final int result4 = voting.solve(nums);
+        final int result5 = merge.solve(nums);
 
         assert result1 == result2;
         assert result1 == result3;
         assert result1 == result4;
-
+        assert result1 == result5;
         return result1;
     }
 
@@ -130,6 +132,46 @@ public class MajorityElement {
             }
 
             return candidate;
+        }
+
+    }
+
+    /**
+     * 병합(divide and conquer) 활용
+     *
+     * 시간복잡도: O(n * log n)
+     * 공간복잡도: O(log n)
+     */
+    static class MergeMajorityElement {
+
+        public int solve(int[] nums) {
+            return solve(nums, 0, nums.length - 1);
+        }
+
+        private int solve(int[] nums, int from, int to) {
+
+            // 기저 조건
+            if (from == to) return nums[from];
+
+            // 쪼개어 수행
+            final int mid = (from + to) / 2;
+            final int left = solve(nums, from, mid);
+            final int right = solve(nums, mid + 1, to);
+
+            // 나온 결과 2개 중 누가 정말 더 큰 숫자를 갖고 있는지 검사
+            final int leftCount = count(left, nums, from, to);
+            final int rightCount = count(right, nums, from, to);
+            return leftCount > rightCount ? left : right;
+        }
+
+        private int count(int target, int[] nums, int from, int to) {
+            int count = 0;
+
+            for (int i = from; i <= to; i++) {
+                if (nums[i] == target) count++;
+            }
+
+            return count;
         }
 
     }
