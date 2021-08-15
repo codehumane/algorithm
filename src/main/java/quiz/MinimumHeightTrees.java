@@ -14,9 +14,9 @@ public class MinimumHeightTrees {
 
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
         final List<Node> nodes = toNodes(n, edges);
-        final List<Node> minNodes = minNodes(nodes);
+        final List<Node> centroids = extractCentroids(nodes);
 
-        return minNodes
+        return centroids
                 .stream()
                 .map(node -> node.value)
                 .collect(Collectors.toList());
@@ -35,36 +35,24 @@ public class MinimumHeightTrees {
         return nodes;
     }
 
-    private List<Node> minNodes(List<Node> nodes) {
-        final List<Node> minNodes = new ArrayList<>();
-        int minHeight = Integer.MAX_VALUE;
+    private List<Node> extractCentroids(List<Node> nodes) {
+        final List<Node> centroids = new ArrayList<>(nodes);
 
-        for (Node node : nodes) {
-            final int height = calculateHeight(node, 0, new HashSet<>());
+        while (centroids.size() > 2) {
+            final Set<Node> leaves = centroids
+                    .stream()
+                    .filter(n -> 1 == n.adjacent.size())
+                    .collect(Collectors.toSet());
 
-            if (height < minHeight) {
-                minNodes.clear();
-                minNodes.add(node);
-                minHeight = height;
-            } else if (height == minHeight) {
-                minNodes.add(node);
-            }
+            leaves.forEach(leaf -> {
+                final Node adjacent = leaf.adjacent.iterator().next();
+                adjacent.removeAdjacent(leaf);
+            });
+
+            centroids.removeAll(leaves);
         }
 
-        return minNodes;
-    }
-
-    private int calculateHeight(Node node, int currentHeight, Set<Node> visited) {
-        if (visited.contains(node)) return currentHeight;
-        visited.add(node);
-
-        int maxHeight = 0;
-        for (Node adj : node.adjacent) {
-            final int height = calculateHeight(adj, currentHeight + 1, visited);
-            maxHeight = Integer.max(maxHeight, height);
-        }
-
-        return maxHeight;
+        return centroids;
     }
 
     static class Node {
@@ -80,6 +68,11 @@ public class MinimumHeightTrees {
         public void addAdjacent(Node node) {
             adjacent.add(node);
             node.adjacent.add(this);
+        }
+
+        public void removeAdjacent(Node node) {
+            adjacent.remove(node);
+            node.adjacent.remove(this);
         }
 
         @Override
