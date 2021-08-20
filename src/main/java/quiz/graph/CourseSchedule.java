@@ -1,4 +1,4 @@
-package quiz;
+package quiz.graph;
 
 import java.util.HashSet;
 import java.util.List;

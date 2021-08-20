@@ -1,8 +1,9 @@
-package quiz;
+package quiz.graph;
 
 import com.google.common.collect.Lists;
 import lombok.val;
 import org.junit.Test;
+import quiz.graph.MinimumHeightTrees;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,5 +50,5 @@ public class MinimumHeightTreesTest {
         // then
         assertEquals(expected, result);
     }
-    
+
 }

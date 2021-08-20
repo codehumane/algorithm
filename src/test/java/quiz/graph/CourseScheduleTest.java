@@ -1,7 +1,8 @@
-package quiz;
+package quiz.graph;
 
 import lombok.val;
 import org.junit.Test;
+import quiz.graph.CourseSchedule;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
