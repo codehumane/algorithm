@@ -2,10 +2,7 @@ package quiz.graph;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,109 +23,128 @@ import java.util.stream.IntStream;
 public class CourseSchedule2 {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        final List<Node> tops = connectNodes(numCourses, prerequisites);
-        final List<Node> schedule = schedule(tops);
+        final int[] byKhan = new KahnAlgorithmSolution().findOrder(numCourses, prerequisites);
+        final int[] byColor = new ColoredSolution().findOrder(numCourses, prerequisites);
 
-        if (schedule.size() != numCourses) {
-            return new int[]{};
-        }
+        assert Arrays.equals(byKhan, byColor);
 
-        return schedule
-                .stream()
-                .mapToInt(n -> n.value)
-                .toArray();
+        return byKhan;
     }
 
-    private List<Node> schedule(List<Node> tops) {
-        final List<Node> schedule = new ArrayList<>();
+    static class ColoredSolution {
+        public int[] findOrder(int numCourses, int[][] prerequisites) {
+            return new int[]{};
+        }
+    }
 
-        for (Node top : tops) {
-            schedule.add(top);
+    static class KahnAlgorithmSolution {
 
-            for (Node child : top.children) {
+        public int[] findOrder(int numCourses, int[][] prerequisites) {
+            final List<Node> tops = connectNodes(numCourses, prerequisites);
+            final List<Node> schedule = schedule(tops);
+
+            if (schedule.size() != numCourses) {
+                return new int[]{};
+            }
+
+            return schedule
+                    .stream()
+                    .mapToInt(n -> n.value)
+                    .toArray();
+        }
+
+        private List<Node> schedule(List<Node> tops) {
+            final List<Node> schedule = new ArrayList<>();
+
+            for (Node top : tops) {
+                schedule.add(top);
+
+                for (Node child : top.children) {
+                    schedule(child, schedule);
+                }
+            }
+
+            return schedule;
+        }
+
+        private void schedule(Node node, List<Node> schedule) {
+
+            node.parentCount--;
+            if (node.parentCount > 0) {
+                return;
+            }
+
+            schedule.add(node);
+            for (Node child : node.children) {
                 schedule(child, schedule);
             }
         }
 
-        return schedule;
-    }
+        private List<Node> connectNodes(int numCourses, int[][] prerequisites) {
 
-    private void schedule(Node node, List<Node> schedule) {
+            final List<Node> nodes = IntStream
+                    .range(0, numCourses)
+                    .mapToObj(Node::new)
+                    .collect(Collectors.toList());
 
-        node.parentCount--;
-        if (node.parentCount > 0) {
-            return;
-        }
+            for (int[] prerequisite : prerequisites) {
+                final Node child = nodes.get(prerequisite[0]);
+                final Node parent = nodes.get(prerequisite[1]);
+                parent.addChild(child);
+            }
 
-        schedule.add(node);
-        for (Node child : node.children) {
-            schedule(child, schedule);
-        }
-    }
-
-    private List<Node> connectNodes(int numCourses, int[][] prerequisites) {
-
-        final List<Node> nodes = IntStream
-                .range(0, numCourses)
-                .mapToObj(Node::new)
-                .collect(Collectors.toList());
-
-        for (int[] prerequisite : prerequisites) {
-            final Node child = nodes.get(prerequisite[0]);
-            final Node parent = nodes.get(prerequisite[1]);
-            parent.addChild(child);
-        }
-
-        return nodes
-                .stream()
-                .filter(n -> n.parentCount == 0)
-                .collect(Collectors.toList());
-    }
-
-    static class Node {
-
-        final int value;
-        final Set<Node> children;
-        int parentCount;
-
-        public Node(int value) {
-            this.value = value;
-            this.children = new HashSet<>();
-            this.parentCount = 0;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            return value == ((Node) o).value;
-        }
-
-        @Override
-        public int hashCode() {
-            return value;
-        }
-
-        @Override
-        public String toString() {
-            final Set<Integer> childValues = children
+            return nodes
                     .stream()
-                    .map(x -> x.value)
-                    .collect(Collectors.toSet());
-
-            return String.format(
-                    "Node{value=%d, children=%s, parentCount=%d}",
-                    value,
-                    childValues,
-                    parentCount
-            );
+                    .filter(n -> n.parentCount == 0)
+                    .collect(Collectors.toList());
         }
 
-        public void addChild(Node child) {
-            if (children.add(child)) {
-                child.parentCount++;
+        static class Node {
+
+            final int value;
+            final Set<Node> children;
+            int parentCount;
+
+            public Node(int value) {
+                this.value = value;
+                this.children = new HashSet<>();
+                this.parentCount = 0;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                return value == ((Node) o).value;
+            }
+
+            @Override
+            public int hashCode() {
+                return value;
+            }
+
+            @Override
+            public String toString() {
+                final Set<Integer> childValues = children
+                        .stream()
+                        .map(x -> x.value)
+                        .collect(Collectors.toSet());
+
+                return String.format(
+                        "Node{value=%d, children=%s, parentCount=%d}",
+                        value,
+                        childValues,
+                        parentCount
+                );
+            }
+
+            public void addChild(Node child) {
+                if (children.add(child)) {
+                    child.parentCount++;
+                }
             }
         }
+
     }
 
 }
