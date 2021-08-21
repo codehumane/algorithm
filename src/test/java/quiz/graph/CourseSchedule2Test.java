@@ -115,13 +115,14 @@ public class CourseSchedule2Test {
         // given
         val numCourses = 2;
         val prerequisites = new int[][]{};
-        val expected = new int[]{0, 1};
+        val expected1 = new int[]{0, 1};
+        val expected2 = new int[]{1, 0};
 
         // when
         val result = solution.findOrder(numCourses, prerequisites);
 
         // then
-        assertArrayEquals(expected, result);
+        assertTrue(Arrays.equals(expected1, result) || Arrays.equals(expected2, result));
     }
 
     @Test
