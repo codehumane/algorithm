@@ -1,8 +1,6 @@
 package quiz.graph;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -15,7 +13,8 @@ public class NetworkDelayTime {
     public int solution(int[][] times, int n, int k) {
         List<Node> nodes = buildNodes(times, n);
         Node start = nodes.get(k - 1);
-        dfs(start, 0);
+//        dfs(start, 0);
+        dijkstra(start);
 
         // 방문되지 않은 노드가 있다면 -1 반환
         if (nodes.stream().anyMatch(x -> !x.visited)) return -1;
@@ -25,6 +24,26 @@ public class NetworkDelayTime {
                 .mapToInt(x -> x.delay)
                 .max()
                 .orElseThrow(IllegalStateException::new);
+    }
+
+    private void dijkstra(Node root) {
+        Deque<Node> deque = new ArrayDeque<>();
+        deque.offer(root);
+        root.visit(0);
+
+        while (!deque.isEmpty()) {
+            Node parent = deque.poll();
+
+            for (Map.Entry<Node, Integer> e : parent.targets.entrySet()) {
+                Node child = e.getKey();
+                int weight = e.getValue();
+
+                if (child.isVisitable(parent.delay + weight)) {
+                    child.visit(parent.delay + weight);
+                    deque.offer(child);
+                }
+            }
+        }
     }
 
     private void dfs(Node node, int delay) {
