@@ -3,6 +3,7 @@ package quiz.graph;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -14,7 +15,8 @@ public class NetworkDelayTime {
         List<Node> nodes = buildNodes(times, n);
         Node start = nodes.get(k - 1);
 //        dfs(start, 0);
-        dijkstra(start);
+//        wrongDijkstra(start);
+        dijkstra(start, nodes);
 
         // 방문되지 않은 노드가 있다면 -1 반환
         if (nodes.stream().anyMatch(x -> !x.visited)) return -1;
@@ -26,7 +28,31 @@ public class NetworkDelayTime {
                 .orElseThrow(IllegalStateException::new);
     }
 
-    private void dijkstra(Node root) {
+    private void dijkstra(Node start, List<Node> nodes) {
+        nodes.forEach(n -> n.delay = Integer.MAX_VALUE);
+        start.delay = 0;
+
+        while (true) {
+            Optional<Node> min = nodes
+                    .stream()
+                    .filter(n -> !n.visited)
+                    .min(comparingInt(o -> o.delay));
+
+            if (!min.isPresent()) return;
+            if (min.get().delay == Integer.MAX_VALUE) return;
+
+            Node node = min.get();
+            node.visited = true;
+
+            node.targets.forEach((t, w) -> {
+                if (!t.visited && t.delay > node.delay + w) {
+                    t.delay = node.delay + w;
+                }
+            });
+        }
+    }
+
+    private void wrongDijkstra(Node root) {
         Deque<Node> deque = new ArrayDeque<>();
         deque.offer(root);
         root.visit(0);
