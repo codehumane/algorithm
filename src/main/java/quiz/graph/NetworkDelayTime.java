@@ -1,6 +1,9 @@
 package quiz.graph;
 
+import javafx.util.Pair;
+
 import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.stream.IntStream;
 
 import static java.util.Comparator.comparingInt;
@@ -16,7 +19,8 @@ public class NetworkDelayTime {
         Node start = nodes.get(k - 1);
 //        dfs(start, 0);
 //        wrongDijkstra(start);
-        dijkstra(start, nodes);
+//        dijkstra(start, nodes);
+        dijkstraWithHeap(start);
 
         // 방문되지 않은 노드가 있다면 -1 반환
         if (nodes.stream().anyMatch(x -> !x.visited)) return -1;
@@ -26,6 +30,26 @@ public class NetworkDelayTime {
                 .mapToInt(x -> x.delay)
                 .max()
                 .orElseThrow(IllegalStateException::new);
+    }
+
+    private void dijkstraWithHeap(Node start) {
+        Queue<SimpleEntry<Node, Integer>> heap = new PriorityQueue<>(comparingInt(SimpleEntry::getValue));
+        heap.offer(new SimpleEntry<>(start, 0));
+
+        while (!heap.isEmpty()) {
+            SimpleEntry<Node, Integer> entry = heap.remove();
+            Node node = entry.getKey();
+            int delay = entry.getValue();
+
+            if (node.visited) continue;
+            node.visit(delay);
+
+            node.targets.forEach((target, targetDelay) -> {
+                if (!target.visited) {
+                    heap.offer(new SimpleEntry<>(target, delay + targetDelay));
+                }
+            });
+        }
     }
 
     private void dijkstra(Node start, List<Node> nodes) {
@@ -103,7 +127,7 @@ public class NetworkDelayTime {
     static class Node {
 
         final int value;
-        int delay = 0;
+        int delay = Integer.MAX_VALUE;
         boolean visited = false;
         Map<Node, Integer> targets = new HashMap<>();
 
@@ -123,6 +147,28 @@ public class NetworkDelayTime {
         boolean isVisitable(int delayCandidate) {
             if (!visited) return true;
             return delay > delayCandidate;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node node = (Node) o;
+            return value == node.value;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(value);
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    "value=" + value +
+                    ", delay=" + delay +
+                    ", visited=" + visited +
+                    '}';
         }
     }
 
