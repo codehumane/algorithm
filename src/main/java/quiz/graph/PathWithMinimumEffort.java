@@ -12,63 +12,33 @@ public class PathWithMinimumEffort {
         int rows = heights.length;
         int cols = heights[0].length;
         final Set<Position> visited = new HashSet<>();
-        final Map<Position, Integer> efforts = initEfforts(rows, cols);
-        final Map<Position, Position> froms = new HashMap<>();
+        final PriorityQueue<Effort> efforts = new PriorityQueue<>(Comparator.comparingInt(o -> o.value));
+        final Map<Position, Effort> froms = new HashMap<>();
         final Position goal = new Position(rows - 1, cols - 1);
 
-        efforts.put(new Position(0, 0), 0);
+        efforts.offer(new Effort(new Position(0, 0), 0));
 
-        while (visited.size() < rows * cols) {
-            Position position = findMinEffortPosition(efforts, visited);
-            visited.add(position);
+        while (!efforts.isEmpty()) {
+            final Effort effort = efforts.remove();
 
-            updateEffort(position, -1, 0, efforts, heights, froms, visited);
-            updateEffort(position, +1, 0, efforts, heights, froms, visited);
-            updateEffort(position, 0, -1, efforts, heights, froms, visited);
-            updateEffort(position, 0, +1, efforts, heights, froms, visited);
+            if (visited.contains(effort.position)) continue;
+            visited.add(effort.position);
+
+            updateEffort(effort.position, -1, 0, efforts, heights, froms, visited);
+            updateEffort(effort.position, +1, 0, efforts, heights, froms, visited);
+            updateEffort(effort.position, 0, -1, efforts, heights, froms, visited);
+            updateEffort(effort.position, 0, +1, efforts, heights, froms, visited);
         }
 
-        return calculateFinalEffort(efforts, froms, goal);
-    }
-
-    private Map<Position, Integer> initEfforts(int rows, int cols) {
-        final Map<Position, Integer> efforts = new HashMap<>();
-
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                efforts.put(new Position(r, c), Integer.MAX_VALUE);
-            }
-        }
-
-        return efforts;
-    }
-
-    private Position findMinEffortPosition(Map<Position, Integer> efforts,
-                                           Set<Position> visited) {
-
-        Position min = null;
-
-        for (Map.Entry<Position, Integer> e : efforts.entrySet()) {
-            if (visited.contains(e.getKey())) continue;
-
-            if (min == null) {
-                min = e.getKey();
-            }
-
-            if (efforts.get(min) > e.getValue()) {
-                min = e.getKey();
-            }
-        }
-
-        return min;
+        return calculateFinalEffort(froms, goal);
     }
 
     private void updateEffort(Position me,
                               int moveRow,
                               int moveCol,
-                              Map<Position, Integer> efforts,
+                              Queue<Effort> efforts,
                               int[][] heights,
-                              Map<Position, Position> froms,
+                              Map<Position, Effort> froms,
                               Set<Position> visited) {
 
         Position target = me.move(moveRow, moveCol);
@@ -81,24 +51,23 @@ public class PathWithMinimumEffort {
 
         final int meHeight = heights[me.row][me.col];
         final int targetHeight = heights[target.row][target.col];
-        final int effort = Math.abs(meHeight - targetHeight);
+        final int diff = Math.abs(meHeight - targetHeight);
 
-        if (effort < efforts.get(target)) {
-            efforts.put(target, effort);
-            froms.put(target, me);
-        }
+        efforts.offer(new Effort(target, diff));
+
+        froms.computeIfPresent(target, (x, e) -> e.value < diff ? e : new Effort(me, diff));
+        froms.putIfAbsent(target, new Effort(me, diff));
     }
 
-    private int calculateFinalEffort(Map<Position, Integer> efforts,
-                                     Map<Position, Position> froms,
+    private int calculateFinalEffort(Map<Position, Effort> froms,
                                      Position goal) {
 
-        int maxEffort = efforts.get(goal);
-        Position start = froms.get(goal);
+        int maxEffort = 0;
+        Effort start = froms.get(goal);
 
         while (start != null) {
-            maxEffort = Math.max(efforts.get(start), maxEffort);
-            start = froms.get(start);
+            maxEffort = Math.max(start.value, maxEffort);
+            start = froms.get(start.position);
         }
 
         return maxEffort;
@@ -136,6 +105,29 @@ public class PathWithMinimumEffort {
         @Override
         public int hashCode() {
             return Objects.hash(row, col);
+        }
+    }
+
+    private static class Effort {
+        final Position position;
+        final int value;
+
+        Effort(Position position, int value) {
+            this.position = position;
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Effort effort = (Effort) o;
+            return value == effort.value && Objects.equals(position, effort.position);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(position, value);
         }
     }
 }
