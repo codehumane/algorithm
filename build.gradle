@@ -24,7 +24,7 @@ dependencies {
 
 group = 'codehumane'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 sourceSets {
     main.kotlin.srcDirs += 'src/main/kotlin'
