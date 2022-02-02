@@ -1,7 +1,8 @@
-package quiz;
+package quiz.sort;
 
 import org.junit.Assert;
 import org.junit.Test;
+import quiz.sort.CyclicRotation;
 
 public class CyclicRotationTest {
 

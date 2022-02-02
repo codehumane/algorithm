@@ -1,5 +1,6 @@
-package quiz
+package quiz.sort
 
+import quiz.sort.Distinct
 import spock.lang.Specification
 
 class DistinctSpec extends Specification {
