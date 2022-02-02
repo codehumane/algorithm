@@ -1,5 +1,6 @@
-package quiz
+package quiz.math
 
+import quiz.math.CountDiv
 import spock.lang.Specification
 
 class CountDivSpec extends Specification {

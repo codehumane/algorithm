@@ -1,10 +1,12 @@
-package quiz;
+package quiz.bit;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import quiz.bit.FanMeeting;
+import quiz.bit.FoolFanMeeting;
 
 import java.util.ArrayList;
 import java.util.List;

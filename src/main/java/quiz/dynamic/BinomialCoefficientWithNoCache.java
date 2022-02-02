@@ -1,4 +1,4 @@
-package quiz;
+package quiz.dynamic;
 
 /**
  * 이항 계수를 캐시 없이 구현한다. 단순 분할 정복

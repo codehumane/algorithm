@@ -1,4 +1,4 @@
-package dynamic;
+package quiz.dynamic;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Supplier;

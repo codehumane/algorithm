@@ -1,5 +1,6 @@
-package quiz
+package quiz.stackqueue
 
+import quiz.stackqueue.Brackets
 import spock.lang.Specification
 
 class BracketsSpec extends Specification {

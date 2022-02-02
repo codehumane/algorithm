@@ -1,7 +1,8 @@
-package quiz;
+package quiz.dac;
 
 import lombok.val;
 import org.junit.Test;
+import quiz.dac.CountOfSmallerNumbersAfterSelf;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;

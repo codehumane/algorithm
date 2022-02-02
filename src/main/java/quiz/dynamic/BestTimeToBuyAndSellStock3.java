@@ -1,4 +1,4 @@
-package dynamic;
+package quiz.dynamic;
 
 /**
  * You are given an array prices

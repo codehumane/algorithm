@@ -1,5 +1,6 @@
-package quiz
+package quiz.math
 
+import quiz.math.CountFactors
 import spock.lang.Specification
 
 class CountFactorsSpec extends Specification {

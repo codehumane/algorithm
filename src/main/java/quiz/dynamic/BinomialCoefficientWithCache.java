@@ -1,4 +1,4 @@
-package quiz;
+package quiz.dynamic;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package quiz;
+package quiz.bit;
 
 import lombok.extern.slf4j.Slf4j;
 

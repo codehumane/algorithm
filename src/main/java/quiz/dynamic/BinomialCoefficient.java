@@ -1,4 +1,4 @@
-package quiz;
+package quiz.dynamic;
 
 /**
  * 이항 계수 (https://ko.wikipedia.org/wiki/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98) <br/>

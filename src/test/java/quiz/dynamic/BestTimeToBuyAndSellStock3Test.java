@@ -1,7 +1,8 @@
-package dynamic;
+package quiz.dynamic;
 
 import lombok.val;
 import org.junit.Test;
+import quiz.dynamic.BestTimeToBuyAndSellStock3;
 
 import static org.junit.Assert.assertEquals;
 

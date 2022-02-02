@@ -1,4 +1,4 @@
-package quiz;
+package quiz.dynamic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -6,6 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import quiz.dynamic.BinomialCoefficient;
+import quiz.dynamic.BinomialCoefficientWithCache;
+import quiz.dynamic.BinomialCoefficientWithNoCache;
 
 import java.util.ArrayList;
 import java.util.List;

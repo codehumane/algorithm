@@ -1,4 +1,4 @@
-package quiz;
+package quiz.bit;
 
 /**
  * https://algospot.com/judge/problem/read/FANMEETING
