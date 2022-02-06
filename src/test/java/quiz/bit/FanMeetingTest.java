@@ -1,41 +1,24 @@
 package quiz.bit;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import quiz.bit.FanMeeting;
-import quiz.bit.FoolFanMeeting;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
-@RunWith(value = Parameterized.class)
-public class FanMeetingTest<T extends FanMeeting> {
+public class FanMeetingTest {
 
-    private T fanMeeting;
-    private Class<T> fanMeetingClass;
-
-    public FanMeetingTest(Class<T> fanMeetingClass) {
-        this.fanMeetingClass = fanMeetingClass;
+    private static Stream<Arguments> fanMeetings() {
+        return Stream.of(
+                Arguments.of(new FoolFanMeeting())
+//                Arguments.of(new BitFanMeeting())
+        );
     }
 
-    @Parameterized.Parameters
-    public static List<Class> fanMeetingClasses() {
-        List<Class> classes = new ArrayList<>();
-        classes.add(FoolFanMeeting.class);
-//        classes.add(BitFanMeeting.class);
-        return classes;
-    }
-
-    @Before
-    public void setup() throws IllegalAccessException, InstantiationException {
-        this.fanMeeting = fanMeetingClass.newInstance();
-    }
-
-    @Test
-    public void count_멤버와_팬의_수가_동일하고_모두_남자인_경우() throws Exception {
+    @ParameterizedTest
+    @MethodSource("fanMeetings")
+    public void count_멤버와_팬의_수가_동일하고_모두_남자인_경우(FanMeeting fanMeeting) throws Exception {
         // Given
         String members = "MMM";
         String fans = "MMM";
@@ -44,11 +27,12 @@ public class FanMeetingTest<T extends FanMeeting> {
         int count = fanMeeting.count(members, fans);
 
         // Then
-        Assert.assertEquals(0, count);
+        Assertions.assertEquals(0, count);
     }
 
-    @Test
-    public void count_멤버와_팬의_수가_동일하고_모두_여자인_경우() throws Exception {
+    @ParameterizedTest
+    @MethodSource("fanMeetings")
+    public void count_멤버와_팬의_수가_동일하고_모두_여자인_경우(FanMeeting fanMeeting) throws Exception {
         // Given
         String members = "FFF";
         String fans = "FFF";
@@ -57,11 +41,12 @@ public class FanMeetingTest<T extends FanMeeting> {
         int count = fanMeeting.count(members, fans);
 
         // Then
-        Assert.assertEquals(1, count);
+        Assertions.assertEquals(1, count);
     }
 
-    @Test
-    public void count_멤버와_팬의_수가_동일하고_멤버와_팬에_남자가_포함되어_있지만_남자팬과_남자팬이_만나지는_않는_경우() throws Exception {
+    @ParameterizedTest
+    @MethodSource("fanMeetings")
+    public void count_멤버와_팬의_수가_동일하고_멤버와_팬에_남자가_포함되어_있지만_남자팬과_남자팬이_만나지는_않는_경우(FanMeeting fanMeeting) throws Exception {
         // Given
         String members = "FMF";
         String fans = "MFF";
@@ -70,11 +55,12 @@ public class FanMeetingTest<T extends FanMeeting> {
         int count = fanMeeting.count(members, fans);
 
         // Then
-        Assert.assertEquals(1, count);
+        Assertions.assertEquals(1, count);
     }
 
-    @Test
-    public void case1() throws Exception {
+    @ParameterizedTest
+    @MethodSource("fanMeetings")
+    public void case1(FanMeeting fanMeeting) throws Exception {
         // Given
         String members = "FFFMMM";
         String fans = "MMMFFF";
@@ -83,11 +69,12 @@ public class FanMeetingTest<T extends FanMeeting> {
         int count = fanMeeting.count(members, fans);
 
         // Then
-        Assert.assertEquals(1, count);
+        Assertions.assertEquals(1, count);
     }
 
-    @Test
-    public void case2() throws Exception {
+    @ParameterizedTest
+    @MethodSource("fanMeetings")
+    public void case2(FanMeeting fanMeeting) throws Exception {
         // Given
         String members = "FFFFF";
         String fans = "FFFFFFFFFF";
@@ -96,11 +83,12 @@ public class FanMeetingTest<T extends FanMeeting> {
         int count = fanMeeting.count(members, fans);
 
         // Then
-        Assert.assertEquals(6, count);
+        Assertions.assertEquals(6, count);
     }
 
-    @Test
-    public void case3() throws Exception {
+    @ParameterizedTest
+    @MethodSource("fanMeetings")
+    public void case3(FanMeeting fanMeeting) throws Exception {
         // Given
         String members = "FFFFM";
         String fans = "FFFFFMMMMF";
@@ -109,11 +97,12 @@ public class FanMeetingTest<T extends FanMeeting> {
         int count = fanMeeting.count(members, fans);
 
         // Then
-        Assert.assertEquals(2, count);
+        Assertions.assertEquals(2, count);
     }
 
-    @Test
-    public void case4() throws Exception {
+    @ParameterizedTest
+    @MethodSource("fanMeetings")
+    public void case4(FanMeeting fanMeeting) throws Exception {
         // Given
         String members = "MFMFMFFFMMMFMF";
         String fans = "MMFFFFFMFFFMFFFFFFMFFFMFFFFMFMMFFFFFFF";
@@ -122,6 +111,7 @@ public class FanMeetingTest<T extends FanMeeting> {
         int count = fanMeeting.count(members, fans);
 
         // Then
-        Assert.assertEquals(2, count);
+        Assertions.assertEquals(2, count);
     }
+
 }

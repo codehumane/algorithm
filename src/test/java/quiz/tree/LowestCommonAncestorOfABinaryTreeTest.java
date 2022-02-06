@@ -2,44 +2,28 @@ package quiz.tree;
 
 import data.tree.TreeNode;
 import lombok.val;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import quiz.tree.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(value = Parameterized.class)
-public class LowestCommonAncestorOfABinaryTreeTest<T extends LowestCommonAncestorOfABinaryTree> {
+public class LowestCommonAncestorOfABinaryTreeTest {
 
-    private T lca;
-    private Class<T> lcaClass;
-
-    public LowestCommonAncestorOfABinaryTreeTest(Class<T> lcaClass) {
-        this.lcaClass = lcaClass;
+    public static Stream<Arguments> lcas() {
+        return Stream.of(
+                Arguments.of(new SlowLowestCommonAncestorOfABinaryTree()),
+                Arguments.of(new RecursiveLowestCommonAncestorOfABinaryTree()),
+                Arguments.of(new ParentPointersLowestCommonAncestorOfABinaryTree()),
+                Arguments.of(new ProbableStackLowestCommonAncestorOfABinaryTree())
+        );
     }
 
-    @Parameterized.Parameters
-    public static List<Class> fanMeetingClasses() {
-        List<Class> classes = new ArrayList<>();
-        classes.add(SlowLowestCommonAncestorOfABinaryTree.class);
-        classes.add(RecursiveLowestCommonAncestorOfABinaryTree.class);
-        classes.add(ParentPointersLowestCommonAncestorOfABinaryTree.class);
-        classes.add(ProbableStackLowestCommonAncestorOfABinaryTree.class);
-        return classes;
-    }
-
-    @Before
-    public void setup() throws IllegalAccessException, InstantiationException {
-        this.lca = lcaClass.newInstance();
-    }
-
-    @Test
-    public void lowestCommonAncestorExample1() {
+    @ParameterizedTest
+    @MethodSource("lcas")
+    public void lowestCommonAncestorExample1(LowestCommonAncestorOfABinaryTree lca) {
 
         // given: 5, 1
         //        3
@@ -74,8 +58,9 @@ public class LowestCommonAncestorOfABinaryTreeTest<T extends LowestCommonAncesto
         assertEquals(node3, ancestor);
     }
 
-    @Test
-    public void lowestCommonAncestorExample2() {
+    @ParameterizedTest
+    @MethodSource("lcas")
+    public void lowestCommonAncestorExample2(LowestCommonAncestorOfABinaryTree lca) {
 
         // given:
         //        3

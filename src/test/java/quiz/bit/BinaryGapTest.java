@@ -1,8 +1,8 @@
 package quiz.bit;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import quiz.bit.BinaryGap;
 
 @Slf4j
@@ -18,7 +18,7 @@ public class BinaryGapTest {
         int computed = binaryGap.computeByMySolution(15);
 
         // Then
-        Assert.assertEquals(0, computed);
+        Assertions.assertEquals(0, computed);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class BinaryGapTest {
         int computed = binaryGap.computeByMySolution(1041);
 
         // Then
-        Assert.assertEquals(5, computed);
+        Assertions.assertEquals(5, computed);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class BinaryGapTest {
         int computed = binaryGap.computeByMySolution(561892);
 
         // Then
-        Assert.assertEquals(3, computed);
+        Assertions.assertEquals(3, computed);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class BinaryGapTest {
         int computed = binaryGap.computeByMySolution(2147483647);
 
         // Then
-        Assert.assertEquals(0, computed);
+        Assertions.assertEquals(0, computed);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class BinaryGapTest {
         int computed = binaryGap.computeByMySolution(0);
 
         // Then
-        Assert.assertEquals(0, computed);
+        Assertions.assertEquals(0, computed);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class BinaryGapTest {
         int computed = binaryGap.computeByMySolution(0);
 
         // Then
-        Assert.assertEquals(0, computed);
+        Assertions.assertEquals(0, computed);
     }
 
     @Test
@@ -96,6 +96,6 @@ public class BinaryGapTest {
         int computed = binaryGap.computeByMySolution(74901729);
 
         // Then
-        Assert.assertEquals(4, computed);
+        Assertions.assertEquals(4, computed);
     }
 }

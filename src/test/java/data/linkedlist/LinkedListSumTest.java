@@ -2,9 +2,9 @@ package data.linkedlist;
 
 import data.linkedlist.LinkedListNode;
 import data.linkedlist.LinkedListSum;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LinkedListSumTest {
 

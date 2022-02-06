@@ -1,8 +1,8 @@
 package hackerrank.array
 
-import hackerrank.array.countMinimumBribes
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
 
 class NewYearChaosKtTest {
 
@@ -19,16 +19,20 @@ class NewYearChaosKtTest {
         assertEquals(3, count)
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `minimumBribes case2`() {
-        val input = arrayOf(2, 5, 1, 3, 4)
-        countMinimumBribes(input)
+        assertThrows(IllegalStateException::class.java) {
+            val input = arrayOf(2, 5, 1, 3, 4)
+            countMinimumBribes(input)
+        }
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `minimumBribes case3`() {
-        val input = arrayOf(5, 1, 2, 3, 7, 8, 6, 4)
-        countMinimumBribes(input)
+        assertThrows(IllegalStateException::class.java) {
+            val input = arrayOf(5, 1, 2, 3, 7, 8, 6, 4)
+            countMinimumBribes(input)
+        }
     }
 
     @Test

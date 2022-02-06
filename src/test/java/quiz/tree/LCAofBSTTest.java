@@ -2,47 +2,20 @@ package quiz.tree;
 
 import data.tree.TreeNode;
 import lombok.val;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import quiz.tree.EfficientRecursiveLCAofBST;
-import quiz.tree.InefficientRecursiveLCAofBST;
-import quiz.tree.IterativeLCAofBST;
-import quiz.tree.LCAofBST;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(value = Parameterized.class)
-public class LCAofBSTTest<T extends LCAofBST> {
+public class LCAofBSTTest {
 
-    private T lcaOfBST;
-    private Class<T> lcaOfBSTClass;
-
-    public LCAofBSTTest(Class<T> lcaOfBSTClass) {
-        this.lcaOfBSTClass = lcaOfBSTClass;
-    }
-
-    @Parameterized.Parameters
-    public static List<Class> classes() {
-        final List<Class> classes = new ArrayList<>();
-        classes.add(InefficientRecursiveLCAofBST.class);
-        classes.add(EfficientRecursiveLCAofBST.class);
-        classes.add(IterativeLCAofBST.class);
-        return classes;
-    }
-
-    @Before
-    public void setup() throws IllegalAccessException, InstantiationException {
-        this.lcaOfBST = lcaOfBSTClass.newInstance();
-    }
-
-    @Test
-    public void example1() {
+    @ParameterizedTest
+    @MethodSource("getLCAOfBST")
+    public void example1(LCAofBST lcaOfBST) {
 
         // given
         //             6
@@ -78,8 +51,9 @@ public class LCAofBSTTest<T extends LCAofBST> {
         assertEquals(n6, lca);
     }
 
-    @Test
-    public void example2() {
+    @ParameterizedTest
+    @MethodSource("getLCAOfBST")
+    public void example2(LCAofBST lcaOfBST) {
 
         // given
         //             6
@@ -115,8 +89,9 @@ public class LCAofBSTTest<T extends LCAofBST> {
         assertEquals(n2, lca);
     }
 
-    @Test
-    public void example3() {
+    @ParameterizedTest
+    @MethodSource("getLCAOfBST")
+    public void example3(LCAofBST lcaOfBST) {
 
         // given
         val n2 = new TreeNode(2);
@@ -129,6 +104,14 @@ public class LCAofBSTTest<T extends LCAofBST> {
         // then
         assertNotNull(lca);
         assertEquals(n2, lca);
+    }
+
+    private static Stream<Arguments> getLCAOfBST() {
+        return Stream.of(
+                Arguments.of(new InefficientRecursiveLCAofBST()),
+                Arguments.of(new EfficientRecursiveLCAofBST()),
+                Arguments.of(new IterativeLCAofBST())
+        );
     }
 
 }

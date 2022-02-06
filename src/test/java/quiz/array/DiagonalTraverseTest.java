@@ -1,8 +1,8 @@
 package quiz.array;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class DiagonalTraverseTest {
@@ -18,7 +18,7 @@ public class DiagonalTraverseTest {
         };
         final int[] output = new int[]{1, 2, 4, 7, 5, 3, 6, 8, 9};
         final int[] result = traverse.findDiagonalOrder(input);
-        Assert.assertArrayEquals(output, result);
+        Assertions.assertArrayEquals(output, result);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class DiagonalTraverseTest {
         };
         final int[] output = new int[]{1, 2, 6, 11, 7, 3, 4, 8, 12, 16, 21, 17, 13, 9, 5, 10, 14, 18, 22, 23, 19, 15, 20, 24, 25};
         final int[] result = traverse.findDiagonalOrder(input);
-        Assert.assertArrayEquals(output, result);
+        Assertions.assertArrayEquals(output, result);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class DiagonalTraverseTest {
 
         final int[] output = new int[]{1, 2, 6, 7, 3, 4, 8, 9, 5, 10};
         final int[] result = traverse.findDiagonalOrder(input);
-        Assert.assertArrayEquals(output, result);
+        Assertions.assertArrayEquals(output, result);
     }
 
     @Test
@@ -59,6 +59,6 @@ public class DiagonalTraverseTest {
 
         final int[] output = new int[]{1, 2, 3, 5, 4, 6, 7, 9, 8, 10};
         final int[] result = traverse.findDiagonalOrder(input);
-        Assert.assertArrayEquals(output, result);
+        Assertions.assertArrayEquals(output, result);
     }
 }

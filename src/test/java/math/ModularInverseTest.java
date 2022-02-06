@@ -1,14 +1,14 @@
 package math;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ModularInverseTest {
 
     @Test
     public void get() throws Exception {
-        assertEquals("..., -2, 5, 12, ...의 정수 집합 중 연산의 특성상 5를 반환", 5, ModularInverse.get(3, 7));
+        assertEquals(5, ModularInverse.get(3, 7), "..., -2, 5, 12, ...의 정수 집합 중 연산의 특성상 5를 반환");
     }
 
     @Test

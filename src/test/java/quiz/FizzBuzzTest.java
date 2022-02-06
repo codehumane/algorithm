@@ -1,7 +1,7 @@
 package quiz;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FizzBuzzTest {
 
@@ -14,7 +14,7 @@ public class FizzBuzzTest {
         String result = fizzBuzz.convert(1);
 
         // Then
-        Assert.assertEquals("1", result);
+        Assertions.assertEquals("1", result);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class FizzBuzzTest {
         String result = fizzBuzz.convert(2);
 
         // Then
-        Assert.assertEquals("12", result);
+        Assertions.assertEquals("12", result);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class FizzBuzzTest {
         String result = fizzBuzz.convert(3);
 
         // Then
-        Assert.assertEquals("12fizz", result);
+        Assertions.assertEquals("12fizz", result);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class FizzBuzzTest {
         String result = fizzBuzz.convert(5);
 
         // Then
-        Assert.assertEquals("12fizz4buzz", result);
+        Assertions.assertEquals("12fizz4buzz", result);
     }
 
     @Test
@@ -62,6 +62,6 @@ public class FizzBuzzTest {
         String result = fizzBuzz.convert(15);
 
         // Then
-        Assert.assertEquals("12fizz4buzzfizz78fizzbuzz11fizz1314fizzbuzz", result);
+        Assertions.assertEquals("12fizz4buzzfizz78fizzbuzz11fizz1314fizzbuzz", result);
     }
 }

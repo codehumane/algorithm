@@ -1,10 +1,10 @@
 package quiz.dynamic;
 
 import lombok.val;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import quiz.dynamic.BestTimeToBuyAndSellStock2;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BestTimeToBuyAndSellStock2Test {
 

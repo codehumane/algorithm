@@ -1,7 +1,7 @@
 package quiz.sort;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import quiz.sort.CyclicRotation;
 
 public class CyclicRotationTest {
@@ -18,7 +18,7 @@ public class CyclicRotationTest {
         int[] result = rotation.execute(input, 3);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class CyclicRotationTest {
         int[] result = rotation.execute(input, 3);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CyclicRotationTest {
         int[] result = rotation.execute(input, 3);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class CyclicRotationTest {
         int[] result = rotation.execute(input, 7);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 
     @Test
@@ -70,6 +70,6 @@ public class CyclicRotationTest {
         int[] result = rotation.execute(input, 20);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 }

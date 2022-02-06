@@ -1,58 +1,50 @@
 package sort;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import sort.MergeSort;
-import sort.ParallelMergeSort;
-import sort.Sort;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 @Slf4j
-@RunWith(value = Parameterized.class)
-public class MergeSortTest<T extends Sort> {
+public class MergeSortTest {
 
-    private T sort;
-    private Class<T> sortClass;
-    private static final int[] list;
+    @ParameterizedTest
+    @MethodSource("getSorter")
+    public void sort(Sort sort) throws Exception {
 
-    /**
-     * List size is a factor affecting on sort performance. The bigger size makes parallel merge sort performance
-     * better.
-     */
-    private static final int LIST_SIZE = 10000;
+        // given
+        final int[] list = generateRandomInts();
+        final int[] expected = Arrays.copyOf(list, list.length);
+        Arrays.sort(expected);
 
-    static {
-        list = new int[LIST_SIZE];
+        // when
+        sort.sort(list);
+
+        // then
+        assertArrayEquals(expected, list);
+    }
+
+    private static Stream<Arguments> getSorter() {
+        return Stream.of(
+                Arguments.of(new ParallelMergeSort()),
+                Arguments.of(new MergeSort())
+        );
+    }
+
+    private int[] generateRandomInts() {
+        final int[] list = new int[10000];
         for (int i = 0; i < list.length; i++) {
             list[i] = new Random().nextInt(10000);
         }
+        return list;
     }
 
-    public MergeSortTest(Class<T> sortClass) {
-        this.sortClass = sortClass;
-    }
-
-    @Parameterized.Parameters
-    public static List<Class> sortClasses() {
-        List<Class> classes = new ArrayList<>();
-        classes.add(ParallelMergeSort.class);
-        classes.add(MergeSort.class);
-        return classes;
-    }
-
-    @Before
-    public void setup() throws IllegalAccessException, InstantiationException {
-        this.sort = sortClass.newInstance();
-    }
-
-    @Test
-    public void sort() throws Exception {
-        this.sort.sort(list);
-    }
 }

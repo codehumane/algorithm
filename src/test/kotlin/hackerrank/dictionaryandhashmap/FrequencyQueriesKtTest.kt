@@ -1,7 +1,7 @@
 package hackerrank.dictionaryandhashmap
 
-import org.junit.Assert.assertArrayEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Test
 
 class FrequencyQueriesKtTest {
 

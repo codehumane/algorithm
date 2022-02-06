@@ -1,7 +1,7 @@
 package quiz;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ParenthesisValidatorTest {
 
@@ -14,7 +14,7 @@ public class ParenthesisValidatorTest {
         boolean valid = validator.validate("()");
 
         // Then
-        Assert.assertTrue(valid);
+        Assertions.assertTrue(valid);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class ParenthesisValidatorTest {
         boolean valid = validator.validate("()()");
 
         // Then
-        Assert.assertTrue(valid);
+        Assertions.assertTrue(valid);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ParenthesisValidatorTest {
         boolean valid = validator.validate("())");
 
         // Then
-        Assert.assertFalse(valid);
+        Assertions.assertFalse(valid);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ParenthesisValidatorTest {
         boolean valid = validator.validate("((((()");
 
         // Then
-        Assert.assertFalse(valid);
+        Assertions.assertFalse(valid);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ParenthesisValidatorTest {
         boolean valid = validator.validate("()))((()");
 
         // Then
-        Assert.assertFalse(valid);
+        Assertions.assertFalse(valid);
     }
 
     @Test
@@ -74,6 +74,6 @@ public class ParenthesisValidatorTest {
         boolean valid = validator.validate("(())");
 
         // Then
-        Assert.assertTrue(valid);
+        Assertions.assertTrue(valid);
     }
 }

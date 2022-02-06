@@ -1,7 +1,7 @@
 package quiz;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class NumberSumTest {
 
@@ -14,7 +14,7 @@ public class NumberSumTest {
         int result = sum.sum(1);
 
         // Then
-        Assert.assertEquals(1, result);
+        Assertions.assertEquals(1, result);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class NumberSumTest {
         int result = sum.sum(5);
 
         // Then
-        Assert.assertEquals(15, result);
+        Assertions.assertEquals(15, result);
     }
 
     @Test
@@ -38,6 +38,6 @@ public class NumberSumTest {
         int result = sum.sum(11);
 
         // Then
-        Assert.assertEquals(66, result);
+        Assertions.assertEquals(66, result);
     }
 }

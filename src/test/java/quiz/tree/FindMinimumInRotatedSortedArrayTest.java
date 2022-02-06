@@ -1,9 +1,9 @@
 package quiz.tree;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import quiz.tree.FindMinimumInRotatedSortedArray;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FindMinimumInRotatedSortedArrayTest {
 

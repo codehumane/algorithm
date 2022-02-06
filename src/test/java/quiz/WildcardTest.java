@@ -1,9 +1,9 @@
 package quiz;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WildcardTest {
 
@@ -13,10 +13,10 @@ public class WildcardTest {
         Wildcard wildcard = new Wildcard("help");
 
         // Then
-        Assert.assertTrue(wildcard.match("help"));
-        Assert.assertFalse(wildcard.match("help1"));
-        Assert.assertFalse(wildcard.match("helt"));
-        Assert.assertFalse(wildcard.match("hep"));
+        Assertions.assertTrue(wildcard.match("help"));
+        Assertions.assertFalse(wildcard.match("help1"));
+        Assertions.assertFalse(wildcard.match("helt"));
+        Assertions.assertFalse(wildcard.match("hep"));
     }
 
     @Test
@@ -25,10 +25,10 @@ public class WildcardTest {
         Wildcard wildcard = new Wildcard("he?p");
 
         // Then
-        Assert.assertTrue(wildcard.match("help"));
-        Assert.assertFalse(wildcard.match("help1"));
-        Assert.assertFalse(wildcard.match("heltp"));
-        Assert.assertFalse(wildcard.match("hep"));
+        Assertions.assertTrue(wildcard.match("help"));
+        Assertions.assertFalse(wildcard.match("help1"));
+        Assertions.assertFalse(wildcard.match("heltp"));
+        Assertions.assertFalse(wildcard.match("hep"));
     }
 
     @Test
@@ -37,11 +37,11 @@ public class WildcardTest {
         Wildcard wildcard = new Wildcard("he*p");
 
         // Then
-        Assert.assertTrue(wildcard.match("help"));
-        Assert.assertFalse(wildcard.match("help1"));
-        Assert.assertTrue(wildcard.match("heltp"));
-        Assert.assertTrue(wildcard.match("heltap"));
-        Assert.assertTrue(wildcard.match("hep"));
+        Assertions.assertTrue(wildcard.match("help"));
+        Assertions.assertFalse(wildcard.match("help1"));
+        Assertions.assertTrue(wildcard.match("heltp"));
+        Assertions.assertTrue(wildcard.match("heltap"));
+        Assertions.assertTrue(wildcard.match("hep"));
     }
 
     @Test
@@ -50,23 +50,23 @@ public class WildcardTest {
         Wildcard wildcard = new Wildcard("he*p*p");
 
         // Then
-        Assert.assertTrue(wildcard.match("helpap"));
-        Assert.assertTrue(wildcard.match("helpappp"));
-        Assert.assertTrue(wildcard.match("helplplp"));
-        Assert.assertTrue(wildcard.match("helpaplp"));
-        Assert.assertTrue(wildcard.match("helplpap"));
-        Assert.assertFalse(wildcard.match("heltp"));
-        Assert.assertTrue(wildcard.match("hepp"));
+        Assertions.assertTrue(wildcard.match("helpap"));
+        Assertions.assertTrue(wildcard.match("helpappp"));
+        Assertions.assertTrue(wildcard.match("helplplp"));
+        Assertions.assertTrue(wildcard.match("helpaplp"));
+        Assertions.assertTrue(wildcard.match("helplpap"));
+        Assertions.assertFalse(wildcard.match("heltp"));
+        Assertions.assertTrue(wildcard.match("hepp"));
     }
 
     @Test
     public void match_algospot_input() throws Exception {
         Wildcard wildcard = new Wildcard("*p*");
-        Assert.assertTrue(wildcard.match("help"));
-        Assert.assertTrue(wildcard.match("papa"));
-        Assert.assertFalse(wildcard.match("hello"));
+        Assertions.assertTrue(wildcard.match("help"));
+        Assertions.assertTrue(wildcard.match("papa"));
+        Assertions.assertFalse(wildcard.match("hello"));
 
         wildcard = new Wildcard("*bb*");
-        Assert.assertTrue(wildcard.match("babbbc"));
+        Assertions.assertTrue(wildcard.match("babbbc"));
     }
 }

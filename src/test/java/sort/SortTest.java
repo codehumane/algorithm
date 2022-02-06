@@ -1,59 +1,32 @@
 package sort;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 @Slf4j
-@RunWith(value = Parameterized.class)
-public class SortTest<T extends Sort> {
+public class SortTest {
 
-    private T sort;
-    private Class<T> sortClass;
-
-    private static final int[] bigList;
-    private static final int BIG_LIST_SIZE = 1000000;
-
-    static {
-        bigList = new int[BIG_LIST_SIZE];
-        for (int i = 0; i < bigList.length; i++) {
-            bigList[i] = new Random().nextInt(10000);
-        }
+    private static Stream<Arguments> sorts() {
+        return Stream.of(
+                Arguments.of(new BubbleSort()),
+                Arguments.of(new SelectionSort()),
+                Arguments.of(new InsertionSort()),
+                Arguments.of(new ParallelMergeSort()),
+                Arguments.of(new MergeSort()),
+                Arguments.of(new QuickSort()),
+                Arguments.of(new CountingSort())
+        );
     }
 
-    public SortTest(Class<T> sortClass) {
-        this.sortClass = sortClass;
-    }
-
-    @Parameterized.Parameters
-    public static List<Class> sortClasses() {
-        List<Class> classes = new ArrayList<>();
-        classes.add(BubbleSort.class);
-        classes.add(SelectionSort.class);
-        classes.add(InsertionSort.class);
-        classes.add(ParallelMergeSort.class);
-        classes.add(MergeSort.class);
-        classes.add(QuickSort.class);
-        classes.add(CountingSort.class);
-        return classes;
-    }
-
-    @Before
-    public void setup() throws IllegalAccessException, InstantiationException {
-        this.sort = sortClass.newInstance();
-        log.info("sort test for " + sortClass.getSimpleName());
-    }
-
-    @Test
-    public void sort_숫자가_하나만_주어진_경우_그대로_반환() throws Exception {
+    @ParameterizedTest
+    @MethodSource("sorts")
+    public void sort_숫자가_하나만_주어진_경우_그대로_반환(Sort sort) throws Exception {
         // Given
         int[] list = {3};
 
@@ -65,8 +38,9 @@ public class SortTest<T extends Sort> {
         assertArrayEquals(expected, list);
     }
 
-    @Test
-    public void sort_역순으로_주어진_경우_정렬해서_반환() throws Exception {
+    @ParameterizedTest
+    @MethodSource("sorts")
+    public void sort_역순으로_주어진_경우_정렬해서_반환(Sort sort) throws Exception {
         // Given
         int[] list = {3, 2, 1};
 
@@ -78,8 +52,9 @@ public class SortTest<T extends Sort> {
         assertArrayEquals(expected, list);
     }
 
-    @Test
-    public void sort_이미_정렬된_경우_그대로_반환() throws Exception {
+    @ParameterizedTest
+    @MethodSource("sorts")
+    public void sort_이미_정렬된_경우_그대로_반환(Sort sort) throws Exception {
         // Given
         int[] list = {1, 2, 3};
 
@@ -91,8 +66,9 @@ public class SortTest<T extends Sort> {
         assertArrayEquals(expected, list);
     }
 
-    @Test
-    public void sort_순서_뒤죽박죽인_긴_배열() throws Exception {
+    @ParameterizedTest
+    @MethodSource("sorts")
+    public void sort_순서_뒤죽박죽인_긴_배열(Sort sort) throws Exception {
         // Given
         int[] list = {3, 1, 5, 8, 7, 6, 2, 4};
 
@@ -104,13 +80,15 @@ public class SortTest<T extends Sort> {
         assertArrayEquals(expected, list);
     }
 
-    @Test
-    public void sort_큰_배열() throws Exception {
+    @ParameterizedTest
+    @MethodSource("sorts")
+    public void sort_큰_배열(Sort sort) throws Exception {
 //        sort.sort(bigList);
     }
 
-    @Test
-    public void caseOfGeeksForGeeks() {
+    @ParameterizedTest
+    @MethodSource("sorts")
+    public void caseOfGeeksForGeeks(Sort sort) {
         // Given
         int[] list = {12, 11, 13, 5, 6, 7};
 

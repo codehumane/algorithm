@@ -1,8 +1,8 @@
 package quiz;
 
 import com.google.common.collect.Sets;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
@@ -21,7 +21,7 @@ public class SubSetTest {
         Set<Set<Integer>> result = subSet.make(3, 2);
 
         // Then
-        Assert.assertEquals(expected, result);
+        Assertions.assertEquals(expected, result);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class SubSetTest {
         Set<Set<Integer>> result = subSet.make(4, 2);
 
         // Then
-        Assert.assertEquals(expected, result);
+        Assertions.assertEquals(expected, result);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class SubSetTest {
         Set<Set<Integer>> result = subSet.make(4, 3);
 
         // Then
-        Assert.assertEquals(expected, result);
+        Assertions.assertEquals(expected, result);
     }
 
     @Test
@@ -80,6 +80,6 @@ public class SubSetTest {
         Set<Set<Integer>> result = subSet.make(5, 3);
 
         // Then
-        Assert.assertEquals(expected, result);
+        Assertions.assertEquals(expected, result);
     }
 }

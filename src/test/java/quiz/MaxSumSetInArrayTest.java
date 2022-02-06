@@ -1,7 +1,7 @@
 package quiz;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class MaxSumSetInArrayTest {
 
@@ -15,7 +15,7 @@ public class MaxSumSetInArrayTest {
         int sum = summer.sum(array);
 
         // Then
-        Assert.assertEquals(3, sum);
+        Assertions.assertEquals(3, sum);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class MaxSumSetInArrayTest {
         int sum = summer.sum(array);
 
         // Then
-        Assert.assertEquals(1, sum);
+        Assertions.assertEquals(1, sum);
     }
 
     @Test
@@ -41,6 +41,6 @@ public class MaxSumSetInArrayTest {
         int sum = summer.sum(array);
 
         // Then
-        Assert.assertEquals(3, sum);
+        Assertions.assertEquals(3, sum);
     }
 }

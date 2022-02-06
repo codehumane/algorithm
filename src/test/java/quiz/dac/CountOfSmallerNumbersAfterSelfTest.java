@@ -1,12 +1,12 @@
 package quiz.dac;
 
 import lombok.val;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import quiz.dac.CountOfSmallerNumbersAfterSelf;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CountOfSmallerNumbersAfterSelfTest {
 
@@ -65,7 +65,7 @@ public class CountOfSmallerNumbersAfterSelfTest {
         val result = solution.countSmaller(nums);
 
         // then
-        assertEquals("중복 고려", expected, result);
+        assertEquals(expected, result, "중복 고려");
     }
 
     @Test
@@ -79,7 +79,7 @@ public class CountOfSmallerNumbersAfterSelfTest {
         val result = solution.countSmaller(nums);
 
         // then
-        assertEquals("중복 고려", expected, result);
+        assertEquals(expected, result, "중복 고려");
     }
 
 }

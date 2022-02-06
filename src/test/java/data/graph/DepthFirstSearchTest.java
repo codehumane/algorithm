@@ -1,25 +1,15 @@
 package data.graph;
 
-import data.graph.DepthFirstSearch;
-import data.graph.DirectGraphBuilder;
-import data.graph.IndirectGraphBuilder;
-import data.graph.Vertex;
 import lombok.val;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DepthFirstSearchTest {
 
-    private DepthFirstSearch dfs;
-
-    @Before
-    public void setUp() throws Exception {
-        this.dfs = new DepthFirstSearch();
-    }
+    private DepthFirstSearch dfs = new DepthFirstSearch();
 
     @Test
     public void explore_무방향그래프_단순한_경우() throws Exception {

@@ -1,8 +1,8 @@
 package hackerrank.dictionaryandhashmap
 
 import hackerrank.dictionaryandhashmap.twoStrings
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 class TwoStringsKtTest {
 

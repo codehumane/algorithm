@@ -4,8 +4,8 @@ import data.set.BitSet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class BitSetTest {
         set.set(6);
 
         // Then
-        Assert.assertEquals("01000001", set.toString());
+        Assertions.assertEquals("01000001", set.toString());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class BitSetTest {
         set.clear(3);
 
         // Then
-        Assert.assertEquals("00010000", set.toString());
+        Assertions.assertEquals("00010000", set.toString());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class BitSetTest {
         set.toggle(0);
 
         // Then
-        Assert.assertEquals("10011000", set.toString());
+        Assertions.assertEquals("10011000", set.toString());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class BitSetTest {
         set.full();
 
         // Then
-        Assert.assertEquals(20, set.count());
+        Assertions.assertEquals(20, set.count());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class BitSetTest {
         set.empty();
 
         // Then
-        Assert.assertEquals(0, set.count());
+        Assertions.assertEquals(0, set.count());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class BitSetTest {
         set.union(source);
 
         // Then
-        Assert.assertEquals("11110001", set.toString());
+        Assertions.assertEquals("11110001", set.toString());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class BitSetTest {
         set.intersect(source);
 
         // Then
-        Assert.assertEquals("10000000", set.toString());
+        Assertions.assertEquals("10000000", set.toString());
     }
 
     @Test
@@ -138,7 +138,7 @@ public class BitSetTest {
         set.difference(source);
 
         // Then
-        Assert.assertEquals("01010001", set.toString());
+        Assertions.assertEquals("01010001", set.toString());
     }
 
     @Test
@@ -153,14 +153,14 @@ public class BitSetTest {
         Set subsets = set.getSubsets();
 
         // Then
-        Assert.assertEquals(7, subsets.size());
-        Assert.assertTrue(subsets.contains(128 + 0 + 0 + 0 + 0 + 4 + 2 + 0));
-        Assert.assertTrue(subsets.contains(128 + 0 + 0 + 0 + 0 + 4 + 0 + 0));
-        Assert.assertTrue(subsets.contains(128 + 0 + 0 + 0 + 0 + 0 + 2 + 0));
-        Assert.assertTrue(subsets.contains(128 + 0 + 0 + 0 + 0 + 0 + 0 + 0));
-        Assert.assertTrue(subsets.contains(0 + 0 + 0 + 0 + 0 + 4 + 2 + 0));
-        Assert.assertTrue(subsets.contains(0 + 0 + 0 + 0 + 0 + 4 + 0 + 0));
-        Assert.assertTrue(subsets.contains(0 + 0 + 0 + 0 + 0 + 0 + 2 + 0));
+        Assertions.assertEquals(7, subsets.size());
+        Assertions.assertTrue(subsets.contains(128 + 0 + 0 + 0 + 0 + 4 + 2 + 0));
+        Assertions.assertTrue(subsets.contains(128 + 0 + 0 + 0 + 0 + 4 + 0 + 0));
+        Assertions.assertTrue(subsets.contains(128 + 0 + 0 + 0 + 0 + 0 + 2 + 0));
+        Assertions.assertTrue(subsets.contains(128 + 0 + 0 + 0 + 0 + 0 + 0 + 0));
+        Assertions.assertTrue(subsets.contains(0 + 0 + 0 + 0 + 0 + 4 + 2 + 0));
+        Assertions.assertTrue(subsets.contains(0 + 0 + 0 + 0 + 0 + 4 + 0 + 0));
+        Assertions.assertTrue(subsets.contains(0 + 0 + 0 + 0 + 0 + 0 + 2 + 0));
     }
 
     @Test
@@ -169,7 +169,7 @@ public class BitSetTest {
         BitSet set = new BitSet(20);
 
         // Then
-        Assert.assertTrue(set.equals(set));
+        Assertions.assertTrue(set.equals(set));
     }
 
     @Test
@@ -182,7 +182,7 @@ public class BitSetTest {
         target.set(3);
 
         // Then
-        Assert.assertFalse(set.equals(target));
+        Assertions.assertFalse(set.equals(target));
     }
 
     @Test
@@ -197,7 +197,7 @@ public class BitSetTest {
         target.set(5);
 
         // Then
-        Assert.assertTrue(set.equals(target));
+        Assertions.assertTrue(set.equals(target));
     }
 
     @Test
@@ -212,7 +212,7 @@ public class BitSetTest {
         int index = set.firstSetIndex();
 
         // Then
-        Assert.assertEquals(4, index);
+        Assertions.assertEquals(4, index);
     }
 
     @Test
@@ -227,7 +227,7 @@ public class BitSetTest {
         int index = set.firstSetIndex();
 
         // Then
-        Assert.assertEquals(2, index);
+        Assertions.assertEquals(2, index);
     }
 
     @Test
@@ -240,7 +240,7 @@ public class BitSetTest {
         int index = set.firstSetIndex();
 
         // Then
-        Assert.assertEquals(0, index);
+        Assertions.assertEquals(0, index);
     }
 
     @Test
@@ -252,7 +252,7 @@ public class BitSetTest {
         int index = set.firstSetIndex();
 
         // Then
-        Assert.assertEquals(0, index);
+        Assertions.assertEquals(0, index);
     }
 
     @Test
@@ -267,7 +267,7 @@ public class BitSetTest {
         int index = set.lastSetIndex();
 
         // Then
-        Assert.assertEquals(0, index);
+        Assertions.assertEquals(0, index);
     }
 
     @Test
@@ -280,7 +280,7 @@ public class BitSetTest {
         int index = set.lastSetIndex();
 
         // Then
-        Assert.assertEquals(7, index);
+        Assertions.assertEquals(7, index);
     }
 
     @Test
@@ -294,7 +294,7 @@ public class BitSetTest {
         int index = set.lastSetIndex();
 
         // Then
-        Assert.assertEquals(5, index);
+        Assertions.assertEquals(5, index);
     }
 
     @Test
@@ -305,7 +305,7 @@ public class BitSetTest {
         set.add(a);
 //        a.setName("b");
         set.remove(a);
-        Assert.assertEquals(0, set.size());
+        Assertions.assertEquals(0, set.size());
     }
 
     @Getter

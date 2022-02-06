@@ -1,8 +1,8 @@
 package basic.tree
 
 import basic.tree.MinHeap.Companion.ROOT_INDEX
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 class MinHeapTest {
 

@@ -1,11 +1,11 @@
 package quiz.tree;
 
 import data.tree.Node;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import quiz.tree.PopulatingNextRightPointersInEachNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class PopulatingNextRightPointersInEachNodeTest {
 

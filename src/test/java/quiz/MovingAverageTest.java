@@ -1,7 +1,7 @@
 package quiz;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class MovingAverageTest {
 
@@ -17,7 +17,7 @@ public class MovingAverageTest {
         double[] result = movingAverage.computeByLinearTime(input, 2);
 
         // Then
-        Assert.assertArrayEquals(expected, result, 0.00001);
+        Assertions.assertArrayEquals(expected, result, 0.00001);
     }
 
     @Test
@@ -30,6 +30,6 @@ public class MovingAverageTest {
         double[] result = movingAverage.computeByLinearTime(input, 2);
 
         // Then
-        Assert.assertArrayEquals(expected, result, 0.01);
+        Assertions.assertArrayEquals(expected, result, 0.01);
     }
 }

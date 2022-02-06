@@ -1,28 +1,18 @@
 package data.graph;
 
-import data.graph.BreathFirstSearch;
-import data.graph.Graph;
-import data.graph.IndirectGraphBuilder;
-import data.graph.Vertex;
 import lombok.val;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BreathFirstSearchTest {
 
-    private BreathFirstSearch bfs;
-
-    @Before
-    public void setUp() throws Exception {
-        bfs = new BreathFirstSearch();
-    }
+    private BreathFirstSearch bfs = new BreathFirstSearch();
 
     @Test
     public void getDistance_자기자신으로의_거리는_0이다() throws Exception {

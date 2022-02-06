@@ -12,6 +12,8 @@ public class ParallelMergeSort implements Sort {
 
     @Override
     public void sort(int[] input) {
+        log.info("ParallelMergeSort start");
+
         int idxFrom = 0;
         int idxTo = input.length - 1;
         int[] result = new int[input.length];

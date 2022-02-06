@@ -1,13 +1,13 @@
 package quiz.tree;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import quiz.tree.FindKClosestElements;
 
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 public class FindKClosestElementsTest {

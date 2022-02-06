@@ -1,19 +1,11 @@
 package quiz;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class QuadTreeTest {
 
-    private QuadTree quadTree;
-
-    @Before
-    public void setUp() throws Exception {
-        quadTree = new QuadTree();
-    }
+    private QuadTree quadTree = new QuadTree();
 
     @Test
     public void reverseVertically_한_가지_색으로_이루어진_경우_결과는_입력값과_동일하다() throws Exception {
@@ -26,7 +18,7 @@ public class QuadTreeTest {
         String reversed = quadTree.reverseVertically(input);
 
         // Then
-        Assert.assertEquals(input, reversed);
+        Assertions.assertEquals(input, reversed);
     }
 
     @Test
@@ -45,7 +37,7 @@ public class QuadTreeTest {
         String reversed = quadTree.reverseVertically(input);
 
         // Then
-        Assert.assertEquals(expected, reversed);
+        Assertions.assertEquals(expected, reversed);
     }
 
     @Test
@@ -62,7 +54,7 @@ public class QuadTreeTest {
         String reversed = quadTree.reverseVertically(input);
 
         // Then
-        Assert.assertEquals(expected, reversed);
+        Assertions.assertEquals(expected, reversed);
     }
 
     @Test
@@ -81,6 +73,6 @@ public class QuadTreeTest {
         String reversed = quadTree.reverseVertically(input);
 
         // Then
-        Assert.assertEquals(expected, reversed);
+        Assertions.assertEquals(expected, reversed);
     }
 }

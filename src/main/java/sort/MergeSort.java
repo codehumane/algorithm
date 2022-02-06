@@ -8,6 +8,8 @@ import java.util.Arrays;
 public class MergeSort implements Sort {
 
     public void sort(int[] input) {
+        log.info("MergeSort start");
+
         divideSort(input, 0, input.length - 1);
     }
 

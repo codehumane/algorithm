@@ -1,9 +1,9 @@
 package data.tree;
 
 import lombok.val;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InsertIntoABinarySearchTreeTest {
 
@@ -111,7 +111,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 2, inserted.left.left.right.val);
+        assertEquals(2, inserted.left.left.right.val, "새로 추가된 노드");
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -148,7 +148,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 8, inserted.right.left.val);
+        assertEquals(8, inserted.right.left.val, "새로 추가된 노드");
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -187,7 +187,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 0, inserted.left.left.left.val);
+        assertEquals(0, inserted.left.left.left.val, "새로 추가된 노드");
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -224,7 +224,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 10, inserted.right.right.val);
+        assertEquals(10, inserted.right.right.val, "새로 추가된 노드");
         assertTrue(validator.isValidBST(inserted));
     }
 
@@ -263,7 +263,7 @@ public class InsertIntoABinarySearchTreeTest {
         assertEquals(node9, inserted.right);
         assertEquals(node1, inserted.left.left);
         assertEquals(node5, inserted.left.right);
-        assertEquals("새로 추가된 노드", 4, inserted.left.right.left.val);
+        assertEquals(4, inserted.left.right.left.val, "새로 추가된 노드");
         assertTrue(validator.isValidBST(inserted));
     }
 

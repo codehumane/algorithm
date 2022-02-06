@@ -1,19 +1,11 @@
 package quiz;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FibonacciTest {
 
-    private Fibonacci fibonacci;
-
-    @Before
-    public void setup() {
-        fibonacci = new Fibonacci();
-    }
+    private Fibonacci fibonacci = new Fibonacci();
 
     @Test
     public void run_1을_입력하면_1을_반환한다() throws Exception {
@@ -24,7 +16,7 @@ public class FibonacciTest {
         int[] result = fibonacci.run(1);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 
     @Test
@@ -36,7 +28,7 @@ public class FibonacciTest {
         int[] result = fibonacci.run(2);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 
     @Test
@@ -48,7 +40,7 @@ public class FibonacciTest {
         int[] result = fibonacci.run(3);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 
     @Test
@@ -60,6 +52,6 @@ public class FibonacciTest {
         int[] result = fibonacci.run(10);
 
         // Then
-        Assert.assertArrayEquals(expected, result);
+        Assertions.assertArrayEquals(expected, result);
     }
 }
