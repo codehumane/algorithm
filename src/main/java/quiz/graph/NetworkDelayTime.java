@@ -1,9 +1,7 @@
 package quiz.graph;
 
-import javafx.util.Pair;
-
-import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.Comparator.comparingInt;
