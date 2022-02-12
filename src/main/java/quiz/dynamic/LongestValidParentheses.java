@@ -5,23 +5,38 @@ package quiz.dynamic;
  */
 public class LongestValidParentheses {
 
+    /**
+     * isLeftConcatenating 케이스를 생각 못했는데,
+     * 단편적으로 한 번만 왼쪽 결과를 더하는 것뿐만 아니라,
+     * 여러 번 더하는 경우까지 고려해야 하는데,
+     * 그러지 못하는 문제가 있음.
+     * 그러려면 공간복잡도가 올라감.
+     * 결국 이 방식은 오류!
+     */
     public int longestValidParentheses(String s) {
         var index = s.indexOf("()");
+        var lastLeft = -1;
+        var lastRight = -1;
         var max = 0;
 
         while (index >= 0) {
-            var left = index;
-            var right = index + 1;
+            var l = index;
+            var r = index + 1;
 
             while (true) {
-                if (isRightExpanding(s, right)) {
-                    right += 2;
-                } else if (isSurroundExpanding(s, left, right)) {
-                    left -= 1;
-                    right += 1;
+                if (isRightExpanding(s, r)) {
+                    r += 2;
+                } else if (isSurroundExpanding(s, l, r)) {
+                    l -= 1;
+                    r += 1;
+                } else if (isLeftConcatenating(lastLeft, lastRight, l)) {
+                    l = lastLeft;
                 } else {
-                    index = s.indexOf("()", right + 1);
-                    max = Math.max(max, right - left + 1);
+                    var length = r - l + 1;
+                    max = Math.max(max, length);
+                    index = s.indexOf("()", r + 1);
+                    lastLeft = l;
+                    lastRight = r;
                     break;
                 }
             }
@@ -41,6 +56,11 @@ public class LongestValidParentheses {
                 && rightIdx + 1 < s.length()
                 && s.charAt(leftIdx - 1) == '('
                 && s.charAt(rightIdx + 1) == ')';
+    }
+
+    private boolean isLeftConcatenating(int lastLeft, int lastRight, int leftIndex) {
+        return 0 <= lastLeft
+                && lastRight + 1 == leftIndex;
     }
 
 }

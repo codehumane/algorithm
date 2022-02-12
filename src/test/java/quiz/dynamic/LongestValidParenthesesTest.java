@@ -45,4 +45,19 @@ class LongestValidParenthesesTest {
     void advanced(String input, int output) {
         assertEquals(output, solution.longestValidParentheses(input));
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "()(()),6",
+            "(()(())),8",
+            "()(()(())),10",
+            "(((()())()()))()(()),20",
+            "((((()())()()))()(())),22",
+            ")(((((()())()()))()(()))(,22",
+            "()(((()(())))),14"
+    })
+    void wrong(String input, int output) {
+        assertEquals(output, solution.longestValidParentheses(input));
+    }
+
 }
