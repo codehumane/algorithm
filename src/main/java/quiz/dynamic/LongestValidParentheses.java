@@ -11,8 +11,69 @@ public class LongestValidParentheses {
 //        return new Wrong().longestValidParentheses(s);
         final var dp = new DP().longestValidParentheses(s);
         final var stack = new Stack().longestValidParentheses(s);
+        final var twoPointerWithReverse = new TwoPointerWithReverse().longestValidParentheses(s);
+
         assert dp == stack;
+        assert dp == twoPointerWithReverse;
+
         return stack;
+    }
+
+    // 아이디어가 좋긴 하다만 쉽게 생각해 내긴 어려운 방식
+    // 2 Pointer 방식인데, 여기에 거꾸로 뒤집어서 한 번 더 반복하는 풀이
+    static class TwoPointerWithReverse {
+        public int longestValidParentheses(String s) {
+            return Math.max(
+                    leftToRightTwoPointer(s),
+                    rightToLeftTwoPointer(s)
+            );
+        }
+
+        private int leftToRightTwoPointer(String s) {
+            var max = 0;
+            var left = 0;
+            var right = 0;
+
+            for (int i = 0; i < s.toCharArray().length; i++) {
+                if (s.charAt(i) == '(') {
+                    left++;
+                } else {
+                    right++;
+
+                    if (left == right) {
+                        max = Math.max(max, right * 2);
+                    } else if (left < right) {
+                        left = 0;
+                        right = 0;
+                    }
+                }
+            }
+
+            return max;
+        }
+
+        private int rightToLeftTwoPointer(String s) {
+            var max = 0;
+            var left = 0;
+            var right = 0;
+
+            for (int i = s.toCharArray().length - 1; i >= 0; i--) {
+                if (s.charAt(i) == ')') {
+                    left++;
+                } else {
+                    right++;
+
+                    if (left == right) {
+                        max = Math.max(max, right * 2);
+                    } else if (left < right) {
+                        left = 0;
+                        right = 0;
+                    }
+                }
+            }
+
+            return max;
+        }
     }
 
     static class Stack {
