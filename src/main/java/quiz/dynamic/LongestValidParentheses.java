@@ -6,7 +6,35 @@ package quiz.dynamic;
 public class LongestValidParentheses {
 
     public int longestValidParentheses(String s) {
-        return new Wrong().longestValidParentheses(s);
+//        return new Wrong().longestValidParentheses(s);
+        return new DP().longestValidParentheses(s);
+    }
+
+    static class DP {
+        public int longestValidParentheses(String s) {
+            final var dp = new int[s.length()];
+            var max = 0;
+
+            for (int i = 1; i < s.toCharArray().length; i++) {
+                if (s.charAt(i) != ')') continue;
+
+                if (s.charAt(i - 1) == '(') {
+                    dp[i] = 2;
+                    if (i > 2) {
+                        dp[i] += dp[i - 2];
+                    }
+                } else if (i > dp[i - 1] && s.charAt(i - dp[i - 1] - 1) == '(') {
+                    dp[i] = dp[i - 1] + 2;
+                    if (i - dp[i - 1] > 1) {
+                        dp[i] += dp[i - dp[i - 1] - 2];
+                    }
+                }
+
+                max = Math.max(max, dp[i]);
+            }
+
+            return max;
+        }
     }
 
     /**
