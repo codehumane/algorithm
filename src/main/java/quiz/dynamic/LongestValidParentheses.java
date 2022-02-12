@@ -1,5 +1,7 @@
 package quiz.dynamic;
 
+import java.util.ArrayDeque;
+
 /**
  * https://leetcode.com/problems/longest-valid-parentheses/
  */
@@ -7,7 +9,33 @@ public class LongestValidParentheses {
 
     public int longestValidParentheses(String s) {
 //        return new Wrong().longestValidParentheses(s);
-        return new DP().longestValidParentheses(s);
+        final var dp = new DP().longestValidParentheses(s);
+        final var stack = new Stack().longestValidParentheses(s);
+        assert dp == stack;
+        return stack;
+    }
+
+    static class Stack {
+        public int longestValidParentheses(String s) {
+            final var stack = new ArrayDeque<Integer>();
+            stack.push(-1);
+            var max = 0;
+
+            for (int i = 0; i < s.toCharArray().length; i++) {
+                if (s.charAt(i) == '(') {
+                    stack.push(i);
+                } else {
+                    stack.pop();
+                    if (stack.isEmpty()) {
+                        stack.push(i);
+                    } else {
+                        max = Math.max(max, i - stack.peek());
+                    }
+                }
+            }
+
+            return max;
+        }
     }
 
     static class DP {
