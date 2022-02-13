@@ -8,24 +8,30 @@ import java.util.Arrays;
 public class JumpGame {
 
     public boolean canJump(int[] nums) {
-        if (nums.length < 2) return true;
+        return new DP().canJump(nums);
+    }
 
-        final var dp = new boolean[nums.length][nums.length];
+    static class DP {
+        public boolean canJump(int[] nums) {
+            if (nums.length < 2) return true;
 
-        for (int from = 0; from < nums.length - 1; from++) {
-            if (from == 0 || dp[from - 1][from]) {
+            final var dp = new boolean[nums.length][nums.length];
 
-                for (int to = from + 1; to < nums.length; to++) {
-                    dp[from][to] = (to <= from + nums[from]) || (from > 0 && dp[from - 1][to]);
+            for (int from = 0; from < nums.length - 1; from++) {
+                if (from == 0 || dp[from - 1][from]) {
 
-                    if (to == nums.length - 1 && dp[from][to]) {
-                        return true;
+                    for (int to = from + 1; to < nums.length; to++) {
+                        dp[from][to] = (to <= from + nums[from]) || (from > 0 && dp[from - 1][to]);
+
+                        if (to == nums.length - 1 && dp[from][to]) {
+                            return true;
+                        }
                     }
                 }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 
 }
