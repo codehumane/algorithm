@@ -8,15 +8,45 @@ package quiz.dynamic;
 public class RegularExpressionMatching {
 
     public boolean isMatch(String text, String pattern) {
-        if (pattern.isEmpty()) return text.isEmpty();
+        return dp(
+                0,
+                0,
+                text,
+                pattern,
+                new Boolean[text.length() + 1][pattern.length() + 1]
+        );
+    }
 
-        var firstMatch = !text.isEmpty() && (pattern.charAt(0) == text.charAt(0) || pattern.charAt(0) == '.');
+    private boolean dp(int ti,          // text index
+                       int pi,          // pattern index
+                       String t,        // text
+                       String p,        // pattern
+                       Boolean[][] m) { // memoization
 
-        if (pattern.length() >= 2 && pattern.charAt(1) == '*') {
-            return isMatch(text, pattern.substring(2)) || (firstMatch && isMatch(text.substring(1), pattern));
-        } else {
-            return firstMatch && isMatch(text.substring(1), pattern.substring(1));
+        if (m[ti][pi] != null) {
+            return m[ti][pi];
         }
+
+        if (pi == p.length()) {
+            m[ti][pi] = ti == t.length();
+        } else {
+            if (isStarChar(pi, p)) {
+                m[ti][pi] = dp(ti, pi + 2, t, p, m) ||
+                        (matchFirst(ti, pi, t, p) && dp(ti + 1, pi, t, p, m));
+            } else {
+                m[ti][pi] = matchFirst(ti, pi, t, p) && dp(ti + 1, pi + 1, t, p, m);
+            }
+        }
+
+        return m[ti][pi];
+    }
+
+    private boolean matchFirst(int ti, int pi, String t, String p) {
+        return ti < t.length() && (p.charAt(pi) == t.charAt(ti) || p.charAt(pi) == '.');
+    }
+
+    private boolean isStarChar(int pi, String p) {
+        return pi + 1 < p.length() && p.charAt(pi + 1) == '*';
     }
 
 }
