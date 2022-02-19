@@ -7,50 +7,16 @@ package quiz.dynamic;
  */
 public class RegularExpressionMatching {
 
-    public boolean isMatch(String s, String p) {
-        final var sub = p.split("\\*");
-        var beginIdx = 0;
+    public boolean isMatch(String text, String pattern) {
+        if (pattern.isEmpty()) return text.isEmpty();
 
-        for (int i = 0; i < sub.length; i++) {
-            beginIdx = indexOf(s, sub[i], beginIdx);
+        var firstMatch = !text.isEmpty() && (pattern.charAt(0) == text.charAt(0) || pattern.charAt(0) == '.');
 
-            if (beginIdx == -1) return false; // 일치하는 것 없음
-            if (i == 0 && p.charAt(0) != '*' && beginIdx != 0) return false; // first 부분
-
-            beginIdx += sub[i].length();
+        if (pattern.length() >= 2 && pattern.charAt(1) == '*') {
+            return isMatch(text, pattern.substring(2)) || (firstMatch && isMatch(text.substring(1), pattern));
+        } else {
+            return firstMatch && isMatch(text.substring(1), pattern.substring(1));
         }
-
-        return p.charAt(p.length() - 1) == '*' || beginIdx == s.length();
-    }
-
-    private int indexOf(String string, String regex, int beginIdx) {
-        var si = beginIdx;
-
-        while (si < string.length()) {
-            if (si + regex.length() <= string.length() &&
-                    match(string, si, si + regex.length() - 1, regex)) {
-                return si;
-            }
-
-            si++;
-        }
-
-        return -1;
-    }
-
-    private boolean match(String string, int start, int end, String regex) {
-        var si = start;
-        var ri = 0;
-
-        while (ri < regex.length()) {
-            if (si > end) return false;
-            if (regex.charAt(ri) != '.' && regex.charAt(ri) != string.charAt(si)) return false;
-
-            si++;
-            ri++;
-        }
-
-        return true;
     }
 
 }
