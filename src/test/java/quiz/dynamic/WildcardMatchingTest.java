@@ -4,10 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class WildcardMatchingTest {
 
@@ -79,6 +77,8 @@ class WildcardMatchingTest {
             "******,aa,true",
             "******,a,true",
             "******,,true",
+            "*a*b,adceb,true",
+            "aa,aa,true"
     })
     void wrong(String pattern, String text, boolean expected) {
         verify(pattern, text, expected);
