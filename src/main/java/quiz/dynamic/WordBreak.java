@@ -2,7 +2,7 @@ package quiz.dynamic;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * https://leetcode.com/problems/word-break/
@@ -13,56 +13,22 @@ import java.util.*;
 public class WordBreak {
 
     public boolean wordBreak(String text, List<String> dictionary) {
+        var cache = new boolean[text.length()];
 
-        var concatSize = 0;
-        var indices = toIndices(text, dictionary);
+        for (int i = 0; i < text.length(); i++) {
+            for (String segment : dictionary) {
+                var endIdx = i + segment.length() - 1;
 
-        if (indices.containsKey(0)) {
-            for (String start : indices.get(0)) {
-                if (match(text, start, concatSize, indices)) {
-                    return true;
-                }
+                if (endIdx >= text.length()) continue;
+                if (i > 0 && !cache[i - 1]) continue;
+                if (cache[endIdx]) continue;
+
+                cache[endIdx] = text
+                        .substring(i, endIdx + 1)
+                        .equals(segment);
             }
         }
 
-        return false;
+        return cache[text.length() - 1];
     }
-
-    private boolean match(String text,
-                          String segment,
-                          int concatSize,
-                          Map<Integer, Set<String>> indices) {
-
-        var nextIdx = concatSize + segment.length();
-        if (nextIdx == text.length()) return true;
-        if (!indices.containsKey(nextIdx)) return false;
-
-        for (String next : indices.get(nextIdx)) {
-            if (match(text, next, nextIdx, indices)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private Map<Integer, Set<String>> toIndices(String text, List<String> dictionary) {
-        var indices = new HashMap<Integer, Set<String>>();
-
-        for (String word : dictionary) {
-
-            int from = 0;
-            while (true) {
-                var index = text.indexOf(word, from);
-                if (index < 0) break;
-
-                indices.putIfAbsent(index, new HashSet<>());
-                indices.get(index).add(word);
-                from = index + 1;
-            }
-        }
-
-        return indices;
-    }
-
 }
