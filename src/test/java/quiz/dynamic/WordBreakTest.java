@@ -4,8 +4,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -47,7 +45,6 @@ class WordBreakTest {
         verify(text, words, expected);
     }
 
-
     @ParameterizedTest
     @CsvSource(
             delimiter = '|',
@@ -58,20 +55,15 @@ class WordBreakTest {
             }
     )
     void timeLimitExceeded(String text, String words, boolean expected) {
-        verify(text, words, expected);
+        var dictionary = Arrays.asList(words.split(","));
+        var dpSolution = new WordBreak.DynamicProgramming();
+        var result = dpSolution.wordBreak(text, dictionary);
+        assertEquals(expected, result);
     }
 
     private void verify(String text, String words, boolean expected) {
-
-        // given
-        final List<String> wordDict = Arrays
-                .stream(words.split(","))
-                .collect(Collectors.toList());
-
-        // when
+        var wordDict = Arrays.asList(words.split(","));
         var result = solution.wordBreak(text, wordDict);
-
-        // then
         assertEquals(expected, result);
     }
 
