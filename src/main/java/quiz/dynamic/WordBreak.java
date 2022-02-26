@@ -3,6 +3,7 @@ package quiz.dynamic;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * https://leetcode.com/problems/word-break/
@@ -15,10 +16,37 @@ public class WordBreak {
     public boolean wordBreak(String text, List<String> dictionary) {
         var dp = new DynamicProgramming().wordBreak(text, dictionary);
         var recursion = new Recursion().wordBreak(text, dictionary);
+        var simple = new SimpleAndEfficient().wordBreak(text, dictionary);
 
         assert dp == recursion;
+        assert dp == simple;
 
         return dp;
+    }
+
+    /**
+     * 출처: https://www.programcreek.com/2012/12/leetcode-solution-word-break/
+     */
+    static class SimpleAndEfficient {
+        boolean wordBreak(String text, List<String> dictionary) {
+            var dict = new HashSet<>(dictionary);
+            var pos = new int[text.length() + 1];
+            Arrays.fill(pos, -1);
+            pos[0] = 0;
+
+            for (int from = 0; from < text.length(); from++) {
+                if (pos[from] == -1) continue;
+
+                for (int to = from + 1; to <= text.length(); to++) {
+                    var sub = text.substring(from, to);
+                    if (dict.contains(sub)) {
+                        pos[to] = from;
+                    }
+                }
+            }
+
+            return pos[text.length()] != -1;
+        }
     }
 
     static class DynamicProgramming {

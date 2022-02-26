@@ -56,9 +56,10 @@ class WordBreakTest {
     )
     void timeLimitExceeded(String text, String words, boolean expected) {
         var dictionary = Arrays.asList(words.split(","));
-        var dpSolution = new WordBreak.DynamicProgramming();
-        var result = dpSolution.wordBreak(text, dictionary);
+        var result = new WordBreak.DynamicProgramming().wordBreak(text, dictionary);
+        var result2 = new WordBreak.SimpleAndEfficient().wordBreak(text, dictionary);
         assertEquals(expected, result);
+        assertEquals(expected, result2);
     }
 
     private void verify(String text, String words, boolean expected) {
