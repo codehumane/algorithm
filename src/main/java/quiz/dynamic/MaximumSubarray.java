@@ -3,22 +3,31 @@ package quiz.dynamic;
 public class MaximumSubarray {
 
     public int maxSubArray(int[] nums) {
+        return new Memoization().maxSubArray(nums);
+    }
 
-        var max = nums[0];
-        var sum = nums[0];
+    /**
+     * O(N)
+     */
+    static class Memoization {
+        public int maxSubArray(int[] nums) {
 
-        for (int i = 1; i < nums.length; i++) {
+            var max = nums[0];
+            var sum = nums[0];
 
-            if (sum >= 0 && sum + nums[i] >= 0) {
-                sum += nums[i];
-            } else {
-                sum = nums[i];
+            for (int i = 1; i < nums.length; i++) {
+
+                if (sum >= 0 && sum + nums[i] >= 0) {
+                    sum += nums[i];
+                } else {
+                    sum = nums[i];
+                }
+
+                max = Math.max(max, sum);
             }
 
-            max = Math.max(max, sum);
+            return max;
         }
-
-        return max;
     }
 
 }
