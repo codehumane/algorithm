@@ -11,7 +11,31 @@ public class FindLeavesOfBinaryTree {
     public List<List<Integer>> findLeaves(TreeNode root) {
 //        return new FirstApproach().findLeaves(root);
 //        return new DFSWithSorting().findLeaves(root);
-        return new DFSWithoutSorting().findLeaves(root);
+//        return new DFSWithoutSorting().findLeaves(root);
+        return new DFSWithoutSortingMoreEfficiently().findLeaves(root);
+    }
+
+    static class DFSWithoutSortingMoreEfficiently {
+
+        public List<List<Integer>> findLeaves(TreeNode root) {
+            var result = new ArrayList<List<Integer>>();
+            collectHeight(root, result);
+            return result;
+        }
+
+        private int collectHeight(TreeNode node, List<List<Integer>> result) {
+            var left = node.left == null ? 0 : collectHeight(node.left, result);
+            var right = node.right == null ? 0 : collectHeight(node.right, result);
+            var height = Math.max(left, right) + 1;
+
+            if (result.size() < height) {
+                result.add(new ArrayList<>());
+            }
+
+            result.get(height - 1).add(node.val);
+            return height;
+        }
+
     }
 
     /**
