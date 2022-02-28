@@ -9,11 +9,53 @@ import java.util.stream.Collectors;
 public class FindLeavesOfBinaryTree {
 
     public List<List<Integer>> findLeaves(TreeNode root) {
-        return new FirstApproach().findLeaves(root);
+//        return new FirstApproach().findLeaves(root);
+        return new DFSWithSorting().findLeaves(root);
+    }
+
+    /**
+     * O(N·logN)
+     * O(N)
+     */
+    static class DFSWithSorting {
+
+        public List<List<Integer>> findLeaves(TreeNode root) {
+            var heights = new HashMap<Integer, Set<TreeNode>>();
+            collectHeight(root, heights);
+            return toResult(heights);
+        }
+
+        private int collectHeight(TreeNode node, Map<Integer, Set<TreeNode>> heights) {
+            var left = node.left == null ? 0 : collectHeight(node.left, heights);
+            var right = node.right == null ? 0 : collectHeight(node.right, heights);
+            var height = Math.max(left, right) + 1;
+
+            heights.putIfAbsent(height, new HashSet<>());
+            heights.get(height).add(node);
+            return height;
+        }
+
+        private List<List<Integer>> toResult(HashMap<Integer, Set<TreeNode>> heights) {
+            return heights
+                    .entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByKey())
+                    .map(Map.Entry::getValue)
+                    .map(this::sameHeightNodesToValues)
+                    .collect(Collectors.toList());
+        }
+
+        private List<Integer> sameHeightNodesToValues(Set<TreeNode> nodes) {
+            return nodes
+                    .stream()
+                    .map(n -> n.val)
+                    .collect(Collectors.toList());
+        }
     }
 
     /**
      * O(N^2)
+     * O(N)
      */
     static class FirstApproach {
         public List<List<Integer>> findLeaves(TreeNode root) {
@@ -72,6 +114,12 @@ public class FindLeavesOfBinaryTree {
             this.val = val;
         }
 
+        @Override
+        public String toString() {
+            return "TreeNode{" +
+                    "val=" + val +
+                    '}';
+        }
     }
 
 }
