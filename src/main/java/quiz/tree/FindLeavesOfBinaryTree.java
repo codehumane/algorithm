@@ -10,7 +10,48 @@ public class FindLeavesOfBinaryTree {
 
     public List<List<Integer>> findLeaves(TreeNode root) {
 //        return new FirstApproach().findLeaves(root);
-        return new DFSWithSorting().findLeaves(root);
+//        return new DFSWithSorting().findLeaves(root);
+        return new DFSWithoutSorting().findLeaves(root);
+    }
+
+    /**
+     * O(N)
+     * O(N)
+     */
+    static class DFSWithoutSorting {
+
+        public List<List<Integer>> findLeaves(TreeNode root) {
+            var heights = new HashMap<Integer, Set<TreeNode>>();
+            collectHeight(root, heights);
+            return toResultWithoutSort(heights);
+        }
+
+        private int collectHeight(TreeNode node, Map<Integer, Set<TreeNode>> heights) {
+            var left = node.left == null ? 0 : collectHeight(node.left, heights);
+            var right = node.right == null ? 0 : collectHeight(node.right, heights);
+            var height = Math.max(left, right) + 1;
+
+            heights.putIfAbsent(height, new HashSet<>());
+            heights.get(height).add(node);
+            return height;
+        }
+
+        private ArrayList<List<Integer>> toResultWithoutSort(HashMap<Integer, Set<TreeNode>> heights) {
+            var result = new ArrayList<List<Integer>>();
+
+            for (int i = 1; i <= heights.size(); i++) {
+                var values = heights
+                        .get(i)
+                        .stream()
+                        .map(n -> n.val)
+                        .collect(Collectors.toList());
+
+                result.add(values);
+            }
+
+            return result;
+        }
+
     }
 
     /**
