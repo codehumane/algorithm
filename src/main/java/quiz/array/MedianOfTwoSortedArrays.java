@@ -3,7 +3,11 @@ package quiz.array;
 public class MedianOfTwoSortedArrays {
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        return new FirstApproach().findMedianSortedArrays(nums1, nums2);
+        var firstApproach = new FirstApproach().findMedianSortedArrays(nums1, nums2);
+        var spaceImproved = new SpaceComplexityImproved().findMedianSortedArrays(nums1, nums2);
+
+        assert firstApproach == spaceImproved;
+        return firstApproach;
     }
 
     /**
@@ -44,6 +48,51 @@ public class MedianOfTwoSortedArrays {
             } else {
                 return m[m.length - 1];
             }
+        }
+    }
+
+    /**
+     * O(N)
+     * O(1)
+     */
+    static class SpaceComplexityImproved {
+        public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+            if (nums1.length == 0 && nums2.length == 0) return 0;
+            var total = nums1.length + nums2.length;
+
+            return calculate(
+                    total,
+                    collectMedians(
+                            nums1,
+                            nums2,
+                            total
+                    )
+            );
+        }
+
+        private int[] collectMedians(int[] nums1, int[] nums2, int total) {
+            var medians = new int[2];
+
+            var i1 = 0;
+            var i2 = 0;
+
+            while (i1 + i2 <= total / 2) {
+                medians[0] = medians[1];
+
+                if (i1 >= nums1.length ||
+                        (0 < nums2.length && i2 < nums2.length && nums1[i1] > nums2[i2])) {
+                    medians[1] = nums2[i2++];
+                } else {
+                    medians[1] = nums1[i1++];
+                }
+            }
+
+            return medians;
+        }
+
+        private float calculate(int total, int[] medians) {
+            if (total % 2 == 0) return (medians[0] + medians[1]) / 2f;
+            else return medians[1];
         }
     }
 
