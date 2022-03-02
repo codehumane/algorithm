@@ -27,7 +27,6 @@ class ReverseIntegerTest {
 
     })
     void reverse(int input, int output) {
-        // 2147483647, -2147483648
         assertEquals(output, new ReverseInteger().reverse(input));
     }
 }

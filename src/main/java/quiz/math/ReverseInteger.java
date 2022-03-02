@@ -13,28 +13,41 @@ package quiz.math;
 public class ReverseInteger {
 
     public int reverse(int x) {
-        var number = String.valueOf(x);
+        var reversed = reverse(String.valueOf(x));
+        reversed = processNegative(reversed);
+        reversed = removeZeroPad(reversed);
+        return parseInt(reversed);
+    }
+
+    private String reverse(String number) {
         var reversed = new StringBuilder();
-        var padRemoval = true;
-
-        if (number.startsWith("-")) {
-            number = number.substring(1);
-            reversed.append("-");
-        }
-
         for (int i = number.length() - 1; i >= 0; i--) {
-            if (padRemoval) {
-                if (number.charAt(i) == '0') {
-                    continue;
-                } else {
-                    padRemoval = false;
-                }
-            }
             reversed.append(number.charAt(i));
         }
 
+        return reversed.toString();
+    }
+
+    private String processNegative(String reversed) {
+        if (reversed.endsWith("-")) {
+            reversed = reversed.substring(0, reversed.length() - 1);
+            reversed = "-" + reversed;
+        }
+
+        return reversed;
+    }
+
+    private String removeZeroPad(String reversed) {
+        while (reversed.startsWith("0")) {
+            reversed = reversed.substring(1);
+        }
+
+        return reversed;
+    }
+
+    private int parseInt(String reversed) {
         try {
-            return Integer.parseInt(reversed.toString());
+            return Integer.parseInt(reversed);
         } catch (NumberFormatException e) {
             return 0;
         }
