@@ -1,6 +1,7 @@
 package quiz.graph;
 
 import lombok.extern.slf4j.Slf4j;
+import quiz.graph.ShortestPathInAGridWithObstaclesElimination.BfsWithQuota.Moving;
 
 import java.util.*;
 
@@ -9,7 +10,65 @@ public class ShortestPathInAGridWithObstaclesElimination {
 
     public int shortestPath(int[][] grid, int k) {
 //        return new FirstApproach().shortestPath(grid, k);
-        return new BfsWithQuota().shortestPath(grid, k);
+//        return new BfsWithQuota().shortestPath(grid, k);
+        return new AStarSearch().shortestPath(grid, k);
+    }
+
+    /**
+     * https://en.wikipedia.org/wiki/A*_search_algorithm
+     */
+    static class AStarSearch {
+
+        public int shortestPath(int[][] grid, int k) {
+
+            var start = new Coordinate(0, 0);
+            var goal = new Coordinate(grid.length - 1, grid[0].length - 1);
+            var queue = new PriorityQueue<Moving>(Comparator.comparingInt(m -> m.step + distance(m.coordinate, goal)));
+            var visit = new HashSet<Moving>();
+
+            queue.offer(new Moving(start, 0, 0));
+            visit.add(queue.peek());
+
+            while (!queue.isEmpty()) {
+
+                var cur = queue.poll();
+                var distance = distance(cur.coordinate, goal);
+
+                if (k - cur.quota >= distance) {
+                    return cur.step + distance;
+                }
+
+                var neighbors = List.of(
+                        cur.coordinate.up(),
+                        cur.coordinate.down(),
+                        cur.coordinate.left(),
+                        cur.coordinate.right()
+                );
+
+                for (Coordinate n : neighbors) {
+                    if (n.row < 0) continue;
+                    if (n.col < 0) continue;
+                    if (n.row >= grid.length) continue;
+                    if (n.col >= grid[0].length) continue;
+
+                    var nextQuota = cur.quota + (grid[n.row][n.col] == 1 ? 1 : 0);
+                    var nextMoving = new Moving(n, cur.step + 1, nextQuota);
+
+                    if (visit.contains(nextMoving)) continue;
+                    if (nextQuota > k) continue;
+
+                    queue.offer(nextMoving);
+                    visit.add(nextMoving);
+                }
+            }
+
+            return -1;
+        }
+
+        private int distance(Coordinate from, Coordinate to) {
+            return to.row - from.row + to.col - from.col;
+        }
+
     }
 
     static class BfsWithQuota {
@@ -92,6 +151,13 @@ public class ShortestPathInAGridWithObstaclesElimination {
                 return result;
             }
 
+            @Override
+            public String toString() {
+                return "Moving{" +
+                        "coordinate=" + coordinate +
+                        ", quota=" + quota +
+                        '}';
+            }
         }
 
     }

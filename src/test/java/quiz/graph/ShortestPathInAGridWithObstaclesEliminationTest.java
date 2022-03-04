@@ -52,6 +52,34 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
         assertEquals(-1, result);
     }
 
+    @Test
+    void wrong() {
+
+        // given
+        var grid = new int[][]{
+                {0, 0}, // 0
+                {1, 0}, // 1
+                {1, 0}, // 2
+                {1, 0}, // 3
+                {1, 0}, // 4
+                {1, 0}, // 5
+                {0, 0}, // 6
+                {0, 1},
+                {0, 1},
+                {0, 1},
+                {0, 0},
+                {1, 0},
+                {1, 0},
+                {0, 0}
+        };
+
+        // when
+        var result = solution.shortestPath(grid, 4);
+
+        // then
+        assertEquals(14, result);
+    }
+
     @Nested
     class Combination {
 
