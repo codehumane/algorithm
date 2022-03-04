@@ -26,30 +26,37 @@ public class ShortestPathInAGridWithObstaclesElimination {
             }
 
             deque.offer(new Moving(start, 0, 0));
+            visit.add(deque.peek());
 
             while (!deque.isEmpty()) {
+
                 var cur = deque.poll();
-                var c = cur.coordinate;
-                var q = cur.quota;
-                var s = cur.step;
-
-                if (c.row < 0 || c.row >= grid.length) continue;
-                if (c.col < 0 || c.col >= grid[0].length) continue;
-                if (visit.contains(cur)) continue;
-
-                var quota = q + (grid[c.row][c.col] == 1 ? 1 : 0);
-                if (quota > k) continue;
-
-                if (c.equals(goal)) {
-                    return s;
+                if (cur.coordinate.equals(goal)) {
+                    return cur.step;
                 }
 
-                visit.add(new Moving(c, s, quota));
+                var neighbors = List.of(
+                        cur.coordinate.up(),
+                        cur.coordinate.down(),
+                        cur.coordinate.left(),
+                        cur.coordinate.right()
+                );
 
-                deque.offer(new Moving(c.up(), s + 1, quota));
-                deque.offer(new Moving(c.down(), s + 1, quota));
-                deque.offer(new Moving(c.left(), s + 1, quota));
-                deque.offer(new Moving(c.right(), s + 1, quota));
+                for (Coordinate n : neighbors) {
+                    if (n.row < 0) continue;
+                    if (n.col < 0) continue;
+                    if (n.row >= grid.length) continue;
+                    if (n.col >= grid[0].length) continue;
+
+                    var nextQuota = cur.quota + (grid[n.row][n.col] == 1 ? 1 : 0);
+                    var nextMoving = new Moving(n, cur.step + 1, nextQuota);
+
+                    if (visit.contains(nextMoving)) continue;
+                    if (nextQuota > k) continue;
+
+                    deque.offer(nextMoving);
+                    visit.add(nextMoving);
+                }
             }
 
             return -1;
