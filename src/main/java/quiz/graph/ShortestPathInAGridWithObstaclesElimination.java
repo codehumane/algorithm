@@ -2,10 +2,10 @@ package quiz.graph;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 public class ShortestPathInAGridWithObstaclesElimination {
@@ -114,33 +114,46 @@ public class ShortestPathInAGridWithObstaclesElimination {
         var start = new Coordinate(0, 0);
         var goal = new Coordinate(grid.length - 1, grid[0].length - 1);
         var visit = new HashMap<Coordinate, Integer>();
+        var deque = new ArrayDeque<Move>();
 
-        explore(start, visit, 0, grid);
+        deque.offer(new Move(start, 0));
+
+        while (!deque.isEmpty()) {
+            var now = deque.poll();
+            var c = now.coordinate;
+            var s = now.step;
+
+            if (c.row < 0 || c.row >= grid.length) continue;
+            if (c.col < 0 || c.col >= grid[0].length) continue;
+            if (visit.containsKey(c) && visit.get(c) <= s) continue;
+            if (grid[c.row][c.col] == 1) continue;
+
+            visit.putIfAbsent(c, s);
+            visit.computeIfPresent(c, (x, old) -> Math.min(old, s));
+
+            deque.offer(new Move(c.up(), s + 1));
+            deque.offer(new Move(c.down(), s + 1));
+            deque.offer(new Move(c.left(), s + 1));
+            deque.offer(new Move(c.right(), s + 1));
+        }
+
+
         return visit.getOrDefault(goal, -1);
     }
 
-    private void explore(Coordinate now,
-                         Map<Coordinate, Integer> visit,
-                         int pathLength,
-                         int[][] grid) {
+    static class Move {
+        final Coordinate coordinate;
+        final int step;
 
-        if (now.row < 0 || now.row >= grid.length) return;
-        if (now.col < 0 || now.col >= grid[0].length) return;
-        if (visit.containsKey(now) && visit.get(now) <= pathLength) return;
-        if (grid[now.row][now.col] == 1) return;
-
-        visit.put(now, pathLength);
-
-        explore(now.up(), visit, pathLength + 1, grid);
-        explore(now.down(), visit, pathLength + 1, grid);
-        explore(now.left(), visit, pathLength + 1, grid);
-        explore(now.right(), visit, pathLength + 1, grid);
+        Move(Coordinate coordinate, int step) {
+            this.coordinate = coordinate;
+            this.step = step;
+        }
     }
 
     static class Coordinate {
-
-        int row;
-        int col;
+        final int row;
+        final int col;
 
         Coordinate(int row, int col) {
             this.row = row;
