@@ -15,17 +15,18 @@ public class ShortestPathInAGridWithObstaclesElimination {
         var shortest = -1;
         var obstacles = obstacles(grid);
         var maxRemoval = Math.min(obstacles.size(), k);
+        var removals = combinations(obstacles, maxRemoval);
 
-        for (int n = 1; n <= maxRemoval; n++) {
-            var removals = combinations(obstacles, n);
+        for (Coordinate[] r : removals) {
+            var simulation = simluateObstacleRemomved(grid, r);
+            var path = explore(simulation);
 
-            for (Coordinate[] r : removals) {
-                var simulation = simluateObstacleRemomved(grid, r);
-                var path = explore(simulation);
+            if (path != -1) {
+                shortest = (shortest == -1) ? path : Math.min(shortest, path);
+            }
 
-                if (path != -1) {
-                    shortest = (shortest == -1) ? path : Math.min(shortest, path);
-                }
+            if (shortest == grid.length + grid[0].length - 2) {
+                return shortest;
             }
         }
 
