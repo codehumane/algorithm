@@ -38,6 +38,10 @@ public class ShortestPathInAGridWithObstaclesElimination {
                 var quota = q + (grid[c.row][c.col] == 1 ? 1 : 0);
                 if (quota > k) continue;
 
+                if (c.equals(goal)) {
+                    return s;
+                }
+
                 visit.put(new Moving(c, s, quota), s);
 
                 deque.offer(new Moving(c.up(), s + 1, quota));
@@ -46,13 +50,7 @@ public class ShortestPathInAGridWithObstaclesElimination {
                 deque.offer(new Moving(c.right(), s + 1, quota));
             }
 
-            return visit
-                    .entrySet()
-                    .stream()
-                    .filter(e -> e.getKey().coordinate.equals(goal))
-                    .mapToInt(Map.Entry::getValue)
-                    .min()
-                    .orElse(-1);
+            return -1;
         }
 
         static class Moving {
