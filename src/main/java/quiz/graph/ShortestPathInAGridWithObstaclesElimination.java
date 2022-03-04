@@ -2,22 +2,91 @@ package quiz.graph;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Slf4j
 public class ShortestPathInAGridWithObstaclesElimination {
 
     public int shortestPath(int[][] grid, int k) {
-        return new FirstApproach().shortestPath(grid, k);
+//        return new FirstApproach().shortestPath(grid, k);
+        return new BfsWithQuota().shortestPath(grid, k);
     }
 
     static class BfsWithQuota {
+
         public int shortestPath(int[][] grid, int k) {
-            return -1;
+
+            var start = new Coordinate(0, 0);
+            var goal = new Coordinate(grid.length - 1, grid[0].length - 1);
+            var visit = new HashMap<Moving, Integer>();
+            var deque = new ArrayDeque<Moving>();
+
+            deque.offer(new Moving(start, 0, 0));
+
+            while (!deque.isEmpty()) {
+                var cur = deque.poll();
+                var c = cur.coordinate;
+                var q = cur.quota;
+                var s = cur.step;
+
+                if (c.row < 0 || c.row >= grid.length) continue;
+                if (c.col < 0 || c.col >= grid[0].length) continue;
+                if (visit.containsKey(cur) && visit.get(cur) <= s) continue;
+
+                var quota = q + (grid[c.row][c.col] == 1 ? 1 : 0);
+                if (quota > k) continue;
+
+                visit.put(new Moving(c, s, quota), s);
+
+                deque.offer(new Moving(c.up(), s + 1, quota));
+                deque.offer(new Moving(c.down(), s + 1, quota));
+                deque.offer(new Moving(c.left(), s + 1, quota));
+                deque.offer(new Moving(c.right(), s + 1, quota));
+            }
+
+            return visit
+                    .entrySet()
+                    .stream()
+                    .filter(e -> e.getKey().coordinate.equals(goal))
+                    .mapToInt(Map.Entry::getValue)
+                    .min()
+                    .orElse(-1);
         }
+
+        static class Moving {
+
+            final Coordinate coordinate;
+            final int step;
+            final int quota;
+
+            Moving(Coordinate coordinate, int step, int quota) {
+                this.coordinate = coordinate;
+                this.step = step;
+                this.quota = quota;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+
+                var moving = (Moving) o;
+
+                if (quota != moving.quota) return false;
+                return Objects.equals(coordinate, moving.coordinate);
+            }
+
+            @Override
+            public int hashCode() {
+                var result = coordinate != null ? coordinate.hashCode() : 0;
+                result = 31 * result + quota;
+                return result;
+            }
+
+        }
+
     }
 
     /**
