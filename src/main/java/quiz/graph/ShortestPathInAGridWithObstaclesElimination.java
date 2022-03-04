@@ -3,8 +3,6 @@ package quiz.graph;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Slf4j
 public class ShortestPathInAGridWithObstaclesElimination {
@@ -20,8 +18,12 @@ public class ShortestPathInAGridWithObstaclesElimination {
 
             var start = new Coordinate(0, 0);
             var goal = new Coordinate(grid.length - 1, grid[0].length - 1);
-            var visit = new HashMap<Moving, Integer>();
             var deque = new ArrayDeque<Moving>();
+            var visit = new HashSet<Moving>();
+
+            if (k >= goal.row + goal.col) {
+                return goal.row + goal.col;
+            }
 
             deque.offer(new Moving(start, 0, 0));
 
@@ -33,7 +35,7 @@ public class ShortestPathInAGridWithObstaclesElimination {
 
                 if (c.row < 0 || c.row >= grid.length) continue;
                 if (c.col < 0 || c.col >= grid[0].length) continue;
-                if (visit.containsKey(cur) && visit.get(cur) <= s) continue;
+                if (visit.contains(cur)) continue;
 
                 var quota = q + (grid[c.row][c.col] == 1 ? 1 : 0);
                 if (quota > k) continue;
@@ -42,7 +44,7 @@ public class ShortestPathInAGridWithObstaclesElimination {
                     return s;
                 }
 
-                visit.put(new Moving(c, s, quota), s);
+                visit.add(new Moving(c, s, quota));
 
                 deque.offer(new Moving(c.up(), s + 1, quota));
                 deque.offer(new Moving(c.down(), s + 1, quota));
