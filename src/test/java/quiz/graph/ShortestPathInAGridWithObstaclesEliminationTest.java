@@ -15,6 +15,42 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
 
     private final ShortestPathInAGridWithObstaclesElimination solution = new ShortestPathInAGridWithObstaclesElimination();
 
+    @Test
+    void example1() {
+
+        // given
+        var grid = new int[][]{
+                {0, 0, 0},
+                {1, 1, 0},
+                {0, 0, 0},
+                {0, 1, 1},
+                {0, 0, 0}
+        };
+
+        // when
+        var result = solution.shortestPath(grid, 1);
+
+        // then
+        assertEquals(6, result);
+    }
+
+    @Test
+    void example2() {
+
+        // given
+        var grid = new int[][]{
+                {0, 1, 1},
+                {1, 1, 1},
+                {1, 0, 0}
+        };
+
+        // when
+        var result = solution.shortestPath(grid, 1);
+
+        // then
+        assertEquals(-1, result);
+    }
+
     @Nested
     class Combination {
 
@@ -41,7 +77,8 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
             var result = solution.combinations(coordinates, n);
 
             // then
-            assertTrue(result.isEmpty());
+            assertEquals(1, result.size());
+            assertEquals(0, result.get(0).length);
         }
 
 
