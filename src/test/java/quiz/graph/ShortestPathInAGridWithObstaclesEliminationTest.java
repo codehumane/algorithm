@@ -8,7 +8,8 @@ import quiz.graph.ShortestPathInAGridWithObstaclesElimination.Coordinate;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 class ShortestPathInAGridWithObstaclesEliminationTest {
@@ -54,6 +55,9 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
     @Nested
     class Combination {
 
+        private final ShortestPathInAGridWithObstaclesElimination.FirstApproach firstApproach =
+                new ShortestPathInAGridWithObstaclesElimination.FirstApproach();
+
         private final Coordinate c1 = new Coordinate(1, 0);
         private final Coordinate c2 = new Coordinate(1, 1);
         private final Coordinate c3 = new Coordinate(3, 1);
@@ -74,7 +78,7 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
             var n = 0;
 
             // when
-            var result = solution.combinations(coordinates, n);
+            var result = firstApproach.combinations(coordinates, n);
 
             // then
             assertEquals(1, result.size());
@@ -96,7 +100,7 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
             );
 
             // when
-            var result = solution.combinations(coordinates, n);
+            var result = firstApproach.combinations(coordinates, n);
 
             // then
             verify(expected, result);
@@ -118,7 +122,7 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
             );
 
             // when
-            var result = solution.combinations(coordinates, n);
+            var result = firstApproach.combinations(coordinates, n);
 
             // then
             verify(expected, result);
@@ -138,7 +142,7 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
             );
 
             // when
-            var result = solution.combinations(coordinates, n);
+            var result = firstApproach.combinations(coordinates, n);
 
             // then
             verify(expected, result);
@@ -155,7 +159,7 @@ class ShortestPathInAGridWithObstaclesEliminationTest {
             );
 
             // when
-            var result = solution.combinations(coordinates, n);
+            var result = firstApproach.combinations(coordinates, n);
 
             // then
             verify(expected, result);
