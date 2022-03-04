@@ -18,7 +18,7 @@ public class ShortestPathInAGridWithObstaclesElimination {
         var removals = combinations(obstacles, maxRemoval);
 
         for (Coordinate[] r : removals) {
-            var simulation = simluateObstacleRemomved(grid, r);
+            var simulation = simulateObstacleRemoved(grid, r);
             var path = explore(simulation);
 
             if (path != -1) {
@@ -96,7 +96,7 @@ public class ShortestPathInAGridWithObstaclesElimination {
         }
     }
 
-    private int[][] simluateObstacleRemomved(int[][] grid, Coordinate[] r) {
+    private int[][] simulateObstacleRemoved(int[][] grid, Coordinate[] r) {
         var simulation = new int[grid.length][grid[0].length];
 
         for (int i = 0; i < grid.length; i++) {
