@@ -1,11 +1,13 @@
 package quiz.etc;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LoggerRateLimiter {
 
     private final MapSolution mapSolution = new MapSolution();
     private final QueueAndSetSolution queueAndSetSolution = new QueueAndSetSolution();
+    private final MapSolutionSpaceManaged mapSolutionSpaceManaged = new MapSolutionSpaceManaged();
 
     public LoggerRateLimiter() {
 
@@ -14,7 +16,10 @@ public class LoggerRateLimiter {
     public boolean shouldPrintMessage(int timestamp, String message) {
         var byMap = mapSolution.shouldPrintMessage(timestamp, message);
         var byQueueAndSet = queueAndSetSolution.shouldPrintMessage(timestamp, message);
+        var mapWithSpaceManaged = mapSolutionSpaceManaged.shouldPrintMessage(timestamp, message);
+
         assert byMap == byQueueAndSet;
+        assert byMap == mapWithSpaceManaged;
         return byMap;
     }
 
@@ -57,6 +62,31 @@ public class LoggerRateLimiter {
 
         public boolean shouldPrintMessage(int timestamp, String message) {
             if (lastLogs.containsKey(message) && timestamp - lastLogs.get(message) < 10) {
+                return false;
+            }
+
+            lastLogs.put(message, timestamp);
+            return true;
+        }
+    }
+
+    static class MapSolutionSpaceManaged {
+        private final Map<String, Integer> lastLogs = new HashMap<>();
+
+        public boolean shouldPrintMessage(int timestamp, String message) {
+
+            var expired = lastLogs
+                    .entrySet()
+                    .stream()
+                    .filter(e -> timestamp - e.getValue() >= 10)
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toSet());
+
+            for (String e : expired) {
+                lastLogs.remove(e);
+            }
+
+            if (lastLogs.containsKey(message)) {
                 return false;
             }
 
