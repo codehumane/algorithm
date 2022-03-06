@@ -1,44 +1,57 @@
 package quiz.array;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * https://leetcode.com/problems/longest-string-chain/
  */
 public class LongestStringChain {
 
-    // TODO SortedMap
     public int longestStrChain(String[] words) {
 
         var max = 1;
-        var wordsDepth = new HashMap<String, Integer>(); // word depth
+        var cache = new HashMap<String, Integer>();
+        var lengthToWords = lengthToWords(words);
 
         for (String word : words) {
-            var depth = dfs(word, words, wordsDepth);
+            var depth = dfs(word, lengthToWords, cache);
             max = Math.max(max, depth);
         }
 
         return max;
     }
 
-    private int dfs(String word,
-                    String[] words,
-                    Map<String, Integer> wordDepth) {
+    private Map<Integer, Set<String>> lengthToWords(String[] words) {
+        var lengths = new HashMap<Integer, Set<String>>();
 
-        if (wordDepth.containsKey(word)) {
-            return wordDepth.get(word);
+        for (String word : words) {
+            lengths.putIfAbsent(word.length(), new HashSet<>());
+            lengths.get(word.length()).add(word);
         }
 
-        var maxDepth = 0;
-        for (String w : words) {
-            if (isPredecessor(word, w)) {
-                maxDepth = Math.max(maxDepth, dfs(w, words, wordDepth));
+        return lengths;
+    }
+
+    private int dfs(String word,
+                    Map<Integer, Set<String>> words,
+                    Map<String, Integer> memoized) {
+
+        if (memoized.containsKey(word)) {
+            return memoized.get(word);
+        }
+
+        var candidates = words
+                .getOrDefault(word.length() + 1, Collections.emptySet());
+
+        var depth = 0;
+        for (String candidate : candidates) {
+            if (isPredecessor(word, candidate)) {
+                depth = Math.max(depth, dfs(candidate, words, memoized));
             }
         }
 
-        wordDepth.put(word, maxDepth + 1);
-        return maxDepth + 1;
+        memoized.put(word, depth + 1);
+        return depth + 1;
     }
 
     boolean isPredecessor(String before, String after) {

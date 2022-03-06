@@ -51,7 +51,7 @@ class LongestStringChainTest {
     @ParameterizedTest
     @CsvSource(value = {
             " 4 | a,b,c,ba,bac,ac,bdac ",
-            " 2 | a,b,c,ddd,dddc "
+            " 2 | c,b,a,ddd,dddc "
     }, delimiter = '|')
     void custom2(int expected, String words) {
         assertEquals(expected, solution.longestStrChain(words.split(",")));
