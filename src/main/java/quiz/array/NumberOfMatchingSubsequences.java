@@ -24,9 +24,12 @@ public class NumberOfMatchingSubsequences {
         private Map<Character, List<Word>> toHeads(String[] words) {
             var heads = new HashMap<Character, List<Word>>();
 
+            for (char c = 'a'; c <= 'z'; c++) {
+                heads.put(c, new ArrayList<>());
+            }
+
             for (String word : words) {
                 var w = new Word(word);
-                heads.putIfAbsent(w.header(), new ArrayList<>());
                 heads.get(w.header()).add(w);
             }
 
@@ -37,7 +40,6 @@ public class NumberOfMatchingSubsequences {
             var count = 0;
 
             for (var c : s.toCharArray()) {
-                if (!heads.containsKey(c)) continue;
 
                 var old = heads.get(c);
                 heads.put(c, new ArrayList<>());
@@ -47,14 +49,10 @@ public class NumberOfMatchingSubsequences {
 
                     if (o.isEnd()) {
                         count++;
-                        continue;
+                    } else {
+                        heads.get(o.header()).add(o);
                     }
-
-                    heads.putIfAbsent(o.header(), new ArrayList<>());
-                    heads.get(o.header()).add(o);
                 }
-
-                old.clear();
             }
 
             return count;
@@ -71,7 +69,11 @@ public class NumberOfMatchingSubsequences {
             }
 
             Character header() {
-                return isEnd() ? null : value.charAt(head);
+                if (head < 0 || head >= value.length()) {
+                    throw new IllegalStateException();
+                }
+
+                return value.charAt(head);
             }
 
             boolean isEnd() {
