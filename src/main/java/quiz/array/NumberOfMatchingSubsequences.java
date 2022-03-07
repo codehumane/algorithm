@@ -1,6 +1,7 @@
 package quiz.array;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * https://leetcode.com/problems/number-of-matching-subsequences/
@@ -8,17 +9,22 @@ import java.util.HashMap;
 public class NumberOfMatchingSubsequences {
 
     public int numMatchingSubseq(String s, String[] words) {
-        var subsequences = new HashMap<String, Integer>();
+        var yes = new HashMap<String, Integer>();
+        var no = new HashSet<String>();
 
         for (String w : words) {
-            if (subsequences.containsKey(w)) {
-                subsequences.computeIfPresent(w, (x, c) -> c + 1);
+            if (no.contains(w)) continue;
+
+            if (yes.containsKey(w)) {
+                yes.computeIfPresent(w, (x, c) -> c + 1);
             } else if (isSubsequence(s, w)) {
-                subsequences.put(w, 1);
+                yes.put(w, 1);
+            } else {
+                no.add(w);
             }
         }
 
-        return subsequences
+        return yes
                 .values()
                 .stream()
                 .mapToInt(v -> v)
