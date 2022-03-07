@@ -86,10 +86,26 @@ public class NumberOfMatchingSubsequences {
 
     static class MatchingWordUniquely {
         public int numMatchingSubseq(String s, String[] words) {
-            return (int) Arrays
-                    .stream(words)
-                    .filter(w -> isSubsequence(s, w))
-                    .count();
+            var yes = new HashMap<String, Integer>();
+            var no = new HashSet<String>();
+
+            for (String w : words) {
+                if (no.contains(w)) continue;
+
+                if (yes.containsKey(w)) {
+                    yes.computeIfPresent(w, (x, c) -> c + 1);
+                } else if (isSubsequence(s, w)) {
+                    yes.put(w, 1);
+                } else {
+                    no.add(w);
+                }
+            }
+
+            return yes
+                    .values()
+                    .stream()
+                    .mapToInt(v -> v)
+                    .sum();
         }
 
         boolean isSubsequence(String source, String target) {
