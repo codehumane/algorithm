@@ -1,4 +1,4 @@
-package quiz.array;
+package quiz.dynamic;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

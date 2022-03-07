@@ -1,4 +1,4 @@
-package quiz.array;
+package quiz.dynamic;
 
 import java.util.*;
 
