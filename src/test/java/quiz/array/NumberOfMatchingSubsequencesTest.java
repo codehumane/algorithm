@@ -2,6 +2,7 @@ package quiz.array;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import quiz.array.NumberOfMatchingSubsequences.MatchingWordUniquely;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -41,7 +42,7 @@ class NumberOfMatchingSubsequencesTest {
             " dsahjpjauf | tnmlanowax | false ",
     }, delimiter = '|')
     void isSubsequence(String s, String word, boolean expected) {
-        assertEquals(expected, solution.isSubsequence(s, word));
+        assertEquals(expected, new MatchingWordUniquely().isSubsequence(s, word));
     }
 
 }
