@@ -1,9 +1,6 @@
 package quiz.array;
 
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * https://leetcode.com/problems/number-of-matching-subsequences/
@@ -11,34 +8,56 @@ import java.util.stream.Collectors;
 public class NumberOfMatchingSubsequences {
 
     public int numMatchingSubseq(String s, String[] words) {
-        var iterateSOnce = new IterateSOnlyOnce().numMatchingSubseq(s, words);
-        var effectiveBruteForce = new MatchingWordUniquely().numMatchingSubseq(s, words);
-
-        assert iterateSOnce == effectiveBruteForce;
-        return iterateSOnce;
+        var solution1 = new IterateSOnlyOnce().numMatchingSubseq(s, words);
+        var solution2 = new MatchingWordUniquely().numMatchingSubseq(s, words);
+        assert solution1 == solution2;
+        return solution1;
     }
 
-    @Slf4j
     static class IterateSOnlyOnce {
+
         public int numMatchingSubseq(String s, String[] words) {
+            var heads = toHeads(words);
+            return matchByHeader(s, heads);
+        }
 
-            var heads = Arrays
-                    .stream(words)
-                    .map(Word::new)
-                    .collect(Collectors.toList());
+        private Map<Character, List<Word>> toHeads(String[] words) {
+            var heads = new HashMap<Character, List<Word>>();
 
-            for (int i = 0; i < s.toCharArray().length; i++) {
-                for (Word head : heads) {
-                    if (!head.isEnd() && head.header() == s.charAt(i)) {
-                        head.increase();
-                    }
-                }
+            for (String word : words) {
+                var w = new Word(word);
+                heads.putIfAbsent(w.header(), new ArrayList<>());
+                heads.get(w.header()).add(w);
             }
 
-            return (int) heads
-                    .stream()
-                    .filter(Word::isEnd)
-                    .count();
+            return heads;
+        }
+
+        private int matchByHeader(String s, Map<Character, List<Word>> heads) {
+            var count = 0;
+
+            for (var c : s.toCharArray()) {
+                if (!heads.containsKey(c)) continue;
+
+                var old = heads.get(c);
+                heads.put(c, new ArrayList<>());
+
+                for (Word o : old) {
+                    o.increase();
+
+                    if (o.isEnd()) {
+                        count++;
+                        continue;
+                    }
+
+                    heads.putIfAbsent(o.header(), new ArrayList<>());
+                    heads.get(o.header()).add(o);
+                }
+
+                old.clear();
+            }
+
+            return count;
         }
 
         static class Word {
