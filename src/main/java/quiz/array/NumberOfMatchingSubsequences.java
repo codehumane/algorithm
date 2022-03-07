@@ -1,6 +1,6 @@
 package quiz.array;
 
-import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * https://leetcode.com/problems/number-of-matching-subsequences/
@@ -8,22 +8,33 @@ import java.util.Arrays;
 public class NumberOfMatchingSubsequences {
 
     public int numMatchingSubseq(String s, String[] words) {
-        return (int) Arrays
-                .stream(words)
-                .filter(w -> isSubsequence(s, w))
-                .count();
+        var subsequences = new HashMap<String, Integer>();
+
+        for (String w : words) {
+            if (subsequences.containsKey(w)) {
+                subsequences.computeIfPresent(w, (x, c) -> c + 1);
+            } else if (isSubsequence(s, w)) {
+                subsequences.put(w, 1);
+            }
+        }
+
+        return subsequences
+                .values()
+                .stream()
+                .mapToInt(v -> v)
+                .sum();
     }
 
-    boolean isSubsequence(String source, String target) {
+    boolean isSubsequence(String s, String w) {
         var si = 0;
-        var ti = 0;
+        var wi = 0;
 
-        while (si < source.length() && ti < target.length()) {
-            if (source.charAt(si) == target.charAt(ti)) ti++;
+        while (si < s.length() && wi < w.length()) {
+            if (s.charAt(si) == w.charAt(wi)) wi++;
             si++;
         }
 
-        return ti == target.length();
+        return wi == w.length();
     }
 
 }
