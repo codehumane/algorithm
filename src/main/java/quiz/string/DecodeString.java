@@ -9,43 +9,53 @@ public class DecodeString {
         return build(s, 0).string;
     }
 
-    private EncodeState build(String s, int idx) {
+    private Decoding build(String s, int idx) {
         var builder = new StringBuilder();
 
         while (idx < s.length()) {
-
             if (Character.isAlphabetic(s.charAt(idx))) {
                 builder.append(s.charAt(idx));
                 idx++;
 
             } else if (Character.isDigit(s.charAt(idx))) {
-                var bracketOpen = idx;
-                while (Character.isDigit(s.charAt(bracketOpen))) {
-                    bracketOpen++;
-                }
-
-                var encoded = build(s, bracketOpen + 1);
-                var repeated = String
-                        .valueOf(encoded.string)
-                        .repeat(Math.max(0, Integer.parseInt(s.substring(idx, bracketOpen))));
-
-                builder.append(repeated);
-                idx = encoded.index + 1;
+                var decoded = decode(s, idx);
+                builder.append(decoded.string);
+                idx = decoded.index + 1;
 
             } else {
                 break;
             }
         }
 
-        return new EncodeState(builder.toString(), idx);
+        return new Decoding(builder.toString(), idx);
     }
 
-    static class EncodeState {
+    private Decoding decode(String s, int idx) {
+        var bracketOpenIndex = indexOfBracketOpen(s, idx);
+        var repeat = Integer.parseInt(s.substring(idx, bracketOpenIndex));
+        var decoded = build(s, bracketOpenIndex + 1);
+
+        var repeated = String
+                .valueOf(decoded.string)
+                .repeat(Math.max(0, repeat));
+
+        return new Decoding(repeated, decoded.index);
+    }
+
+    private int indexOfBracketOpen(String s, int idx) {
+        while (Character.isDigit(s.charAt(idx))) {
+            idx++;
+        }
+
+        return idx;
+    }
+
+    static class Decoding {
 
         final String string;
         final int index;
 
-        public EncodeState(String string, int index) {
+        public Decoding(String string, int index) {
             this.string = string;
             this.index = index;
         }
