@@ -27,7 +27,7 @@ class RandomPickWithWeightTest {
         var w = new int[]{1, 3};
         var solution = new RandomPickWithWeight(w);
         var indexToCount = IntStream
-                .range(0, 8)
+                .range(0, 40000)
                 .mapToObj(i -> solution.pickIndex())
                 .collect(Collectors.groupingBy(
                         Function.identity(),
