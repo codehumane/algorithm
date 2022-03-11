@@ -1,7 +1,8 @@
 package quiz.array;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * https://leetcode.com/problems/random-pick-with-weight/
@@ -10,36 +11,29 @@ import java.util.Map;
  */
 public class RandomPickWithWeight {
 
-    private final Map<Integer, Integer> weights;
-    private final int[] source;
+    private final List<Double> probabilities = new ArrayList<>();
+    private final List<Double> picked = new ArrayList<>();
+    private int pickTotalCount = 0;
 
     public RandomPickWithWeight(int[] w) {
-        weights = new HashMap<>();
-        source = w;
+        var sum = Arrays.stream(w).sum();
+
+        for (int n : w) {
+            probabilities.add((double) n / sum);
+            picked.add(0d);
+        }
     }
 
     public int pickIndex() {
-        initializeWeightsIfEmpty();
-        return pick();
-    }
-
-    private void initializeWeightsIfEmpty() {
-        if (!weights.isEmpty()) return;
-
-        for (int i = 0; i < source.length; i++) {
-            weights.put(i, source[i]);
-        }
-    }
-
-    private Integer pick() {
-        var picked = weights.entrySet().iterator().next();
-
-        picked.setValue(picked.getValue() - 1);
-        if (picked.getValue() == 0) {
-            weights.remove(picked.getKey());
+        for (int i = 0; i < picked.size(); i++) {
+            if (pickTotalCount == 0 || picked.get(i) / pickTotalCount <= probabilities.get(i)) {
+                picked.set(i, picked.get(i) + 1);
+                pickTotalCount++;
+                return i;
+            }
         }
 
-        return picked.getKey();
+        throw new IllegalStateException();
     }
 
 }

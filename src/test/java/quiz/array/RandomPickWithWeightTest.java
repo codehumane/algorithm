@@ -1,5 +1,6 @@
 package quiz.array;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Slf4j
 class RandomPickWithWeightTest {
 
     @Test
@@ -37,4 +39,14 @@ class RandomPickWithWeightTest {
         assertEquals(6, indexToCount.get(1));
     }
 
+    @Test
+    void custom() {
+        var w = new int[]{1, 1, 1};
+        var solution = new RandomPickWithWeight(w);
+        log.info("picked 1: {}", solution.pickIndex());
+        log.info("picked 2: {}", solution.pickIndex());
+        log.info("picked 3: {}", solution.pickIndex());
+        log.info("picked 4: {}", solution.pickIndex());
+        log.info("picked 5: {}", solution.pickIndex());
+    }
 }
