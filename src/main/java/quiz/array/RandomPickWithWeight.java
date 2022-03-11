@@ -25,7 +25,11 @@ public class RandomPickWithWeight {
     }
 
     public int pickIndex() {
-        for (int i = 0; i < picked.size(); i++) {
+        var random = (int) (Math.random() * 100);
+        for (int idx = random; idx < picked.size() + random; idx++) {
+
+            var i = idx % picked.size();
+
             if (pickTotalCount == 0 || picked.get(i) / pickTotalCount <= probabilities.get(i)) {
                 picked.set(i, picked.get(i) + 1);
                 pickTotalCount++;
