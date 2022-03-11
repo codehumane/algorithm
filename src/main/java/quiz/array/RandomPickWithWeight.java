@@ -12,13 +12,45 @@ import java.util.List;
 public class RandomPickWithWeight {
 
     private final BasedOnPickedStatistic solution1;
+    private final PrefixSumWithLinearSearch solution2;
 
     public RandomPickWithWeight(int[] w) {
         solution1 = new BasedOnPickedStatistic(w);
+        solution2 = new PrefixSumWithLinearSearch(w);
     }
 
     public int pickIndex() {
-        return solution1.pickIndex();
+//        return solution1.pickIndex();
+        return solution2.pickIndex();
+    }
+
+    static class PrefixSumWithLinearSearch {
+
+        private final int[] prefixSums;
+        private final int totalSum;
+
+        public PrefixSumWithLinearSearch(int[] w) {
+            prefixSums = new int[w.length];
+            var prefixSum = 0;
+
+            for (int i = 0; i < w.length; ++i) {
+                prefixSum += w[i];
+                prefixSums[i] = prefixSum;
+            }
+
+            totalSum = prefixSum;
+        }
+
+        public int pickIndex() {
+            var target = totalSum * Math.random();
+
+            for (var i = 0; i < prefixSums.length; ++i) {
+                if (target < prefixSums[i])
+                    return i;
+            }
+
+            throw new IllegalStateException();
+        }
     }
 
     static class BasedOnPickedStatistic {
