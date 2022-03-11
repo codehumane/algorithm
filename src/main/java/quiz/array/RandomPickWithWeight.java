@@ -11,33 +11,46 @@ import java.util.List;
  */
 public class RandomPickWithWeight {
 
-    private final List<Double> probabilities = new ArrayList<>();
-    private final List<Double> picked = new ArrayList<>();
-    private int pickTotalCount = 0;
+    private final BasedOnPickedStatistic solution1;
 
     public RandomPickWithWeight(int[] w) {
-        var sum = Arrays.stream(w).sum();
-
-        for (int n : w) {
-            probabilities.add((double) n / sum);
-            picked.add(0d);
-        }
+        solution1 = new BasedOnPickedStatistic(w);
     }
 
     public int pickIndex() {
-        var random = (int) (Math.random() * 100);
-        for (int idx = random; idx < picked.size() + random; idx++) {
+        return solution1.pickIndex();
+    }
 
-            var i = idx % picked.size();
+    static class BasedOnPickedStatistic {
 
-            if (pickTotalCount == 0 || picked.get(i) / pickTotalCount <= probabilities.get(i)) {
-                picked.set(i, picked.get(i) + 1);
-                pickTotalCount++;
-                return i;
+        private final List<Double> probabilities = new ArrayList<>();
+        private final List<Double> picked = new ArrayList<>();
+        private int pickTotalCount = 0;
+
+        public BasedOnPickedStatistic(int[] w) {
+            var sum = Arrays.stream(w).sum();
+
+            for (int n : w) {
+                probabilities.add((double) n / sum);
+                picked.add(0d);
             }
         }
 
-        throw new IllegalStateException();
+        public int pickIndex() {
+            var random = (int) (Math.random() * 100);
+            for (int idx = random; idx < picked.size() + random; idx++) {
+
+                var i = idx % picked.size();
+
+                if (pickTotalCount == 0 || picked.get(i) / pickTotalCount <= probabilities.get(i)) {
+                    picked.set(i, picked.get(i) + 1);
+                    pickTotalCount++;
+                    return i;
+                }
+            }
+
+            throw new IllegalStateException();
+        }
     }
 
 }
