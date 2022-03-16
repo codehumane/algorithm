@@ -11,21 +11,33 @@ import java.util.Arrays;
 public class JumpGame2 {
 
     public int jump(int[] nums) {
-        var counts = new int[nums.length];
-        Arrays.fill(counts, Integer.MAX_VALUE);
-        counts[0] = 0;
+        return new DynamicProgramming().jump(nums);
+    }
 
-        for (int i = 0; i + 1 < nums.length; i++) {
-            var j = i;
+    /**
+     * DP
+     * <p>
+     * O(N^2)
+     * O(N)
+     */
+    static class DynamicProgramming {
+        public int jump(int[] nums) {
+            var counts = new int[nums.length];
+            Arrays.fill(counts, Integer.MAX_VALUE);
+            counts[0] = 0;
 
-            while (j < nums.length && j <= i + nums[i]) {
-                counts[j] = Math.min(counts[j], counts[i] + 1);
-                j++;
+            for (int i = 0; i + 1 < nums.length; i++) {
+                var j = i;
+
+                while (j < nums.length && j <= i + nums[i]) {
+                    counts[j] = Math.min(counts[j], counts[i] + 1);
+                    j++;
+                }
+
             }
 
+            return counts[nums.length - 1];
         }
-
-        return counts[nums.length - 1];
     }
 
 }
