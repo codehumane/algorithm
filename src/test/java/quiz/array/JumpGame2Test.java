@@ -24,7 +24,10 @@ class JumpGame2Test {
     @ParameterizedTest
     @CsvSource(value = {
             " 2,4,0,9     | 2 ",
-            " 3,2,1,1,1,0 | 3 "
+            " 3,2,1,1,1,0 | 3 ",
+            " 1           | 0 ",
+            " 2,3,1       | 1 ",
+            " 7,0,9,6,9,6,1,7,9,0,1,2,9,0,3 | 2 "
     }, delimiter = '|')
     void custom(String input, int expected) {
         var result = solution.jump(toIntArray(input));

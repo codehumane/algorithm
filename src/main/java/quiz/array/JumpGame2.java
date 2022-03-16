@@ -11,7 +11,35 @@ import java.util.Arrays;
 public class JumpGame2 {
 
     public int jump(int[] nums) {
-        return new DynamicProgramming().jump(nums);
+//        var dp = new DynamicProgramming().jump(nums);
+        var greedy = new Greedy().jump(nums);
+//        assert dp == greedy;
+        return greedy;
+    }
+
+    /**
+     * Greedy
+     * <p>
+     * O(N)
+     * O(1)
+     */
+    static class Greedy {
+        public int jump(int[] nums) {
+            var end = 0;
+            var candidate = 0;
+            var count = 0;
+
+            for (int i = 0; i < nums.length - 1; i++) {
+                candidate = Math.max(candidate, i + nums[i]);
+
+                if (i == end) {
+                    end = candidate;
+                    count++;
+                }
+            }
+
+            return count;
+        }
     }
 
     /**
