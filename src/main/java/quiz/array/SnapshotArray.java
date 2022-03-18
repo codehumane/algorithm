@@ -8,27 +8,29 @@ import java.util.Map;
  */
 public class SnapshotArray {
 
-    private final Map<Integer, Integer> changed = new HashMap<>(); // index -> val (스냅샷으로 남을)
-    private final Map<Integer, Map<Integer, Integer>> snapshots = new HashMap<>(); // index -> snap_id -> val (스냅샷)
+    // index -> snap_id -> val
+    private final Map<Integer, Map<Integer, Integer>> snapshots = new HashMap<>();
+    private final int length;
     private int snapId = 0;
 
     public SnapshotArray(int length) {
+        this.length = length;
+
         for (int i = 0; i < length; i++) {
-            changed.put(i, 0);
+            snapshots.put(i, new HashMap<>());
+            snapshots.get(i).put(snapId, 0);
         }
     }
 
     public void set(int index, int val) {
-        changed.put(index, val);
+        if (index < 0 || index >= length) {
+            throw new IllegalArgumentException();
+        }
+
+        snapshots.get(index).put(snapId, val);
     }
 
     public int snap() {
-        changed.forEach((i, v) -> {
-            snapshots.putIfAbsent(i, new HashMap<>());
-            snapshots.get(i).put(snapId, v);
-        });
-
-        changed.clear();
         return snapId++;
     }
 
