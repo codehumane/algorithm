@@ -2,6 +2,7 @@ package quiz.array;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * https://leetcode.com/problems/snapshot-array/
@@ -9,7 +10,7 @@ import java.util.Map;
 public class SnapshotArray {
 
     // index -> snap_id -> val
-    private final Map<Integer, Map<Integer, Integer>> snapshots = new HashMap<>();
+    private final Map<Integer, TreeMap<Integer, Integer>> snapshots = new HashMap<>();
     private final int length;
     private int snapId = 0;
 
@@ -17,7 +18,7 @@ public class SnapshotArray {
         this.length = length;
 
         for (int i = 0; i < length; i++) {
-            snapshots.put(i, new HashMap<>());
+            snapshots.put(i, new TreeMap<>());
             snapshots.get(i).put(snapId, 0);
         }
     }
@@ -34,16 +35,10 @@ public class SnapshotArray {
     public int get(int index, int snap_id) {
         validateIndex(index);
 
-        var id = snap_id;
-        while (id >= 0) {
-            var value = snapshots.get(index).get(id);
-            if (value != null) {
-                return value;
-            }
-            id--;
-        }
-
-        throw new IllegalStateException();
+        return snapshots
+                .get(index)
+                .floorEntry(snap_id)
+                .getValue();
     }
 
     private void validateIndex(int index) {
