@@ -22,25 +22,21 @@ public class SnapshotArray {
         }
     }
 
-    public void set(int index, int val) {
-        if (index < 0 || index >= length) {
-            throw new IllegalArgumentException();
-        }
-
-        snapshots.get(index).put(snapId, val);
-    }
-
     public int snap() {
         return snapId++;
     }
 
+    public void set(int index, int val) {
+        validateIndex(index);
+        snapshots.get(index).put(snapId, val);
+    }
+
     public int get(int index, int snap_id) {
-        var snapshot = snapshots.get(index);
-        if (snapshot == null) throw new IllegalStateException();
+        validateIndex(index);
 
         var id = snap_id;
         while (id >= 0) {
-            var value = snapshot.get(id);
+            var value = snapshots.get(index).get(id);
             if (value != null) {
                 return value;
             }
@@ -48,6 +44,12 @@ public class SnapshotArray {
         }
 
         throw new IllegalStateException();
+    }
+
+    private void validateIndex(int index) {
+        if (index < 0 || index >= length) {
+            throw new IllegalArgumentException();
+        }
     }
 
 }
