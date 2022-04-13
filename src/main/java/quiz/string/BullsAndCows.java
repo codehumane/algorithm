@@ -2,8 +2,9 @@ package quiz.string;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * https://leetcode.com/problems/bulls-and-cows/
@@ -12,61 +13,55 @@ import java.util.Map;
 public class BullsAndCows {
 
     public String getHint(String secret, String guess) {
-        var counts = countSecretChars(secret);
-        var bulls = collectBulls(secret, guess, counts);
-        var cows = collectCows(guess, counts, bulls);
-
-        return String.format("%dA%dB", bulls.size(), cows.size());
+        var counts = countChars(secret);
+        var bulls = countBulls(secret, guess, counts);
+        var cows = countCows(secret, guess, counts);
+        return String.format("%dA%dB", bulls, cows);
     }
 
-    private HashMap<Character, Integer> countSecretChars(String secret) {
-        var counts = new HashMap<Character, Integer>();
+    private Map<Character, Long> countChars(String secret) {
 
+        return secret
+                .chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(
+                        Function.identity(),
+                        Collectors.counting()
+                ));
+    }
+
+    private int countBulls(String secret,
+                           String guess,
+                           Map<Character, Long> counts) {
+
+        var count = 0;
         for (int i = 0; i < secret.length(); i++) {
-            var c = secret.charAt(i);
-            counts.putIfAbsent(c, 0);
-            counts.computeIfPresent(c, (k, v) -> v + 1);
-        }
+            var c = guess.charAt(i);
 
-        return counts;
-    }
-
-    private Map<Integer, Character> collectBulls(String secret,
-                                                 String guess,
-                                                 Map<Character, Integer> counts) {
-
-        var bulls = new HashMap<Integer, Character>();
-
-        for (int i = 0; i < guess.length(); i++) {
-            if (secret.charAt(i) == guess.charAt(i)) {
-                var c = secret.charAt(i);
-                counts.computeIfPresent(c, (k, v) -> v - 1);
-                bulls.put(i, c);
+            if (c == secret.charAt(i) && counts.get(c) > 0) {
+                counts.put(c, counts.get(c) - 1);
+                count++;
             }
         }
 
-        return bulls;
+        return count;
     }
 
-    private HashMap<Integer, Character> collectCows(String guess,
-                                                    Map<Character, Integer> counts,
-                                                    Map<Integer, Character> bulls) {
+    private int countCows(String secret,
+                          String guess,
+                          Map<Character, Long> counts) {
 
-        var cows = new HashMap<Integer, Character>();
+        var count = 0;
+        for (int i = 0; i < secret.length(); i++) {
+            var c = guess.charAt(i);
 
-        for (int i = 0; i < guess.length(); i++) {
-            if (bulls.containsKey(i)) continue;
-
-            var ch = guess.charAt(i);
-            var count = counts.getOrDefault(ch, 0);
-
-            if (count > 0) {
-                cows.put(i, ch);
-                counts.computeIfPresent(ch, (k, v) -> v - 1);
+            if (c != secret.charAt(i) && counts.getOrDefault(c, 0L) > 0) {
+                counts.put(c, counts.get(c) - 1);
+                count++;
             }
         }
 
-        return cows;
+        return count;
     }
 
 }
