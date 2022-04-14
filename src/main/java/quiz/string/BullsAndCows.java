@@ -13,13 +13,12 @@ import java.util.stream.Collectors;
 public class BullsAndCows {
 
     public String getHint(String secret, String guess) {
-        var counts = countChars(secret);
-        var bulls = countBulls(secret, guess, counts);
-        var cows = countCows(secret, guess, counts);
-        return String.format("%dA%dB", bulls, cows);
+        var counts = countSecretChars(secret);
+        var hint = toHint(secret, guess, counts);
+        return hint.toString();
     }
 
-    private Map<Character, Long> countChars(String secret) {
+    private Map<Character, Long> countSecretChars(String secret) {
 
         return secret
                 .chars()
@@ -30,38 +29,52 @@ public class BullsAndCows {
                 ));
     }
 
-    private int countBulls(String secret,
-                           String guess,
-                           Map<Character, Long> counts) {
+    private Hint toHint(String secret,
+                        String guess,
+                        Map<Character, Long> counts) {
 
-        var count = 0;
-        for (int i = 0; i < secret.length(); i++) {
-            var c = guess.charAt(i);
+        var hint = new Hint();
 
-            if (c == secret.charAt(i) && counts.get(c) > 0) {
-                counts.put(c, counts.get(c) - 1);
-                count++;
+        for (int i = 0; i < guess.length(); i++) {
+            var gc = guess.charAt(i);
+            if (counts.containsKey(gc)) {
+
+                if (gc == secret.charAt(i)) {
+                    hint.bulls++;
+
+                    // 앞에서 bulls만 있었던 경우는 counts의 특성상 0보다 작을 수 없고,
+                    // 따라서 0보다 작은 것은 cows가 있었던 경우에 한하며,
+                    // bulls가 우선하므로,
+                    // cows를 감소.
+                    if (counts.get(gc) <= 0) {
+                        hint.cows--;
+                    }
+                } else {
+
+                    // bulls가 우선이므로,
+                    // bulls에 이미 다 카운팅한 경우라면,
+                    // cows 계산은 생략.
+                    if (counts.get(gc) > 0) {
+                        hint.cows++;
+                    }
+                }
+
+                counts.put(gc, counts.get(gc) - 1);
             }
         }
 
-        return count;
+        return hint;
     }
 
-    private int countCows(String secret,
-                          String guess,
-                          Map<Character, Long> counts) {
+    static class Hint {
 
-        var count = 0;
-        for (int i = 0; i < secret.length(); i++) {
-            var c = guess.charAt(i);
+        int bulls = 0;
+        int cows = 0;
 
-            if (c != secret.charAt(i) && counts.getOrDefault(c, 0L) > 0) {
-                counts.put(c, counts.get(c) - 1);
-                count++;
-            }
+        @Override
+        public String toString() {
+            return String.format("%dA%dB", bulls, cows);
         }
-
-        return count;
     }
 
 }
