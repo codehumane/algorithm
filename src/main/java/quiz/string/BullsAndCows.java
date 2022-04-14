@@ -2,6 +2,7 @@ package quiz.string;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -13,7 +14,36 @@ import java.util.stream.Collectors;
 public class BullsAndCows {
 
     public String getHint(String secret, String guess) {
-        return new TwoPass().getHint(secret, guess);
+        var twoPass = new TwoPass().getHint(secret, guess);
+        var onePass = new OnePass().getHint(secret, guess);
+        assert twoPass.equals(onePass);
+        return onePass;
+    }
+
+    static class OnePass {
+
+        public String getHint(String secret, String guess) {
+            var counts = new HashMap<Character, Integer>();
+            var hint = new Hint();
+
+            for (int i = 0; i < guess.length(); i++) {
+                var gc = guess.charAt(i);
+                var sc = secret.charAt(i);
+
+                if (gc == sc) {
+                    hint.bulls++;
+                } else {
+                    if (counts.getOrDefault(sc, 0) < 0) hint.cows++;
+                    if (counts.getOrDefault(gc, 0) > 0) hint.cows++;
+
+                    counts.put(sc, counts.getOrDefault(sc, 0) + 1);
+                    counts.put(gc, counts.getOrDefault(gc, 0) - 1);
+                }
+            }
+
+            return hint.toString();
+        }
+
     }
 
     static class TwoPass {
