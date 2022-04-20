@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another/
@@ -16,7 +17,58 @@ import java.util.List;
 public class StepByStepDirectionsFromABinaryTreeNodeToAnother {
 
     public String getDirections(TreeNode root, int startValue, int destValue) {
-        return new FirstApproach().getDirections(root, startValue, destValue);
+        var first = new FirstApproach().getDirections(root, startValue, destValue);
+        var efficient = new MoreEfficient().getDirections(root, startValue, destValue);
+        assert first.equals(efficient);
+        return efficient;
+    }
+
+    static class MoreEfficient {
+        public String getDirections(TreeNode root, int startValue, int destValue) {
+            var lcp = findLCP(root, startValue, destValue);
+            return toDirections(startValue, destValue, lcp);
+        }
+
+        TreeNode findLCP(TreeNode me, int start, int dest) {
+            if (me == null) return null;
+
+            var left = findLCP(me.left, start, dest);
+            var right = findLCP(me.right, start, dest);
+
+            if ((left != null && right != null)
+                    || me.val == start
+                    || me.val == dest) {
+                return me;
+            }
+
+            return (left != null) ? left : right;
+        }
+
+        private String toDirections(int startValue, int destValue, TreeNode lcp) {
+            var start = reversedPath(lcp, startValue)
+                    .chars()
+                    .mapToObj(x -> "U")
+                    .collect(Collectors.joining());
+
+            var dest = reversedPath(lcp, destValue)
+                    .reverse()
+                    .toString();
+
+            return start.concat(dest);
+        }
+
+        private StringBuilder reversedPath(TreeNode from, int to) {
+            if (from == null) return null;
+            if (from.val == to) return new StringBuilder();
+
+            var l = reversedPath(from.left, to);
+            var r = reversedPath(from.right, to);
+
+            if (l != null) return l.append("L");
+            if (r != null) return r.append("R");
+
+            return null;
+        }
     }
 
     static class FirstApproach {
