@@ -15,91 +15,95 @@ import java.util.List;
  */
 public class StepByStepDirectionsFromABinaryTreeNodeToAnother {
 
-    public String getDirections(TreeNode root,
-                                int startValue,
-                                int destValue) {
-
-        // 1. 두 값에 대해 dfs (w/ 경로 저장) -> S, D
-        // 2. S reverse -> S_REVERSED
-        // 3. D 값들을 set으로 저장 -> D_SET
-        // 4. S_REVERSED 순회하며 D_SET에 포함된 첫 번째 값 찾기 -> LCP
-        // 5. S_REVERSED 순회를 LCP까지 한 경로 + D 순회를 LCP까지 한 경로
-
-        var SR = pathReversed(root, startValue);
-        var D = pathReversed(root, destValue);
-        Collections.reverse(D);
-
-        var LCP = findLCP(SR, D);
-        var P = getShortestPath(SR, D, LCP);
-        return toDirections(P);
+    public String getDirections(TreeNode root, int startValue, int destValue) {
+        return new FirstApproach().getDirections(root, startValue, destValue);
     }
 
-    private List<TreeNode> pathReversed(TreeNode me, int to) {
-        if (me == null) return null;
+    static class FirstApproach {
+        public String getDirections(TreeNode root, int startValue, int destValue) {
 
-        if (me.val == to) {
+            // 1. 두 값에 대해 dfs (w/ 경로 저장) -> S, D
+            // 2. S reverse -> S_REVERSED
+            // 3. D 값들을 set으로 저장 -> D_SET
+            // 4. S_REVERSED 순회하며 D_SET에 포함된 첫 번째 값 찾기 -> LCP
+            // 5. S_REVERSED 순회를 LCP까지 한 경로 + D 순회를 LCP까지 한 경로
+
+            var SR = pathReversed(root, startValue);
+            var D = pathReversed(root, destValue);
+            Collections.reverse(D);
+
+            var LCP = findLCP(SR, D);
+            var P = getShortestPath(SR, D, LCP);
+            return toDirections(P);
+        }
+
+        private List<TreeNode> pathReversed(TreeNode me, int to) {
+            if (me == null) return null;
+
+            if (me.val == to) {
+                var path = new ArrayList<TreeNode>();
+                path.add(me);
+                return path;
+            }
+
+            var left = pathReversed(me.left, to);
+            if (left != null) {
+                left.add(me);
+                return left;
+            }
+
+            var right = pathReversed(me.right, to);
+            if (right != null) {
+                right.add(me);
+                return right;
+            }
+
+            return null;
+        }
+
+        private TreeNode findLCP(List<TreeNode> SR, List<TreeNode> D) {
+            var SET = new HashSet<>(D);
+            for (TreeNode N : SR) {
+                if (SET.contains(N)) {
+                    return N;
+                }
+            }
+
+            throw new IllegalStateException();
+        }
+
+        private List<TreeNode> getShortestPath(List<TreeNode> SR, List<TreeNode> D, TreeNode LCP) {
             var path = new ArrayList<TreeNode>();
-            path.add(me);
+
+            for (int i = 0; i < SR.indexOf(LCP); i++) {
+                path.add(SR.get(i));
+            }
+
+            path.add(LCP);
+
+            for (int i = D.indexOf(LCP) + 1; i < D.size(); i++) {
+                path.add(D.get(i));
+            }
+
             return path;
         }
 
-        var left = pathReversed(me.left, to);
-        if (left != null) {
-            left.add(me);
-            return left;
-        }
+        private String toDirections(List<TreeNode> path) {
+            var directions = new StringBuilder();
 
-        var right = pathReversed(me.right, to);
-        if (right != null) {
-            right.add(me);
-            return right;
-        }
-
-        return null;
-    }
-
-    private TreeNode findLCP(List<TreeNode> SR, List<TreeNode> D) {
-        var SET = new HashSet<>(D);
-        for (TreeNode N : SR) {
-            if (SET.contains(N)) {
-                return N;
+            for (int i = 0; i < path.size() - 1; i++) {
+                var direction = getDirection(path.get(i), path.get(i + 1));
+                directions.append(direction);
             }
+
+            return directions.toString();
         }
 
-        throw new IllegalStateException();
-    }
-
-    private List<TreeNode> getShortestPath(List<TreeNode> SR, List<TreeNode> D, TreeNode LCP) {
-        var path = new ArrayList<TreeNode>();
-
-        for (int i = 0; i < SR.indexOf(LCP); i++) {
-            path.add(SR.get(i));
+        private String getDirection(TreeNode from, TreeNode to) {
+            if (from.left == to) return "L";
+            else if (from.right == to) return "R";
+            else return "U";
         }
-
-        path.add(LCP);
-
-        for (int i = D.indexOf(LCP) + 1; i < D.size(); i++) {
-            path.add(D.get(i));
-        }
-
-        return path;
-    }
-
-    private String toDirections(List<TreeNode> path) {
-        var directions = new StringBuilder();
-
-        for (int i = 0; i < path.size() - 1; i++) {
-            var direction = getDirection(path.get(i), path.get(i + 1));
-            directions.append(direction);
-        }
-
-        return directions.toString();
-    }
-
-    private String getDirection(TreeNode from, TreeNode to) {
-        if (from.left == to) return "L";
-        else if (from.right == to) return "R";
-        else return "U";
     }
 
     static class TreeNode {
