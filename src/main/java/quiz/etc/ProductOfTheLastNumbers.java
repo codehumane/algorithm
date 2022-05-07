@@ -19,8 +19,10 @@ public class ProductOfTheLastNumbers {
             return;
         }
 
-        for (int i = 0; i < productions.size(); i++) {
-            productions.set(i, productions.get(i) * num);
+        if (num != 1) {
+            for (int i = 0; i < productions.size(); i++) {
+                productions.set(i, productions.get(i) * num);
+            }
         }
 
         productions.add((long) num);

@@ -26,4 +26,23 @@ class ProductOfTheLastNumbersTest {
         assertEquals(32, solution.getProduct(2), "The product of the last 2 numbers is 4 * 8 = 32");
     }
 
+    @Test
+    void custom1() {
+        var solution = new ProductOfTheLastNumbers();
+
+        solution.add(5);
+        solution.add(4);
+        solution.add(1);
+        solution.add(1);
+        solution.add(1);
+        solution.add(1);
+
+        assertEquals(1, solution.getProduct(1));
+        assertEquals(1, solution.getProduct(2));
+        assertEquals(1, solution.getProduct(3));
+        assertEquals(1, solution.getProduct(4));
+        assertEquals(4, solution.getProduct(5));
+        assertEquals(20, solution.getProduct(6));
+    }
+
 }
