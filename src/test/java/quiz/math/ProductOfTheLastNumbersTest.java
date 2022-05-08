@@ -1,4 +1,4 @@
-package quiz.etc;
+package quiz.math;
 
 import org.junit.jupiter.api.Test;
 

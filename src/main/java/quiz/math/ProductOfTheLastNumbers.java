@@ -1,4 +1,4 @@
-package quiz.etc;
+package quiz.math;
 
 import java.util.ArrayList;
 import java.util.List;
