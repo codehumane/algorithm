@@ -12,27 +12,33 @@ public class MeetingRooms2 {
 
     public int minMeetingRooms(int[][] input) {
         var rooms = new ArrayList<Room>();
+        var intervals = toIntervals(input);
 
-        var intervals = Arrays
+        for (Interval interval : intervals) {
+            schedule(rooms, interval);
+        }
+
+        return rooms.size();
+    }
+
+    private void schedule(List<Room> rooms, Interval interval) {
+        var room = rooms
+                .stream()
+                .filter(r -> r.isAppendable(interval))
+                .findAny();
+
+        room.ifPresentOrElse(
+                r -> r.append(interval),
+                () -> rooms.add(Room.with(interval))
+        );
+    }
+
+    private List<Interval> toIntervals(int[][] input) {
+        return Arrays
                 .stream(input)
                 .map(x -> new Interval(x[0], x[1]))
                 .sorted()
                 .collect(Collectors.toList());
-
-        for (Interval interval : intervals) {
-            var room = rooms
-                    .stream()
-                    .filter(r -> r.isAppendable(interval))
-                    .findAny();
-
-            if (room.isPresent()) {
-                room.get().append(interval);
-            } else {
-                rooms.add(Room.with(interval));
-            }
-        }
-
-        return rooms.size();
     }
 
     static class Room {
