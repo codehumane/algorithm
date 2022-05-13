@@ -11,34 +11,42 @@ import java.util.stream.Collectors;
 public class MeetingRooms2 {
 
     public int minMeetingRooms(int[][] input) {
-        var rooms = new ArrayList<Room>();
-        var intervals = toIntervals(input);
+        return new Naive().minMeetingRooms(input);
+    }
 
-        for (Interval interval : intervals) {
-            schedule(rooms, interval);
+    static class Naive {
+
+        public int minMeetingRooms(int[][] input) {
+            var rooms = new ArrayList<Room>();
+            var intervals = toIntervals(input);
+
+            for (Interval interval : intervals) {
+                schedule(rooms, interval);
+            }
+
+            return rooms.size();
         }
 
-        return rooms.size();
-    }
+        private void schedule(List<Room> rooms, Interval interval) {
+            var room = rooms
+                    .stream()
+                    .filter(r -> r.isAppendable(interval))
+                    .findAny();
 
-    private void schedule(List<Room> rooms, Interval interval) {
-        var room = rooms
-                .stream()
-                .filter(r -> r.isAppendable(interval))
-                .findAny();
+            room.ifPresentOrElse(
+                    r -> r.append(interval),
+                    () -> rooms.add(Room.with(interval))
+            );
+        }
 
-        room.ifPresentOrElse(
-                r -> r.append(interval),
-                () -> rooms.add(Room.with(interval))
-        );
-    }
+        private List<Interval> toIntervals(int[][] input) {
+            return Arrays
+                    .stream(input)
+                    .map(x -> new Interval(x[0], x[1]))
+                    .sorted()
+                    .collect(Collectors.toList());
+        }
 
-    private List<Interval> toIntervals(int[][] input) {
-        return Arrays
-                .stream(input)
-                .map(x -> new Interval(x[0], x[1]))
-                .sorted()
-                .collect(Collectors.toList());
     }
 
     static class Room {
