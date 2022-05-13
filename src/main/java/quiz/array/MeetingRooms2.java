@@ -14,8 +14,44 @@ public class MeetingRooms2 {
     public int minMeetingRooms(int[][] input) {
         var naive = new Naive().minMeetingRooms(input);
         var usingPriorityQueue = new UsingPriorityQueue().minMeetingRooms(input);
+        var chronologicalOrdering = new ChronologicalOrdering().minMeetingRooms(input);
+
         assert naive == usingPriorityQueue;
-        return usingPriorityQueue;
+        assert naive == chronologicalOrdering;
+        return chronologicalOrdering;
+    }
+
+    static class ChronologicalOrdering {
+
+        public int minMeetingRooms(int[][] input) {
+            var starts = new int[input.length];
+            var ends = new int[input.length];
+
+            var rooms = 0;
+            var startPointer = 0;
+            var endPointer = 0;
+
+            for (int i = 0; i < input.length; i++) {
+                starts[i] = input[i][0];
+                ends[i] = input[i][1];
+            }
+
+            Arrays.sort(starts);
+            Arrays.sort(ends);
+
+            while (startPointer < input.length) {
+                if (starts[startPointer] >= ends[endPointer]) {
+                    endPointer++;
+                    rooms--;
+                }
+
+                startPointer++;
+                rooms++;
+            }
+
+            return rooms;
+        }
+
     }
 
     /**

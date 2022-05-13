@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,6 +66,31 @@ class MeetingRooms2Test {
                 new int[]{15, 25},
                 new int[]{13, 14},
                 new int[]{13, 19}
+        };
+
+        assertEquals(2, solution.minMeetingRooms(intervals));
+    }
+
+    @Test
+    void custom4() {
+        var intervals = new int[][]{
+                new int[]{1, 10},
+                new int[]{2, 7},
+                new int[]{3, 19},
+                new int[]{8, 12},
+                new int[]{10, 20},
+                new int[]{11, 30}
+        };
+
+        assertEquals(4, solution.minMeetingRooms(intervals));
+    }
+
+    @Test
+    void custom5() {
+        var intervals = new int[][]{
+                new int[]{13, 15},
+                new int[]{1, 13},
+                new int[]{6, 9}
         };
 
         assertEquals(2, solution.minMeetingRooms(intervals));
