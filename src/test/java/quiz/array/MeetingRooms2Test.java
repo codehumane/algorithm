@@ -1,12 +1,17 @@
 package quiz.array;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MeetingRooms2Test {
 
-    private MeetingRooms2 solution = new MeetingRooms2();
+    private final MeetingRooms2 solution = new MeetingRooms2();
 
     @Test
     void example1() {
@@ -65,6 +70,38 @@ class MeetingRooms2Test {
         };
 
         assertEquals(2, solution.minMeetingRooms(intervals));
+    }
+
+    @Nested
+    class RoomTest {
+
+        @Test
+        void comparable() {
+
+            // given
+            var r1 = new MeetingRooms2.Room();
+            var r2 = new MeetingRooms2.Room();
+            var r3 = new MeetingRooms2.Room();
+
+            r1.append(new MeetingRooms2.Interval(1, 5));
+            r1.append(new MeetingRooms2.Interval(6, 7));
+            r2.append(new MeetingRooms2.Interval(2, 4));
+            r3.append(new MeetingRooms2.Interval(5, 8));
+
+            var rooms = new ArrayList<MeetingRooms2.Room>();
+            rooms.add(r1);
+            rooms.add(r2);
+            rooms.add(r3);
+
+            // when
+            Collections.sort(rooms);
+
+            // then
+            assertEquals(r2, rooms.get(0));
+            assertEquals(r1, rooms.get(1));
+            assertEquals(r3, rooms.get(2));
+        }
+
     }
 
 }

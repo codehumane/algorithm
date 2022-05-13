@@ -3,6 +3,7 @@ package quiz.array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 /**
@@ -11,7 +12,51 @@ import java.util.stream.Collectors;
 public class MeetingRooms2 {
 
     public int minMeetingRooms(int[][] input) {
-        return new Naive().minMeetingRooms(input);
+        var naive = new Naive().minMeetingRooms(input);
+        var usingPriorityQueue = new UsingPriorityQueue().minMeetingRooms(input);
+        assert naive == usingPriorityQueue;
+        return usingPriorityQueue;
+    }
+
+    /**
+     * Instead of manually iterating on every room
+     * that's been allocated and checking if the room is available or not,
+     * we can keep all the rooms in a min heap
+     * where the key for the min heap would be the ending time of meeting.
+     */
+    static class UsingPriorityQueue {
+
+        public int minMeetingRooms(int[][] input) {
+            var rooms = new PriorityQueue<Room>();
+
+            for (Interval i : toIntervals(input)) {
+                schedule(rooms, i);
+            }
+
+            return rooms.size();
+        }
+
+        private List<Interval> toIntervals(int[][] input) {
+
+            return Arrays
+                    .stream(input)
+                    .map(x -> new Interval(x[0], x[1]))
+                    .sorted()
+                    .collect(Collectors.toList());
+        }
+
+        private void schedule(PriorityQueue<Room> rooms, Interval interval) {
+
+            if (rooms.isEmpty()
+                    || !rooms.element().isAppendable(interval)) {
+                rooms.offer(Room.with(interval));
+                return;
+            }
+
+            var room = rooms.remove();
+            room.append(interval);
+            rooms.offer(room);
+        }
     }
 
     static class Naive {
@@ -49,7 +94,7 @@ public class MeetingRooms2 {
 
     }
 
-    static class Room {
+    static class Room implements Comparable<Room> {
 
         static Room with(Interval interval) {
             var room = new Room();
@@ -68,14 +113,23 @@ public class MeetingRooms2 {
         }
 
         boolean isAppendable(Interval interval) {
-            if (intervals.isEmpty()) {
-                return true;
-            }
-
-            var last = intervals.get(intervals.size() - 1);
-            return last.end <= interval.start;
+            return end() <= interval.start;
         }
 
+        private int end() {
+            if (intervals.isEmpty()) return 0;
+            return intervals.get(intervals.size() - 1).end;
+        }
+
+        @Override
+        public int compareTo(Room o) {
+            return Integer.compare(this.end(), o.end());
+        }
+
+        @Override
+        public String toString() {
+            return "Room{" + intervals + '}';
+        }
     }
 
     static class Interval implements Comparable<Interval> {
@@ -113,10 +167,7 @@ public class MeetingRooms2 {
 
         @Override
         public String toString() {
-            return "Interval{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
+            return "(" + start + "," + end + ')';
         }
     }
 
