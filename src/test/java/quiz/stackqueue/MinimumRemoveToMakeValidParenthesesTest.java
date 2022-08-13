@@ -1,7 +1,8 @@
-package quiz.dynamic;
+package quiz.stackqueue;
 
 import lombok.val;
 import org.junit.jupiter.api.Test;
+import quiz.stackqueue.MinimumRemoveToMakeValidParentheses;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

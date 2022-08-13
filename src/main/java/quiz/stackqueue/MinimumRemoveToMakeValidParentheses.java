@@ -1,4 +1,4 @@
-package quiz.dynamic;
+package quiz.stackqueue;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
