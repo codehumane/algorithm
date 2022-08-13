@@ -23,40 +23,48 @@ import java.util.Set;
 public class MinimumRemoveToMakeValidParentheses {
 
     public String minRemoveToMakeValid(String s) {
-        return makeValid(s, collectInvalidIndices(s));
+        return new UsingStack().minRemoveToMakeValid(s);
     }
 
-    private Set<Integer> collectInvalidIndices(String s) {
-        var invalids = new HashSet<Integer>();
-        var opens = new ArrayDeque<Integer>();
+    static class UsingStack {
 
-        for (int i = 0; i < s.length(); i++) {
-            var c = s.charAt(i);
-
-            if ('(' == c) {
-                opens.push(i);
-            }
-
-            if (')' == c) {
-                if (opens.isEmpty()) invalids.add(i);
-                else opens.pop();
-            }
+        public String minRemoveToMakeValid(String s) {
+            return makeValid(s, collectInvalidIndices(s));
         }
 
-        invalids.addAll(opens);
-        return invalids;
-    }
+        private Set<Integer> collectInvalidIndices(String s) {
+            var invalids = new HashSet<Integer>();
+            var opens = new ArrayDeque<Integer>();
 
-    private String makeValid(String s, Set<Integer> invalidIndices) {
-        var builder = new StringBuilder(s.length());
+            for (int i = 0; i < s.length(); i++) {
+                var c = s.charAt(i);
 
-        for (int i = 0; i < s.length(); i++) {
-            if (!invalidIndices.contains(i)) {
-                builder.append(s.charAt(i));
+                if ('(' == c) {
+                    opens.push(i);
+                }
+
+                if (')' == c) {
+                    if (opens.isEmpty()) invalids.add(i);
+                    else opens.pop();
+                }
             }
+
+            invalids.addAll(opens);
+            return invalids;
         }
 
-        return builder.toString();
+        private String makeValid(String s, Set<Integer> invalidIndices) {
+            var builder = new StringBuilder(s.length());
+
+            for (int i = 0; i < s.length(); i++) {
+                if (!invalidIndices.contains(i)) {
+                    builder.append(s.charAt(i));
+                }
+            }
+
+            return builder.toString();
+        }
+
     }
 
 }
