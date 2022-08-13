@@ -23,7 +23,55 @@ import java.util.Set;
 public class MinimumRemoveToMakeValidParentheses {
 
     public String minRemoveToMakeValid(String s) {
-        return new UsingStack().minRemoveToMakeValid(s);
+        var usingTwoPass = new UsingTwoPass().minRemoveToMakeValid(s);
+        var usingStack = new UsingStack().minRemoveToMakeValid(s);
+        assert usingTwoPass.equals(usingStack);
+        return usingStack;
+    }
+
+    // 괄호 문제 나오면 종종 사용되는 방식
+    static class UsingTwoPass {
+
+        public String minRemoveToMakeValid(String s) {
+            var first = removeInvalidCloses(
+                    s,
+                    '(',
+                    ')'
+            );
+
+            var second = removeInvalidCloses(
+                    first.reverse(),
+                    ')',
+                    '('
+            );
+
+            return second
+                    .reverse()
+                    .toString();
+        }
+
+        private StringBuilder removeInvalidCloses(CharSequence s, char open, char close) {
+            var builder = new StringBuilder();
+            var opens = 0;
+
+            for (int i = 0; i < s.length(); i++) {
+                var c = s.charAt(i);
+
+                if (c == open) {
+                    opens++;
+                }
+
+                if (c == close) {
+                    if (opens == 0) continue;
+                    opens--;
+                }
+
+                builder.append(c);
+            }
+
+            return builder;
+        }
+
     }
 
     static class UsingStack {
