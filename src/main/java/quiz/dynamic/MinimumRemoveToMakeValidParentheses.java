@@ -2,6 +2,7 @@ package quiz.dynamic;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/
@@ -22,13 +23,12 @@ import java.util.HashSet;
 public class MinimumRemoveToMakeValidParentheses {
 
     public String minRemoveToMakeValid(String s) {
-        var invalidIndices = collectInvalidCharIndices(s);
-        return makeValid(s, invalidIndices);
+        return makeValid(s, collectInvalidIndices(s));
     }
 
-    private HashSet<Integer> collectInvalidCharIndices(String s) {
+    private Set<Integer> collectInvalidIndices(String s) {
+        var invalids = new HashSet<Integer>();
         var opens = new ArrayDeque<Integer>();
-        var closes = new ArrayDeque<Integer>();
 
         for (int i = 0; i < s.length(); i++) {
             var c = s.charAt(i);
@@ -38,21 +38,18 @@ public class MinimumRemoveToMakeValidParentheses {
             }
 
             if (')' == c) {
-                if (opens.isEmpty()) {
-                    closes.push(i);
-                } else {
-                    opens.pop();
-                }
+                if (opens.isEmpty()) invalids.add(i);
+                else opens.pop();
             }
         }
 
-        var indices = new HashSet<>(opens);
-        indices.addAll(closes);
-        return indices;
+        invalids.addAll(opens);
+        return invalids;
     }
 
-    private String makeValid(String s, HashSet<Integer> invalidIndices) {
+    private String makeValid(String s, Set<Integer> invalidIndices) {
         var builder = new StringBuilder(s.length());
+
         for (int i = 0; i < s.length(); i++) {
             if (!invalidIndices.contains(i)) {
                 builder.append(s.charAt(i));
