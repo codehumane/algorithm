@@ -19,7 +19,8 @@ class LongestSubstringWithoutRepeatingCharactersTest {
             "1,' '", // blank string " "
             "1,b",
             "3,aaabc",
-            "3,dvdf"
+            "3,dvdf",
+            "2,abba"
     })
     public void verify(int output, String input) {
         var actual = solution.lengthOfLongestSubstring(input);
