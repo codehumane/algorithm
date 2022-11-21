@@ -20,7 +20,8 @@ public class SortTest {
                 Arguments.of(new ParallelMergeSort()),
                 Arguments.of(new MergeSort()),
                 Arguments.of(new QuickSort()),
-                Arguments.of(new CountingSort())
+                Arguments.of(new CountingSort()),
+                Arguments.of(new RadixSort())
         );
     }
 

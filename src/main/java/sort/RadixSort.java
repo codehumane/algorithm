@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
  * https://www.geeksforgeeks.org/radix-sort/
  */
 @Slf4j
-public class RadixSort {
+public class RadixSort implements Sort {
 
     public void sort(int[] input) {
         if (input.length < 2) return;
@@ -29,7 +29,7 @@ public class RadixSort {
         return max;
     }
 
-    // e.g. 256 336 736 443 831 907
+    // e.g. 256 336 736 443 831 907 (1의 자리)
     private void countingSort(int[] input, int digit) {
         var temp = new int[input.length];
         var count = new int[10];
