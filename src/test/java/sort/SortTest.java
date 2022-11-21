@@ -21,6 +21,7 @@ public class SortTest {
                 Arguments.of(new MergeSort()),
                 Arguments.of(new QuickSort()),
                 Arguments.of(new CountingSort()),
+                Arguments.of(new CountingSort2022()),
                 Arguments.of(new RadixSort())
         );
     }
