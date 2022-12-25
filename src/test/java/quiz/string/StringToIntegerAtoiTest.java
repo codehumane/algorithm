@@ -42,6 +42,7 @@ class StringToIntegerAtoiTest {
     @Test
     void wrong() {
         assertEquals(0, solution.myAtoi("words and 987"));
+        assertEquals(0, solution.myAtoi("+-12"));
     }
 
 }

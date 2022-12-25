@@ -13,19 +13,27 @@ public class StringToIntegerAtoi {
     public int myAtoi(String s) {
 
         var sign = 1;
-        var collecting = false;
+        var started = false;
         var numbers = new ArrayList<Character>(s.length());
-
         for (char c : s.toCharArray()) {
-            if (!collecting) {
-                if (Character.isDigit(c)) numbers.add(c);
-                else if (c == '-') sign = -1;
-                else if (c != '+') continue;
-                collecting = true;
-            } else {
-                if (Character.isDigit(c)) numbers.add(c);
-                else break;
+
+            if (!started) {
+                if (c == ' ') continue;
+
+                started = true;
+
+                if (c == '+') continue;
+                if (c == '-') {
+                    sign = -1;
+                    continue;
+                }
             }
+
+            if (!Character.isDigit(c)) {
+                break;
+            }
+
+            numbers.add(c);
         }
 
         var result = 0;
