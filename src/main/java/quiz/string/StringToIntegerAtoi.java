@@ -14,7 +14,7 @@ public class StringToIntegerAtoi {
 
         var sign = 1;
         var started = false;
-        var numbers = new ArrayList<Character>(s.length());
+        var digitNumbers = new ArrayList<Integer>(s.length());
         for (char c : s.toCharArray()) {
 
             if (!started) {
@@ -33,21 +33,20 @@ public class StringToIntegerAtoi {
                 break;
             }
 
-            numbers.add(c);
+            digitNumbers.add(Integer.parseInt(String.valueOf(c)));
         }
 
-        var result = 0;
-        for (Character n : numbers) {
-            var digitNum = Integer.parseInt(String.valueOf(n));
+        var number = 0;
+        for (int digitNum : digitNumbers) {
 
-            if (Integer.MAX_VALUE / 10 < result || Integer.MAX_VALUE / 10 == result && Integer.MAX_VALUE % 10 < digitNum) {
+            if (Integer.MAX_VALUE / 10 < number || Integer.MAX_VALUE / 10 == number && Integer.MAX_VALUE % 10 < digitNum) {
                 return sign > 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
 
-            result = result * 10 + digitNum;
+            number = number * 10 + digitNum;
         }
 
-        return result * sign;
+        return number * sign;
     }
 
 }
