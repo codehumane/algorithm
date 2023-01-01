@@ -2,9 +2,10 @@ package quiz.math;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Array;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * https://leetcode.com/problems/3sum/
@@ -16,28 +17,33 @@ import java.util.stream.Collectors;
 public class ThreeSum {
 
     public List<List<Integer>> threeSum(int[] nums) {
-        var result = new ArrayList<List<Integer>>();
-
         Arrays.sort(nums);
 
-        for (int i = 0; i < nums.length - 2; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
+        var res = new ArrayList<List<Integer>>();
+        for (int i = 0; i < nums.length && nums[i] <= 0; ++i) {
+            if (i == 0 || nums[i] != nums[i - 1]) {
+                collect(nums, i, res);
+            }
+        }
 
-            for (int j = i + 1; j < nums.length - 1; j++) {
-                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+        return res;
+    }
 
-                for (int k = j + 1; k < nums.length; k++) {
-                    if (k > j + 1 && nums[k] == nums[k - 1]) continue;
+    void collect(int[] nums, int i, List<List<Integer>> res) {
+        var complements = new HashSet<Integer>();
 
-                    if (nums[i] + nums[j] + nums[k] == 0) {
-                        result.add(List.of(nums[i], nums[j], nums[k]));
-                    }
+        for (int j = i + 1; j < nums.length; ++j) {
+            int complement = -(nums[i] + nums[j]);
+
+            if (complements.contains(complement)) {
+                res.add(List.of(nums[i], nums[j], complement));
+                while (j + 1 < nums.length && nums[j] == nums[j + 1]) {
+                    ++j;
                 }
             }
 
+            complements.add(nums[j]);
         }
-
-        return result;
     }
 
 }
