@@ -17,7 +17,47 @@ import java.util.List;
 public class ThreeSum {
 
     public List<List<Integer>> threeSum(int[] nums) {
-        return new ByHashSet().threeSum(nums);
+        return new ByTwoPointers().threeSum(nums);
+    }
+
+    static class ByTwoPointers {
+        public List<List<Integer>> threeSum(int[] nums) {
+            Arrays.sort(nums);
+
+            var res = new ArrayList<List<Integer>>();
+            for (int i = 0; i < nums.length - 2 && nums[i] <= 0; ++i) {
+                if (i == 0 || nums[i] != nums[i - 1]) {
+                    collect(nums, i, res);
+                }
+            }
+
+            return res;
+        }
+
+        private void collect(int[] nums, int i, List<List<Integer>> res) {
+            var l = i + 1;
+            var r = nums.length - 1;
+
+            while (l < r) {
+                var sum = nums[i] + nums[l] + nums[r];
+
+                if (sum == 0) {
+                    res.add(List.of(nums[i], nums[l], nums[r]));
+
+                    l++;
+                    r--;
+
+                    while (l > i + 1 && l < r && nums[l] == nums[l - 1]) l++;
+                    while (r < nums.length - 1 && l < r && nums[r] == nums[r + 1]) r--;
+
+                } else if (sum < 0) {
+                    l++;
+                } else {
+                    r--;
+                }
+            }
+        }
+
     }
 
     static class ByHashSet {

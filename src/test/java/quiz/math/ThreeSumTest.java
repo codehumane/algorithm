@@ -43,6 +43,19 @@ class ThreeSumTest {
         assertTriplet(expected, result);
     }
 
+    @Test
+    void custom1() {
+        var nums = new int[]{3, -1, 0, 1, 1, -2, 3, 0, 0};
+        var expected = List.of(
+                List.of(-2, -1, 3),
+                List.of(-2, 1, 1),
+                List.of(-1, 0, 1),
+                List.of(0, 0, 0)
+        );
+        var result = solution.threeSum(nums);
+        assertTriplet(expected, result);
+    }
+
     private void assertTriplet(List<List<Integer>> expected, List<List<Integer>> result) {
         var expectedTriplets = toTriplets(expected);
         var resultTriplets = toTriplets(result);
