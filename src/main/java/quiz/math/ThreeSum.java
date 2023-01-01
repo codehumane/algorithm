@@ -2,10 +2,7 @@ package quiz.math;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * https://leetcode.com/problems/3sum/
@@ -17,7 +14,7 @@ import java.util.List;
 public class ThreeSum {
 
     public List<List<Integer>> threeSum(int[] nums) {
-        return new ByTwoPointers().threeSum(nums);
+        return new NoSort().threeSum(nums);
     }
 
     static class ByTwoPointers {
@@ -89,6 +86,33 @@ public class ThreeSum {
 
                 complements.add(nums[j]);
             }
+        }
+    }
+
+    static class NoSort {
+        public List<List<Integer>> threeSum(int[] nums) {
+            var triplets = new HashSet<List<Integer>>();
+            var duplicated = new HashSet<Integer>();
+            var complements = new HashMap<Integer, Integer>(); // num to current index
+
+            for (int i = 0; i < nums.length; i++) {
+                if (duplicated.contains(nums[i])) continue;
+                duplicated.add(nums[i]);
+
+                for (int j = i + 1; j < nums.length; j++) {
+                    var comp = -(nums[i] + nums[j]);
+
+                    if (complements.getOrDefault(nums[j], -1) == i) {
+                        var triplet = Arrays.asList(comp, nums[i], nums[j]);
+                        Collections.sort(triplet);
+                        triplets.add(triplet);
+                    }
+
+                    complements.put(comp, i);
+                }
+            }
+
+            return new ArrayList<>(triplets);
         }
     }
 }
