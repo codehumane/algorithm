@@ -2,6 +2,7 @@ package quiz.math;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,60 +16,25 @@ import java.util.stream.Collectors;
 public class ThreeSum {
 
     public List<List<Integer>> threeSum(int[] nums) {
-        var sumOfTwoIndices = sumOfTwoIndices(nums);
-        var threeSumIndices = threeSumIndices(nums, sumOfTwoIndices);
-        return mapToValueAndDistinct(nums, threeSumIndices);
-    }
+        var result = new ArrayList<List<Integer>>();
 
-    private Map<Integer, Set<Set<Integer>>> sumOfTwoIndices(int[] nums) {
-        final Map<Integer, Set<Set<Integer>>> sums = new HashMap<>();
+        Arrays.sort(nums);
 
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                var sum = nums[i] + nums[j];
-                var indices = Set.of(i, j);
-                sums.putIfAbsent(sum, new HashSet<>());
-                sums.get(sum).add(indices);
-            }
-        }
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
 
-        return sums;
-    }
+            for (int j = i + 1; j < nums.length - 1; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
 
-    private Set<Set<Integer>> threeSumIndices(int[] nums, Map<Integer, Set<Set<Integer>>> sumOfTwoIndices) {
-        var indices = new HashSet<Set<Integer>>();
+                for (int k = j + 1; k < nums.length; k++) {
+                    if (k > j + 1 && nums[k] == nums[k - 1]) continue;
 
-        for (int i = 0; i < nums.length; i++) {
-            var candidates = sumOfTwoIndices.getOrDefault(-nums[i], Set.of());
-
-            for (Set<Integer> candidate : candidates) {
-                var threeSum = new HashSet<>(candidate);
-                threeSum.add(i);
-
-                if (threeSum.size() == 3) {
-                    indices.add(threeSum);
+                    if (nums[i] + nums[j] + nums[k] == 0) {
+                        result.add(List.of(nums[i], nums[j], nums[k]));
+                    }
                 }
             }
-        }
 
-        return indices;
-    }
-
-    private List<List<Integer>> mapToValueAndDistinct(int[] nums, Set<Set<Integer>> threeSumIndices) {
-        List<List<Integer>> result = new ArrayList<>();
-        Set<Set<Integer>> distinct = new HashSet<>();
-
-        for (Set<Integer> indices : threeSumIndices) {
-            final List<Integer> values = indices
-                    .stream()
-                    .map(i -> nums[i])
-                    .collect(Collectors.toList());
-
-            final HashSet<Integer> identity = new HashSet<>(values);
-            if (distinct.contains(identity)) continue;
-
-            distinct.add(identity);
-            result.add(values);
         }
 
         return result;
