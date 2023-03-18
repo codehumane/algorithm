@@ -2,34 +2,25 @@ package quiz.linkedlist;
 
 import lombok.ToString;
 
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-
 public class SwapNodesInPairs {
 
     public ListNode swapPairs(ListNode head) {
+        final var prefix = new ListNode(Integer.MIN_VALUE, head);
 
-        if (isNull(head)) return null;
-        if (isNull(head.next)) return head;
+        var node = prefix;
+        while (node.next != null && node.next.next != null) {
+            var n1 = node.next;
+            var n2 = node.next.next;
+            var n3 = node.next.next.next;
 
-        final ListNode newHead = head.next;
-        ListNode before = null;
-        ListNode node = head;
+            node.next = n2;
+            n2.next = n1;
+            n1.next = n3;
 
-        while (nonNull(node) && nonNull(node.next)) {
-            var temp = node.next.next;
-
-            if (nonNull(before)) {
-                before.next = node.next;
-            }
-
-            node.next.next = node;
-            node.next = temp;
-            before = node;
-            node = temp;
+            node = n1;
         }
 
-        return newHead;
+        return prefix.next;
     }
 
     @ToString(of = {"val"})
