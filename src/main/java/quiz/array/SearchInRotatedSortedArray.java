@@ -1,7 +1,5 @@
 package quiz.array;
 
-import java.util.Arrays;
-
 public class SearchInRotatedSortedArray {
 
     /**
@@ -13,21 +11,7 @@ public class SearchInRotatedSortedArray {
      * @return the index of target if it is in nums, or -1 if it is not in nums.
      */
     public int search(int[] nums, int target) {
-        var rotationSize = cancelRotation(nums);
-        var index = indexOf(nums, target);
-
-        if (index == -1) return index;
-        return (index + rotationSize) % nums.length;
-    }
-
-    private int cancelRotation(int[] nums) {
-        var index = indexOf(nums, min(nums));
-
-        reverse(nums, 0, index - 1);
-        reverse(nums, index, nums.length - 1);
-        reverse(nums, 0, nums.length - 1);
-
-        return index;
+        return indexOf(nums, target);
     }
 
     private int indexOf(int[] nums, int target) {
@@ -36,25 +20,6 @@ public class SearchInRotatedSortedArray {
         }
 
         return -1;
-    }
-
-    private int min(int[] nums) {
-        return Arrays
-                .stream(nums)
-                .min()
-                .orElseThrow();
-    }
-
-    private void reverse(int[] nums, int from, int to) {
-        while (from < to) {
-            swap(nums, from++, to--);
-        }
-    }
-
-    private void swap(int[] nums, int from, int to) {
-        var tmp = nums[from];
-        nums[from] = nums[to];
-        nums[to] = tmp;
     }
 
 }
