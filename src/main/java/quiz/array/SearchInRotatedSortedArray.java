@@ -13,14 +13,14 @@ public class SearchInRotatedSortedArray {
      * @return the index of target if it is in nums, or -1 if it is not in nums.
      */
     public int search(int[] nums, int target) {
-        var rotation = beforeRotation(nums);
+        var rotationSize = cancelRotation(nums);
         var index = indexOf(nums, target);
 
         if (index == -1) return index;
-        return (index + rotation) % nums.length;
+        return (index + rotationSize) % nums.length;
     }
 
-    private int beforeRotation(int[] nums) {
+    private int cancelRotation(int[] nums) {
         var index = indexOf(nums, min(nums));
 
         reverse(nums, 0, index - 1);
@@ -47,12 +47,14 @@ public class SearchInRotatedSortedArray {
 
     private void reverse(int[] nums, int from, int to) {
         while (from < to) {
-            var tmp = nums[from];
-            nums[from] = nums[to];
-            nums[to] = tmp;
-            from++;
-            to--;
+            swap(nums, from++, to--);
         }
+    }
+
+    private void swap(int[] nums, int from, int to) {
+        var tmp = nums[from];
+        nums[from] = nums[to];
+        nums[to] = tmp;
     }
 
 }
