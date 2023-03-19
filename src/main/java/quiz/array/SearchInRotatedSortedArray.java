@@ -13,23 +13,46 @@ public class SearchInRotatedSortedArray {
      * @return the index of target if it is in nums, or -1 if it is not in nums.
      */
     public int search(int[] nums, int target) {
-        var first = nums[0];
-        Arrays.sort(nums);
-        var targetIndex = indexOf(nums, target);
-        var rotation = nums.length - indexOf(nums, first);
+        var rotation = beforeRotation(nums);
+        var index = indexOf(nums, target);
 
-        if (targetIndex == -1) return -1;
-        else return (targetIndex + rotation) % nums.length;
+        if (index == -1) return index;
+        return (index + rotation) % nums.length;
+    }
+
+    private int beforeRotation(int[] nums) {
+        var index = indexOf(nums, min(nums));
+
+        reverse(nums, 0, index - 1);
+        reverse(nums, index, nums.length - 1);
+        reverse(nums, 0, nums.length - 1);
+
+        return index;
     }
 
     private int indexOf(int[] nums, int target) {
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == target) {
-                return i;
-            }
+            if (nums[i] == target) return i;
         }
 
         return -1;
+    }
+
+    private int min(int[] nums) {
+        return Arrays
+                .stream(nums)
+                .min()
+                .orElseThrow();
+    }
+
+    private void reverse(int[] nums, int from, int to) {
+        while (from < to) {
+            var tmp = nums[from];
+            nums[from] = nums[to];
+            nums[to] = tmp;
+            from++;
+            to--;
+        }
     }
 
 }

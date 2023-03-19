@@ -83,5 +83,4 @@ class SearchInRotatedSortedArrayTest {
         assertEquals(expected, result);
     }
 
-
 }
